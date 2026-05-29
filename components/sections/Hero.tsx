@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -72,9 +73,18 @@ export default function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            className="group relative flex items-center gap-2 text-[0.7rem] tracking-[0.2em] uppercase font-bold text-[#070D0E]/60 hover:text-[#070D0E] transition-colors"
+            className="group relative flex items-center gap-2.5 text-[0.7rem] tracking-[0.2em] uppercase font-bold text-[#070D0E]/60 hover:text-[#070D0E] transition-colors"
           >
-            <span>An initiative from <span className="text-[#56C7D9]">Biofix</span></span>
+            <span className="flex items-center gap-2">
+              An initiative from 
+              <Image 
+                src="/images/biofix.png" 
+                alt="Biofix Logo" 
+                width={90} 
+                height={26}
+                className="h-5.5 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+              />
+            </span>
             <svg className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
