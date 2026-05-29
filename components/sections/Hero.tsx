@@ -131,29 +131,31 @@ export default function Hero() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-8 text-[#070D0E]/40 hover:text-[#070D0E]/80 transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-8"
       >
         {/* WhatsApp */}
         <a 
           href="https://wa.me/918884577773" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="hover:text-[#56C7D9] transition-all hover:scale-110 duration-300 flex items-center justify-center"
+          className="transition-all hover:scale-125 duration-300 flex items-center justify-center"
           title="WhatsApp"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.46h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"></path>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" className="w-5.5 h-5.5 drop-shadow-[0_2px_8px_rgba(37,211,102,0.45)]">
+            <path fill="#25D366" d="M12.003 21c-1.63 0-3.21-.42-4.62-1.21L3 21l1.24-4.22c-.87-1.51-1.33-3.23-1.33-4.99C2.91 6.18 7.09 2 12.23 2c2.49 0 4.83.97 6.59 2.73s2.73 4.1 2.73 6.59c-.01 5.62-4.19 9.8-9.33 9.8z"/>
+            <path fill="#FFF" d="M16.92 14.88c-.27-.14-1.59-.78-1.84-.87-.25-.09-.43-.14-.61.14-.18.27-.69.87-.85 1.05-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.17-1.34-.8-.71-1.34-1.59-1.5-1.86-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.48-.84-2.03-.22-.53-.44-.46-.61-.47h-.52c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29s.98 2.65 1.12 2.83c.14.18 1.92 2.93 4.66 4.11.65.28 1.16.45 1.56.58.69.22 1.31.19 1.8.12.55-.08 1.69-.69 1.93-1.36.24-.67.24-1.24.16-1.36-.07-.12-.26-.19-.53-.33z"/>
           </svg>
         </a>
 
         {/* Telephone Call */}
         <a 
           href="tel:+918884577773" 
-          className="hover:text-[#56C7D9] transition-all hover:scale-110 duration-300 flex items-center justify-center"
+          className="transition-all hover:scale-125 duration-300 flex items-center justify-center"
           title="Call Us"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" className="w-5.5 h-5.5 drop-shadow-[0_2px_8px_rgba(86,199,217,0.45)]">
+            <circle cx="12" cy="12" r="10" fill="#56C7D9" />
+            <path fill="none" stroke="#FFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" d="M17 13.46v1.82a1.21 1.21 0 0 1-1.32 1.21 12 12 0 0 1-5.23-1.86 11.83 11.83 0 0 1-3.64-3.64A12 12 0 0 1 4.95 5.76 1.21 1.21 0 0 1 6.16 4.54h1.82a1.21 1.21 0 0 1 1.21 1.04c.24 1.7.67 3.35 1.27 4.91a1.21 1.21 0 0 1-.27 1.27L9.12 13a9.71 9.71 0 0 0 3.64 3.64l1.24-1.24a1.21 1.21 0 0 1 1.27-.27c1.56.6 3.21 1.03 4.91 1.27A1.21 1.21 0 0 1 17 13.46z"/>
           </svg>
         </a>
 
@@ -162,13 +164,21 @@ export default function Hero() {
           href="https://www.instagram.com/biodrops.india?igsh=MW9ybTRheTh0N2ZwcA==" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="hover:text-[#56C7D9] transition-all hover:scale-110 duration-300 flex items-center justify-center"
+          className="transition-all hover:scale-125 duration-300 flex items-center justify-center"
           title="Instagram"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" className="w-5.5 h-5.5 drop-shadow-[0_2px_8px_rgba(225,48,108,0.45)]">
+            <defs>
+              <linearGradient id="ig-grad" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#C13584" />
+                <stop offset="50%" stopColor="#E1306C" />
+                <stop offset="100%" stopColor="#FD1D1D" />
+              </linearGradient>
+            </defs>
+            <rect width="20" height="20" x="2" y="2" rx="5" fill="url(#ig-grad)" />
+            <rect width="12" height="12" x="6" y="6" rx="3" fill="none" stroke="#FFF" strokeWidth="1.8" />
+            <circle cx="12" cy="12" r="3" fill="none" stroke="#FFF" strokeWidth="1.8" />
+            <circle cx="16.5" cy="7.5" r="1" fill="#FFF" />
           </svg>
         </a>
 
@@ -177,11 +187,12 @@ export default function Hero() {
           href="https://facebook.com" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="hover:text-[#56C7D9] transition-all hover:scale-110 duration-300 flex items-center justify-center"
+          className="transition-all hover:scale-125 duration-300 flex items-center justify-center"
           title="Facebook"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" className="w-5.5 h-5.5 drop-shadow-[0_2px_8px_rgba(24,119,242,0.45)]">
+            <circle cx="12" cy="12" r="10" fill="#1877F2"/>
+            <path fill="#FFF" d="M14 12h-2v7H9.5v-7h-1.5V9.5h1.5v-2c0-1.8 1.1-2.8 2.8-2.8.8 0 1.5.1 1.7.1v2h-1.2c-.9 0-1.1.4-1.1 1v1.7h2.2l-.3 2.5z"/>
           </svg>
         </a>
       </motion.div>
