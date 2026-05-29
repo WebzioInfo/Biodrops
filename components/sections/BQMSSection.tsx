@@ -90,13 +90,13 @@ export default function BQMSSection() {
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full aspect-[1/2] md:aspect-[3/4] lg:aspect-[2/3] max-w-[400px] mx-auto hidden md:flex items-center justify-center rounded-3xl overflow-hidden drop-shadow-2xl bg-[#F4F6F8]/50 -translate-y-12 md:-translate-y-24"
+          className="relative w-full aspect-[1/2] md:aspect-[3/4] lg:aspect-[2/3] max-w-[400px] mx-auto hidden md:flex items-center justify-center -translate-y-28 md:-translate-y-48"
         >
           <Image 
             src="/images/bqms-badge.png" 
             alt="BQMS Golden Standard Seal" 
             fill
-            className="object-contain p-8 md:p-12 drop-shadow-xl"
+            className="object-contain"
           />
         </motion.div>
 
