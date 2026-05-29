@@ -132,7 +132,7 @@ export default function Hero() {
 
         {/* Instagram */}
         <a 
-          href="https://instagram.com" 
+          href="https://www.instagram.com/biodrops.india?igsh=MW9ybTRheTh0N2ZwcA==" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="hover:text-[#56C7D9] transition-all hover:scale-110 duration-300 flex items-center justify-center"
