@@ -29,11 +29,11 @@ export default function Hero() {
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="text-[clamp(3rem,7vw,7rem)] leading-[1] tracking-[-0.03em] text-[#070D0E]"
-            style={{ fontFamily: "'Satoshi', sans-serif" }}
+            className="text-[clamp(3.5rem,7.5vw,7.5rem)] leading-[1.05] tracking-tight text-[#070D0E]"
+            style={{ fontFamily: "'DM Serif Display', Georgia, serif" }}
           >
             Quality Can Be<br/>
-            <span className="italic text-[#56C7D9] font-medium">Canned.</span>
+            <span className="italic text-[#56C7D9] font-normal">Canned.</span>
           </motion.h1>
         </div>
 
