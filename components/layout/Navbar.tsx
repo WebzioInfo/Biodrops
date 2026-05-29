@@ -50,10 +50,10 @@ export default function Navbar() {
       }`}
     >
       <div 
-        className={`flex items-center justify-center gap-10 md:gap-20 transition-all duration-500 shadow-[0_12px_40px_rgba(0,0,0,0.15)] rounded-full ${
+        className={`flex items-center justify-center gap-8 md:gap-14 transition-all duration-500 shadow-[0_12px_40px_rgba(0,0,0,0.25)] rounded-full ${
           scrolled 
-            ? "bg-[#070D0E] border border-white/10 px-24 py-4.5" 
-            : "bg-[#070D0E] border border-white/5 px-28 py-5.5"
+            ? "bg-[#070D0E]/85 backdrop-blur-xl border border-white/10 px-10 py-3.5" 
+            : "bg-[#070D0E]/70 backdrop-blur-xl border border-white/5 px-12 py-4.5"
         }`}
       >
         <Link href="/" className="flex items-center gap-3">
@@ -62,28 +62,30 @@ export default function Navbar() {
             alt="Biodrops Logo" 
             width={150} 
             height={40}
-            className="h-10 w-auto object-contain"
+            className="h-9 w-auto object-contain hover:scale-105 transition-transform duration-300"
             priority
           />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-12">
-          <Link href="#process" className="text-[0.8rem] font-bold tracking-[0.18em] uppercase text-white/60 hover:text-[#56C7D9] transition-colors">
+        <nav className="hidden md:flex items-center gap-10">
+          <Link href="#process" className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
             Process
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#56C7D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
           </Link>
-          <Link href="#why" className="text-[0.8rem] font-bold tracking-[0.18em] uppercase text-white/60 hover:text-[#56C7D9] transition-colors">
+          <Link href="#why" className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
             Why Us
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#56C7D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
           </Link>
-          <Link href="#bqms" className="text-[0.8rem] font-bold tracking-[0.18em] uppercase text-white/60 hover:text-[#56C7D9] transition-colors">
+          <Link href="#bqms" className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
             BQMS
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#56C7D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
           </Link>
         </nav>
 
         <a
           href="#contact"
-          className="group relative inline-flex items-center justify-center px-8 py-3 bg-white border border-white hover:border-[#56C7D9] rounded-full text-[0.7rem] font-bold tracking-[0.2em] uppercase text-[#070D0E] hover:text-white overflow-hidden transition-all duration-500 shadow-sm"
+          className="group relative inline-flex items-center justify-center px-8 py-3 bg-white rounded-full text-[0.7rem] font-bold tracking-[0.2em] uppercase text-[#070D0E] hover:bg-[#56C7D9] hover:text-[#070D0E] transition-all duration-300 hover:scale-105 shadow-[0_4px_12px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_20px_rgba(86,199,217,0.3)] overflow-hidden"
         >
-          <div className="absolute inset-0 w-[200%] translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-[#56C7D9]/20 to-transparent transition-transform duration-1000 ease-out" />
           <span className="relative z-10">Contact</span>
         </a>
       </div>
