@@ -89,7 +89,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="mt-14 mb-16"
+          className="mt-28 mb-16"
         >
           <a
             href="#product"
