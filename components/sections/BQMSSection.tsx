@@ -22,7 +22,7 @@ export default function BQMSSection() {
           {/* Mobile Background Seal (visible on mobile only as a subtle watermark background) */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] opacity-[0.08] pointer-events-none md:hidden z-0">
             <Image 
-              src="/images/bqms-seal.png" 
+              src="/images/bqms-badge.png" 
               alt="BQMS Golden Standard Seal Background" 
               fill
               className="object-contain"
@@ -93,7 +93,7 @@ export default function BQMSSection() {
           className="relative w-full aspect-[1/2] md:aspect-[3/4] lg:aspect-[2/3] max-w-[400px] mx-auto hidden md:flex items-center justify-center rounded-3xl overflow-hidden drop-shadow-2xl bg-[#F4F6F8]/50 -translate-y-12 md:-translate-y-24"
         >
           <Image 
-            src="/images/bqms-seal.png" 
+            src="/images/bqms-badge.png" 
             alt="BQMS Golden Standard Seal" 
             fill
             className="object-contain p-8 md:p-12 drop-shadow-xl"
