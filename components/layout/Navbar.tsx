@@ -50,8 +50,8 @@ export default function Navbar() {
     >
       <div 
         style={{
-          paddingLeft: scrolled ? '75px' : '85px',
-          paddingRight: scrolled ? '75px' : '85px',
+          paddingLeft: scrolled ? '60px' : '70px',
+          paddingRight: scrolled ? '60px' : '70px',
           paddingTop: scrolled ? '14px' : '18px',
           paddingBottom: scrolled ? '14px' : '18px'
         }}
