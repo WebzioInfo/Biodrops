@@ -118,17 +118,17 @@ export default function ProductShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
-            className="mt-24 md:mt-32"
+            className="mt-20 md:mt-24 w-full flex justify-center md:justify-start"
           >
             <a
               href="https://edrops.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center gap-3 px-10 py-4.5 bg-[#070D0E] border border-[#070D0E] hover:border-[#56C7D9] rounded-full text-[0.75rem] font-bold tracking-[0.22em] uppercase text-white overflow-hidden transition-all duration-500 shadow-md hover:scale-[1.03] active:scale-95"
+              className="group relative inline-flex items-center justify-center gap-4 px-16 py-6 bg-[#070D0E] border-2 border-[#070D0E] hover:border-[#56C7D9] rounded-full text-[0.85rem] font-bold tracking-[0.25em] uppercase text-white overflow-hidden transition-all duration-500 shadow-xl hover:scale-[1.04] active:scale-95 text-center w-full sm:w-auto min-w-[300px]"
             >
-              <div className="absolute inset-0 w-[200%] translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-out" />
+              <div className="absolute inset-0 w-[200%] translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-[#56C7D9]/20 to-transparent transition-transform duration-1000 ease-out" />
               <span className="relative z-10">Request Delivery</span>
-              <svg className="relative z-10 w-4 h-4 text-white/50 group-hover:text-[#56C7D9] group-hover:translate-x-1 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg className="relative z-10 w-4.5 h-4.5 text-white/50 group-hover:text-[#56C7D9] group-hover:translate-x-1.5 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </a>

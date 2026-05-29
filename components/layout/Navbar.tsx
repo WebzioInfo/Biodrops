@@ -21,10 +21,10 @@ export default function Navbar() {
       // Clear the timeout to debounce showing it again
       clearTimeout(timeoutId);
 
-      // Show the navbar after scrolling has stopped for 100ms
+      // Show the navbar after scrolling has stopped for 10ms (0.01s)
       timeoutId = setTimeout(() => {
         setVisible(true);
-      }, 100);
+      }, 10);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -42,11 +42,11 @@ export default function Navbar() {
         y: visible ? 0 : -100 
       }}
       transition={{ 
-        opacity: { duration: 0.15 },
-        y: { duration: 0.22, ease: "easeOut" }
+        opacity: { duration: 0.08 },
+        y: { duration: 0.12, ease: "easeOut" }
       }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex justify-center ${
-        scrolled ? "pt-6 px-4" : "pt-8 px-6"
+        scrolled ? "pt-8 px-4" : "pt-14 px-6"
       }`}
     >
       <div 

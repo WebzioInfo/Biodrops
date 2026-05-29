@@ -7,42 +7,10 @@ export default function Hero() {
     <section
       className="relative w-full h-[100svh] flex flex-col items-center justify-center bg-[#F4F6F8] overflow-hidden"
     >
-      {/* Pattern Background Image with Flat Opacity */}
-      <div 
-        className="absolute inset-0 pointer-events-none bg-center bg-cover opacity-[0.2]"
-        style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
-      />
-
       <motion.div 
         className="relative z-10 w-full max-w-7xl text-center flex flex-col items-center justify-center"
         style={{ paddingLeft: "max(1.5rem, 8vw)", paddingRight: "max(1.5rem, 8vw)" }}
       >
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-10">
-          <motion.a
-            href="https://biofixtechnology.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#070D0E]/10 bg-white/40 backdrop-blur-xl text-[0.65rem] tracking-[0.15em] uppercase font-semibold text-[#070D0E] hover:border-[#56C7D9]/50 transition-colors shadow-sm"
-          >
-            An initiative from <span className="text-[#56C7D9]">Biofix</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-          </motion.a>
-
-          <motion.a
-            href="#bqms"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#070D0E]/10 bg-white/40 backdrop-blur-xl text-[0.65rem] tracking-[0.15em] uppercase font-semibold text-[#070D0E] hover:border-[#56C7D9]/50 transition-colors shadow-sm"
-          >
-            Certified by <span className="text-[#56C7D9]">BQMS</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>
-          </motion.a>
-        </div>
-
         <div className="overflow-hidden mb-8">
           <motion.div
             initial={{ y: "100%" }}
@@ -69,16 +37,52 @@ export default function Hero() {
           </motion.h1>
         </div>
 
-        <div className="overflow-hidden mt-10 max-w-lg mx-auto">
+        <div className="overflow-hidden mt-10 max-w-xl mx-auto">
           <motion.p
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="text-[1rem] leading-[1.8] text-[#6B7C80]"
+            className="text-[clamp(1.05rem,2.2vw,1.35rem)] leading-[1.7] text-[#6B7C80] font-light text-center"
+            style={{ fontFamily: "'Satoshi', sans-serif" }}
           >
             Engineered for modern living. A masterpiece of hydration, 
             multi-stage purified and perfectly balanced.
           </motion.p>
+        </div>
+
+        {/* Relocated and Redesigned Biofix & BQMS Links */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 mt-12">
+          <motion.a
+            href="https://biofixtechnology.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+            className="group relative flex items-center gap-2 text-[0.7rem] tracking-[0.2em] uppercase font-bold text-[#070D0E]/60 hover:text-[#070D0E] transition-colors"
+          >
+            <span>An initiative from <span className="text-[#56C7D9]">Biofix</span></span>
+            <svg className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+            <span className="absolute bottom-[-6px] left-0 right-0 h-px bg-[#56C7D9]/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+          </motion.a>
+
+          <span className="hidden sm:inline w-1.5 h-1.5 rounded-full bg-[#070D0E]/15" />
+
+          <motion.a
+            href="#bqms"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
+            className="group relative flex items-center gap-2 text-[0.7rem] tracking-[0.2em] uppercase font-bold text-[#070D0E]/60 hover:text-[#070D0E] transition-colors"
+          >
+            <span>Certified by <span className="text-[#56C7D9]">BQMS</span></span>
+            <svg className="w-3.5 h-3.5 opacity-60 group-hover:translate-y-0.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+            <span className="absolute bottom-[-6px] left-0 right-0 h-px bg-[#56C7D9]/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+          </motion.a>
         </div>
 
         <motion.div

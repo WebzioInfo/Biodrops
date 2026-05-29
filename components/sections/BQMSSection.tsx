@@ -67,17 +67,17 @@ export default function BQMSSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10"
+            className="relative z-10 w-full flex justify-center md:justify-start"
           >
             <a
               href="/bqms-brochure.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#070D0E] border border-[#070D0E] hover:border-[#56C7D9] rounded-full text-[0.7rem] font-bold tracking-[0.2em] uppercase text-white overflow-hidden transition-all duration-500 shadow-md hover:scale-[1.03] active:scale-95"
+              className="group relative inline-flex items-center justify-center gap-4 px-14 py-5.5 bg-[#070D0E] border-2 border-[#070D0E] hover:border-[#56C7D9] rounded-full text-[0.8rem] font-bold tracking-[0.22em] uppercase text-white overflow-hidden transition-all duration-500 shadow-xl hover:scale-[1.04] active:scale-95 text-center w-full sm:w-auto min-w-[280px]"
             >
-              <div className="absolute inset-0 w-[200%] translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-out" />
+              <div className="absolute inset-0 w-[200%] translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-[#56C7D9]/20 to-transparent transition-transform duration-1000 ease-out" />
               <span className="relative z-10">View BQMS Brochure</span>
-              <svg className="relative z-10 w-4 h-4 text-white/50 group-hover:text-[#56C7D9] group-hover:translate-x-1 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg className="relative z-10 w-4.5 h-4.5 text-white/50 group-hover:text-[#56C7D9] group-hover:translate-y-0.5 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </a>
