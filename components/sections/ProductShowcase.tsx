@@ -127,20 +127,21 @@ export default function ProductShowcase() {
               href="https://edrops.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="relative group inline-block rounded-full focus:outline-none focus:ring-0 active:scale-[0.98] transition-transform duration-100"
+              className="group flex items-center justify-center gap-6 px-[56px] py-[38px] bg-[#cfef00] hover:bg-[#c4e201] text-black text-[16px] font-bold uppercase tracking-[0.2em] rounded-full transition-all duration-200 transform active:scale-95 shadow-[0_8px_25px_rgba(207,239,0,0.3)] hover:shadow-[0_12px_35px_rgba(207,239,0,0.5)] min-w-[320px] sm:min-w-[340px] text-center"
             >
-              {/* 3D button depth edge */}
-              <span className="absolute inset-0 rounded-full bg-[#007BA0] translate-y-[6px]" />
-              
-              {/* Main button face */}
-              <span className="relative block px-[72px] py-[24px] bg-gradient-to-r from-[#56C7D9] via-[#00B4D8] to-[#00A8CC] text-[#070D0E] text-[0.95rem] font-black tracking-[0.25em] uppercase rounded-full transform -translate-y-[6px] group-hover:-translate-y-[8px] active:-translate-y-[2px] transition-all duration-200 ease-out shadow-[0_8px_25px_rgba(0,180,216,0.25)] group-hover:shadow-[0_15px_35px_rgba(0,180,216,0.45)] text-center min-w-[320px] sm:min-w-[340px]">
-                <span className="flex items-center justify-center gap-4">
-                  Request Delivery
-                  <svg className="w-5.5 h-5.5 text-[#070D0E] group-hover:translate-x-1.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </span>
-              </span>
+              <span>Request Delivery</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 74 74"
+                className="w-[34px] h-[34px] transition-transform duration-300 ease-in-out group-hover:translate-x-[5px]"
+              >
+                <circle strokeWidth="3" stroke="black" r="35.5" cy="37" cx="37"></circle>
+                <path
+                  fill="black"
+                  d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z"
+                ></path>
+              </svg>
             </a>
           </motion.div>
         </div>

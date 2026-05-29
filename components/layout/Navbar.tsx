@@ -89,7 +89,7 @@ export default function Navbar() {
 
         <a
           href="#contact"
-          className="group relative inline-flex items-center justify-center px-10 py-3.5 bg-white rounded-full text-[0.7rem] font-bold tracking-[0.2em] uppercase text-[#070D0E] hover:bg-[#56C7D9] hover:text-[#070D0E] transition-all duration-300 hover:scale-105 shadow-[0_4px_12px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_20px_rgba(86,199,217,0.3)] overflow-hidden"
+          className="group relative inline-flex items-center justify-center px-8 py-3 bg-[#cfef00] hover:bg-[#c4e201] rounded-full text-[0.75rem] font-bold tracking-[0.2em] uppercase text-black transition-all duration-200 hover:scale-105 active:scale-95 shadow-[0_4px_12px_rgba(207,239,0,0.25)] hover:shadow-[0_8px_20px_rgba(207,239,0,0.45)] overflow-hidden"
         >
           <span className="relative z-10">Contact</span>
         </a>

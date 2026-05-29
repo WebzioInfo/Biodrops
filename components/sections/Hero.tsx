@@ -133,54 +133,20 @@ export default function Hero() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-8"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-6"
       >
-        {/* WhatsApp */}
-        <a 
-          href="https://wa.me/918884577773" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="transition-all hover:scale-125 duration-300 flex items-center justify-center"
-          title="WhatsApp"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" className="w-5.5 h-5.5 drop-shadow-[0_2px_8px_rgba(37,211,102,0.45)]">
-            <path fill="#25D366" d="M12.003 21c-1.63 0-3.21-.42-4.62-1.21L3 21l1.24-4.22c-.87-1.51-1.33-3.23-1.33-4.99C2.91 6.18 7.09 2 12.23 2c2.49 0 4.83.97 6.59 2.73s2.73 4.1 2.73 6.59c-.01 5.62-4.19 9.8-9.33 9.8z"/>
-            <path fill="#FFF" d="M16.92 14.88c-.27-.14-1.59-.78-1.84-.87-.25-.09-.43-.14-.61.14-.18.27-.69.87-.85 1.05-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.17-1.34-.8-.71-1.34-1.59-1.5-1.86-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.48-.84-2.03-.22-.53-.44-.46-.61-.47h-.52c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29s.98 2.65 1.12 2.83c.14.18 1.92 2.93 4.66 4.11.65.28 1.16.45 1.56.58.69.22 1.31.19 1.8.12.55-.08 1.69-.69 1.93-1.36.24-.67.24-1.24.16-1.36-.07-.12-.26-.19-.53-.33z"/>
-          </svg>
-        </a>
-
-        {/* Telephone Call */}
-        <a 
-          href="tel:+918884577773" 
-          className="transition-all hover:scale-125 duration-300 flex items-center justify-center"
-          title="Call Us"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" className="w-5.5 h-5.5 drop-shadow-[0_2px_8px_rgba(86,199,217,0.45)]">
-            <circle cx="12" cy="12" r="10" fill="#56C7D9" />
-            <path fill="none" stroke="#FFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" d="M17 13.46v1.82a1.21 1.21 0 0 1-1.32 1.21 12 12 0 0 1-5.23-1.86 11.83 11.83 0 0 1-3.64-3.64A12 12 0 0 1 4.95 5.76 1.21 1.21 0 0 1 6.16 4.54h1.82a1.21 1.21 0 0 1 1.21 1.04c.24 1.7.67 3.35 1.27 4.91a1.21 1.21 0 0 1-.27 1.27L9.12 13a9.71 9.71 0 0 0 3.64 3.64l1.24-1.24a1.21 1.21 0 0 1 1.27-.27c1.56.6 3.21 1.03 4.91 1.27A1.21 1.21 0 0 1 17 13.46z"/>
-          </svg>
-        </a>
-
         {/* Instagram */}
         <a 
           href="https://www.instagram.com/biodrops.india?igsh=MW9ybTRheTh0N2ZwcA==" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="transition-all hover:scale-125 duration-300 flex items-center justify-center"
+          className="w-11 h-11 rounded-full border border-[#070D0E]/15 text-[#070D0E]/60 hover:border-[#00A8CC] hover:text-[#00A8CC] hover:bg-[#00A8CC]/5 hover:scale-110 transition-all duration-300 flex items-center justify-center"
           title="Instagram"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" className="w-5.5 h-5.5 drop-shadow-[0_2px_8px_rgba(225,48,108,0.45)]">
-            <defs>
-              <linearGradient id="ig-grad" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#C13584" />
-                <stop offset="50%" stopColor="#E1306C" />
-                <stop offset="100%" stopColor="#FD1D1D" />
-              </linearGradient>
-            </defs>
-            <rect width="20" height="20" x="2" y="2" rx="5" fill="url(#ig-grad)" />
-            <rect width="12" height="12" x="6" y="6" rx="3" fill="none" stroke="#FFF" strokeWidth="1.8" />
-            <circle cx="12" cy="12" r="3" fill="none" stroke="#FFF" strokeWidth="1.8" />
-            <circle cx="16.5" cy="7.5" r="1" fill="#FFF" />
+          <svg className="w-5 h-5 stroke-current fill-none" strokeWidth="2" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
           </svg>
         </a>
 
@@ -189,12 +155,35 @@ export default function Hero() {
           href="https://facebook.com" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="transition-all hover:scale-125 duration-300 flex items-center justify-center"
+          className="w-11 h-11 rounded-full border border-[#070D0E]/15 text-[#070D0E]/60 hover:border-[#00A8CC] hover:text-[#00A8CC] hover:bg-[#00A8CC]/5 hover:scale-110 transition-all duration-300 flex items-center justify-center"
           title="Facebook"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" className="w-5.5 h-5.5 drop-shadow-[0_2px_8px_rgba(24,119,242,0.45)]">
-            <circle cx="12" cy="12" r="10" fill="#1877F2"/>
-            <path fill="#FFF" d="M14 12h-2v7H9.5v-7h-1.5V9.5h1.5v-2c0-1.8 1.1-2.8 2.8-2.8.8 0 1.5.1 1.7.1v2h-1.2c-.9 0-1.1.4-1.1 1v1.7h2.2l-.3 2.5z"/>
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M9 8H7v3h2v9h3v-9h3l.5-3H12V6c0-.88.45-1 1-1h2V2h-3c-3.1 0-4 1.88-4 4v2z"/>
+          </svg>
+        </a>
+
+        {/* Phone Call */}
+        <a 
+          href="tel:+918884577773" 
+          className="w-11 h-11 rounded-full border border-[#070D0E]/15 text-[#070D0E]/60 hover:border-[#00A8CC] hover:text-[#00A8CC] hover:bg-[#00A8CC]/5 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+          title="Call Us"
+        >
+          <svg className="w-5 h-5 stroke-current fill-none" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+        </a>
+
+        {/* WhatsApp */}
+        <a 
+          href="https://wa.me/918884577773" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="w-11 h-11 rounded-full border border-[#070D0E]/15 text-[#070D0E]/60 hover:border-[#00A8CC] hover:text-[#00A8CC] hover:bg-[#00A8CC]/5 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+          title="WhatsApp"
+        >
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.864-9.858.002-2.634-1.02-5.11-2.881-6.974C16.588 1.83 14.116.804 11.487.804 6.052.804 1.63 5.223 1.627 10.66c-.001 1.7.45 3.355 1.305 4.8l-.294 1.074-.954 3.486 3.57-.936.803-.43zm12.56-6.195c-.302-.152-1.785-.881-2.062-.982-.278-.101-.48-.152-.68.152-.2.304-.778.982-.953 1.185-.175.203-.35.228-.652.076-.301-.152-1.272-.469-2.422-1.494-.895-.798-1.5-1.784-1.675-2.087-.175-.304-.019-.468.133-.619.136-.136.302-.355.454-.53.152-.178.202-.304.303-.507.101-.203.05-.38-.026-.531-.075-.152-.68-1.638-.931-2.247-.244-.587-.492-.507-.68-.517-.174-.009-.374-.011-.573-.011-.198 0-.521.075-.795.374-.274.297-1.047 1.02-1.047 2.486s1.07 2.88 1.219 3.082c.15.203 2.105 3.202 5.1 4.487.712.306 1.27.49 1.7.625.715.227 1.365.195 1.88.118.573-.085 1.785-.73 2.038-1.436.252-.706.252-1.314.176-1.436-.076-.123-.277-.198-.579-.349z"/>
           </svg>
         </a>
       </motion.div>

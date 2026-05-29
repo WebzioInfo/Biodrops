@@ -73,11 +73,17 @@ export default function BQMSSection() {
               href="/bqms-brochure.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center gap-4 px-14 py-5.5 bg-[#070D0E] border-2 border-[#070D0E] hover:border-[#56C7D9] rounded-full text-[0.8rem] font-bold tracking-[0.22em] uppercase text-white overflow-hidden transition-all duration-500 shadow-xl hover:scale-[1.04] active:scale-95 text-center w-full sm:w-auto min-w-[280px]"
+              className="group flex items-center justify-center gap-6 px-[56px] py-[38px] bg-[#cfef00] hover:bg-[#c4e201] text-black text-[16px] font-bold uppercase tracking-[0.2em] rounded-full transition-all duration-200 transform active:scale-95 shadow-[0_8px_25px_rgba(207,239,0,0.3)] hover:shadow-[0_12px_35px_rgba(207,239,0,0.5)] min-w-[320px] sm:min-w-[340px] text-center"
             >
-              <div className="absolute inset-0 w-[200%] translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-[#56C7D9]/20 to-transparent transition-transform duration-1000 ease-out" />
-              <span className="relative z-10">View BQMS Brochure</span>
-              <svg className="relative z-10 w-4.5 h-4.5 text-white/50 group-hover:text-[#56C7D9] group-hover:translate-y-0.5 transition-all duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <span>View BQMS Brochure</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor" 
+                strokeWidth={2.5}
+                className="w-[30px] h-[30px] text-black transition-transform duration-300 ease-in-out group-hover:translate-y-[3px]"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </a>
