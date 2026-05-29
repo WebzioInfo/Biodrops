@@ -42,8 +42,8 @@ export default function Navbar() {
         y: visible ? 0 : -100 
       }}
       transition={{ 
-        opacity: { duration: 0.08 },
-        y: { duration: 0.12, ease: "easeOut" }
+        opacity: { duration: 1.0, ease: "easeInOut" },
+        y: { duration: 1.0, ease: "easeOut" }
       }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex justify-center ${
         scrolled ? "pt-20 px-4" : "pt-32 px-6"
@@ -52,8 +52,8 @@ export default function Navbar() {
       <div 
         className={`flex items-center justify-center gap-10 md:gap-20 transition-all duration-500 shadow-[0_12px_40px_rgba(0,0,0,0.15)] rounded-full ${
           scrolled 
-            ? "bg-[#070D0E] border border-white/10 px-14 py-4.5" 
-            : "bg-[#070D0E] border border-white/5 px-16 py-5.5"
+            ? "bg-[#070D0E] border border-white/10 px-24 py-4.5" 
+            : "bg-[#070D0E] border border-white/5 px-28 py-5.5"
         }`}
       >
         <Link href="/" className="flex items-center gap-3">
