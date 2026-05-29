@@ -7,6 +7,19 @@ export default function Hero() {
     <section
       className="relative w-full h-[100svh] flex flex-col items-center justify-center bg-[#F4F6F8] overflow-hidden"
     >
+      {/* Video Background */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-40"
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
+      </div>
+
       <motion.div 
         className="relative z-10 w-full max-w-7xl text-center flex flex-col items-center justify-center"
         style={{ paddingLeft: "max(1.5rem, 8vw)", paddingRight: "max(1.5rem, 8vw)" }}
