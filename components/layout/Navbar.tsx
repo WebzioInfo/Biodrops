@@ -46,14 +46,14 @@ export default function Navbar() {
         y: { duration: 1.0, ease: "easeOut" }
       }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex justify-center ${
-        scrolled ? "pt-20 px-4" : "pt-32 px-6"
+        scrolled ? "pt-[24px] px-4" : "pt-[30px] px-6"
       }`}
     >
       <div 
         className={`flex items-center justify-center gap-8 md:gap-14 transition-all duration-500 shadow-[0_12px_40px_rgba(0,0,0,0.25)] rounded-full ${
           scrolled 
-            ? "bg-[#070D0E]/85 backdrop-blur-xl border border-white/10 px-10 py-3.5" 
-            : "bg-[#070D0E]/70 backdrop-blur-xl border border-white/5 px-12 py-4.5"
+            ? "bg-[#070D0E]/85 backdrop-blur-xl border border-white/10 pl-[75px] pr-[75px] py-3.5" 
+            : "bg-[#070D0E]/70 backdrop-blur-xl border border-white/5 pl-[85px] pr-[85px] py-4.5"
         }`}
       >
         <Link href="/" className="flex items-center gap-3">
