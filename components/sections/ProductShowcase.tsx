@@ -20,12 +20,12 @@ export default function ProductShowcase() {
       <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 md:via-white/50 to-transparent pointer-events-none" />
 
       <div 
-        className="relative z-10 w-full max-w-7xl flex flex-col items-start justify-center"
+        className="relative z-10 w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center"
         style={{ paddingLeft: "max(1.5rem, 8vw)", paddingRight: "max(1.5rem, 8vw)" }}
       >
         
-        {/* Left Side Content Container */}
-        <div className="w-full max-w-xl flex flex-col items-start text-left">
+        {/* Left Side Content Container (Column span 7) */}
+        <div className="lg:col-span-7 w-full flex flex-col items-start text-left">
           
           {/* Section Header */}
           <div className="flex items-center gap-4 text-[0.65rem] tracking-[0.4em] uppercase text-[#070D0E]/50 font-medium mb-12">
@@ -49,7 +49,7 @@ export default function ProductShowcase() {
           <div className="w-full h-px bg-[#070D0E]/10 mb-12" />
 
           {/* Asymmetric Minimalist Floating Blocks */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full mt-8">
             {[
               { 
                 num: "01", 
@@ -112,19 +112,22 @@ export default function ProductShowcase() {
               </motion.div>
             ))}
           </div>
+        </div>
 
+        {/* Right Side: Button positioned at the bottom of the product image area */}
+        <div className="lg:col-span-5 flex flex-col items-center justify-end w-full min-h-[300px] lg:self-stretch z-20 pb-6 lg:pb-12">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
-            className="mt-20 md:mt-24 w-full flex justify-center md:justify-start"
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full flex justify-center"
           >
             <a
               href="https://edrops.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center gap-4 px-16 py-6 bg-[#070D0E] border-2 border-[#070D0E] hover:border-[#56C7D9] rounded-full text-[0.85rem] font-bold tracking-[0.25em] uppercase text-white overflow-hidden transition-all duration-500 shadow-xl hover:scale-[1.04] active:scale-95 text-center w-full sm:w-auto min-w-[300px]"
+              className="group relative inline-flex items-center justify-center gap-4 px-14 py-6 bg-[#070D0E] border-2 border-[#070D0E] hover:border-[#56C7D9] rounded-full text-[0.85rem] font-bold tracking-[0.25em] uppercase text-white overflow-hidden transition-all duration-500 shadow-xl hover:scale-[1.04] active:scale-95 text-center min-w-[290px] w-full sm:w-auto"
             >
               <div className="absolute inset-0 w-[200%] translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-[#56C7D9]/20 to-transparent transition-transform duration-1000 ease-out" />
               <span className="relative z-10">Request Delivery</span>
@@ -134,6 +137,7 @@ export default function ProductShowcase() {
             </a>
           </motion.div>
         </div>
+
       </div>
     </section>
   );

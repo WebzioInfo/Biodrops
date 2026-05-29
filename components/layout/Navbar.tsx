@@ -46,7 +46,7 @@ export default function Navbar() {
         y: { duration: 0.12, ease: "easeOut" }
       }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex justify-center ${
-        scrolled ? "pt-8 px-4" : "pt-14 px-6"
+        scrolled ? "pt-20 px-4" : "pt-32 px-6"
       }`}
     >
       <div 
