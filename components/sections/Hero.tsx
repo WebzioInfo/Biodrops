@@ -80,9 +80,9 @@ export default function Hero() {
               <Image 
                 src="/images/biofix.png" 
                 alt="Biofix Logo" 
-                width={90} 
-                height={26}
-                className="h-5.5 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                width={120} 
+                height={36}
+                className="h-8 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300"
               />
             </span>
             <svg className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
