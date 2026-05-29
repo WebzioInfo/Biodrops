@@ -45,13 +45,13 @@ export default function Navbar() {
         opacity: { duration: 1.0, ease: "easeInOut" },
         y: { duration: 1.0, ease: "easeOut" }
       }}
-      style={{ paddingTop: scrolled ? '24px' : '30px' }}
+      style={{ paddingTop: scrolled ? '12px' : '16px' }}
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex justify-center px-6"
     >
       <div 
         style={{
-          paddingLeft: scrolled ? '60px' : '70px',
-          paddingRight: scrolled ? '60px' : '70px',
+          paddingLeft: scrolled ? '35px' : '45px',
+          paddingRight: scrolled ? '35px' : '45px',
           paddingTop: scrolled ? '14px' : '18px',
           paddingBottom: scrolled ? '14px' : '18px'
         }}
@@ -89,7 +89,7 @@ export default function Navbar() {
 
         <a
           href="#contact"
-          className="group relative inline-flex items-center justify-center px-8 py-3 bg-white rounded-full text-[0.7rem] font-bold tracking-[0.2em] uppercase text-[#070D0E] hover:bg-[#56C7D9] hover:text-[#070D0E] transition-all duration-300 hover:scale-105 shadow-[0_4px_12px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_20px_rgba(86,199,217,0.3)] overflow-hidden"
+          className="group relative inline-flex items-center justify-center px-10 py-3.5 bg-white rounded-full text-[0.7rem] font-bold tracking-[0.2em] uppercase text-[#070D0E] hover:bg-[#56C7D9] hover:text-[#070D0E] transition-all duration-300 hover:scale-105 shadow-[0_4px_12px_rgba(255,255,255,0.08)] hover:shadow-[0_4px_20px_rgba(86,199,217,0.3)] overflow-hidden"
         >
           <span className="relative z-10">Contact</span>
         </a>

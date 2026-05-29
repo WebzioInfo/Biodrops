@@ -15,10 +15,12 @@ export default function Hero() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-40 scale-108 origin-center"
         >
           <source src="/hero.mp4" type="video/mp4" />
         </video>
+        {/* Vignette Blend Overlay to obscure bottom corner elements */}
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#F4F6F8] via-[#F4F6F8]/50 to-transparent z-[1]" />
       </div>
 
       <motion.div 
@@ -47,7 +49,7 @@ export default function Hero() {
             style={{ fontFamily: "'DM Serif Display', Georgia, serif" }}
           >
             Quality Can Be<br/>
-            <span className="italic text-[#56C7D9] font-normal">Canned.</span>
+            <span className="italic text-[#00A8CC] font-normal">Canned.</span>
           </motion.h1>
         </div>
 
