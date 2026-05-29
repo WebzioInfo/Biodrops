@@ -50,10 +50,10 @@ export default function Navbar() {
       }`}
     >
       <div 
-        className={`flex items-center justify-center gap-10 md:gap-20 transition-all duration-500 backdrop-blur-2xl shadow-[0_8px_32px_rgba(86,199,217,0.04)] rounded-full ${
+        className={`flex items-center justify-center gap-10 md:gap-20 transition-all duration-500 shadow-[0_12px_40px_rgba(0,0,0,0.15)] rounded-full ${
           scrolled 
-            ? "bg-[#56C7D9]/10 border border-[#56C7D9]/20 px-14 py-4.5" 
-            : "bg-[#56C7D9]/5 border border-[#56C7D9]/10 px-16 py-5.5"
+            ? "bg-[#070D0E] border border-white/10 px-14 py-4.5" 
+            : "bg-[#070D0E] border border-white/5 px-16 py-5.5"
         }`}
       >
         <Link href="/" className="flex items-center gap-3">
@@ -68,22 +68,22 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-12">
-          <Link href="#process" className="text-[0.8rem] font-bold tracking-[0.18em] uppercase text-[#6B7C80] hover:text-[#56C7D9] transition-colors">
+          <Link href="#process" className="text-[0.8rem] font-bold tracking-[0.18em] uppercase text-white/60 hover:text-[#56C7D9] transition-colors">
             Process
           </Link>
-          <Link href="#why" className="text-[0.8rem] font-bold tracking-[0.18em] uppercase text-[#6B7C80] hover:text-[#56C7D9] transition-colors">
+          <Link href="#why" className="text-[0.8rem] font-bold tracking-[0.18em] uppercase text-white/60 hover:text-[#56C7D9] transition-colors">
             Why Us
           </Link>
-          <Link href="#bqms" className="text-[0.8rem] font-bold tracking-[0.18em] uppercase text-[#6B7C80] hover:text-[#56C7D9] transition-colors">
+          <Link href="#bqms" className="text-[0.8rem] font-bold tracking-[0.18em] uppercase text-white/60 hover:text-[#56C7D9] transition-colors">
             BQMS
           </Link>
         </nav>
 
         <a
           href="#contact"
-          className="group relative inline-flex items-center justify-center px-8 py-3 bg-[#070D0E] border border-[#070D0E] hover:border-[#56C7D9] rounded-full text-[0.7rem] font-bold tracking-[0.2em] uppercase text-white overflow-hidden transition-all duration-500 shadow-sm"
+          className="group relative inline-flex items-center justify-center px-8 py-3 bg-white border border-white hover:border-[#56C7D9] rounded-full text-[0.7rem] font-bold tracking-[0.2em] uppercase text-[#070D0E] hover:text-white overflow-hidden transition-all duration-500 shadow-sm"
         >
-          <div className="absolute inset-0 w-[200%] translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-out" />
+          <div className="absolute inset-0 w-[200%] translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-[#56C7D9]/20 to-transparent transition-transform duration-1000 ease-out" />
           <span className="relative z-10">Contact</span>
         </a>
       </div>
