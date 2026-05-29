@@ -127,13 +127,20 @@ export default function ProductShowcase() {
               href="https://edrops.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center gap-4 px-16 py-6 bg-gradient-to-r from-[#56C7D9] via-[#00B4D8] to-[#00A8CC] rounded-full text-[0.85rem] font-black tracking-[0.25em] uppercase text-[#070D0E] overflow-hidden transition-all duration-500 shadow-[0_10px_35px_rgba(0,180,216,0.35)] hover:shadow-[0_15px_45px_rgba(0,180,216,0.55)] hover:scale-[1.06] active:scale-95 text-center min-w-[310px] w-full sm:w-auto"
+              className="relative group inline-block rounded-full focus:outline-none focus:ring-0 active:scale-[0.98] transition-transform duration-100"
             >
-              <div className="absolute inset-0 w-[200%] translate-x-[-100%] group-hover:translate-x-[100%] bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-1000 ease-out" />
-              <span className="relative z-10">Request Delivery</span>
-              <svg className="relative z-10 w-5 h-5 text-[#070D0E] group-hover:translate-x-2 transition-transform duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
+              {/* 3D button depth edge */}
+              <span className="absolute inset-0 rounded-full bg-[#007BA0] translate-y-[6px]" />
+              
+              {/* Main button face */}
+              <span className="relative block px-[72px] py-[24px] bg-gradient-to-r from-[#56C7D9] via-[#00B4D8] to-[#00A8CC] text-[#070D0E] text-[0.95rem] font-black tracking-[0.25em] uppercase rounded-full transform -translate-y-[6px] group-hover:-translate-y-[8px] active:-translate-y-[2px] transition-all duration-200 ease-out shadow-[0_8px_25px_rgba(0,180,216,0.25)] group-hover:shadow-[0_15px_35px_rgba(0,180,216,0.45)] text-center min-w-[320px] sm:min-w-[340px]">
+                <span className="flex items-center justify-center gap-4">
+                  Request Delivery
+                  <svg className="w-5.5 h-5.5 text-[#070D0E] group-hover:translate-x-1.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </span>
+              </span>
             </a>
           </motion.div>
         </div>
