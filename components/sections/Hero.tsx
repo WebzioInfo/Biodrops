@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section
-      className="relative w-full h-[100svh] flex flex-col items-center justify-center bg-[#F4F6F8] overflow-hidden"
+      className="relative py-10 w-full h-[100svh] flex flex-col items-center justify-center bg-[#F4F6F8] overflow-hidden"
     >
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">

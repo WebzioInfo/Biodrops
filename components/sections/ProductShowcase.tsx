@@ -8,9 +8,9 @@ export default function ProductShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section 
-      ref={containerRef} 
-      id="product" 
+    <section
+      ref={containerRef}
+      id="product"
       className="relative w-full min-h-[100svh] py-24 md:py-32 flex justify-center items-center bg-cover bg-no-repeat"
       style={{
         backgroundImage: "url('/images/premium-jar-studio.jpg')",
@@ -20,13 +20,13 @@ export default function ProductShowcase() {
       {/* Soft gradient overlay to ensure text readability over the background image */}
       <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 md:via-white/50 to-transparent pointer-events-none" />
 
-      <div 
+      <div
         className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 items-center"
       >
-        
+
         {/* Left Side Content Container (Column span 7) */}
         <div className="lg:col-span-7 w-full flex flex-col items-start text-left">
-          
+
           {/* Section Header */}
           <div className="flex items-center gap-4 text-[0.65rem] tracking-[0.4em] uppercase text-[#070D0E]/50 font-medium mb-12">
             <span className="w-8 h-px bg-[#070D0E]/30" />
@@ -41,7 +41,7 @@ export default function ProductShowcase() {
             className="text-[clamp(3rem,6vw,5.5rem)] leading-[0.9] text-[#070D0E] tracking-tight mb-12"
             style={{ fontFamily: "'Satoshi', sans-serif" }}
           >
-            Pure.<br/>
+            Pure.<br />
             <span className="text-[#56C7D9] italic font-medium">Uncompromised.</span>
           </motion.h2>
 
@@ -51,32 +51,32 @@ export default function ProductShowcase() {
           {/* Asymmetric Minimalist Floating Blocks */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 w-full mt-8">
             {[
-              { 
-                num: "01", 
-                title: "14-Stage Process", 
+              {
+                num: "01",
+                title: "14-Stage Process",
                 desc: "Rigorous filtration and sterilization stages to guarantee clinical-grade purity.",
                 yOffset: "md:translate-y-0"
               },
-              { 
-                num: "02", 
-                title: "edrops Delivery", 
+              {
+                num: "02",
+                title: "edrops Delivery",
                 desc: "Fresh batches dispatched and tracked exclusively through our custom edrops network.",
                 yOffset: "md:translate-y-12"
               },
-              { 
-                num: "03", 
-                title: "Mineral Infused", 
+              {
+                num: "03",
+                title: "Mineral Infused",
                 desc: "Perfect balance of essential minerals (pH 7.4) tailored for healthy daily hydration.",
                 yOffset: "md:-translate-y-4"
               },
-              { 
-                num: "04", 
-                title: "Sterile Lock", 
+              {
+                num: "04",
+                title: "Sterile Lock",
                 desc: "Hygienically sealed under zero-contact environments with a solid threaded safety cap.",
                 yOffset: "md:translate-y-8"
               },
             ].map((feature, index) => (
-              <motion.div 
+              <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -97,14 +97,14 @@ export default function ProductShowcase() {
                 <div className="relative z-10 flex flex-col gap-4 mt-6">
                   {/* Accent Line indicator */}
                   <span className="w-8 h-[2px] bg-[#56C7D9] transition-all duration-500 group-hover:w-16" />
-                  
-                  <h4 
+
+                  <h4
                     className="text-base md:text-lg font-medium tracking-tight text-[#070D0E] group-hover:text-[#56C7D9] transition-colors duration-500 mt-2"
                     style={{ fontFamily: "'Satoshi', sans-serif" }}
                   >
                     {feature.title}
                   </h4>
-                  
+
                   <p className="text-sm md:text-base font-light text-[#070D0E]/60 leading-relaxed max-w-[300px]">
                     {feature.desc}
                   </p>
@@ -116,27 +116,8 @@ export default function ProductShowcase() {
 
         {/* Right Side: Button positioned at the bottom of the product image area */}
         <div className="lg:col-span-5 flex flex-col items-center justify-end w-full min-h-[400px] lg:self-stretch z-20 pb-6 lg:pb-12">
-          
-          {/* Packaging Sleeve Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-[240px] mb-8 relative rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/40 group"
-          >
-            <div className="aspect-[3/4] relative">
-              <Image 
-                src="/Biodrops_sleeve.jpeg" 
-                alt="Biodrops 20L Jar Sleeve Design"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#070D0E]/80 to-transparent p-4 text-center pt-12">
-                <span className="text-white text-[0.65rem] tracking-[0.2em] uppercase font-semibold block transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">Signature Sleeve</span>
-              </div>
-            </div>
-          </motion.div>
+
+
 
           <motion.div
             initial={{ opacity: 0, y: 25 }}
