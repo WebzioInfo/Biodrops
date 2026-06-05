@@ -65,10 +65,9 @@ export default function WhyBiodrops() {
         </div>
 
         <div 
-          className="w-full max-w-5xl text-center flex flex-col items-center justify-center"
-          style={{ paddingLeft: "max(1.5rem, 8vw)", paddingRight: "max(1.5rem, 8vw)" }}
+          className="w-full max-w-5xl mx-auto px-4 md:px-6 lg:px-8 text-center flex flex-col items-center justify-center"
         >
-          <div className="flex flex-col gap-3 md:gap-10 items-center justify-center w-full">
+          <div className="flex flex-col space-y-4 md:space-y-6 items-center justify-center w-full">
             {linesWithGlobalIndices.map((lineWords, lineIdx) => (
               <p 
                 key={lineIdx}

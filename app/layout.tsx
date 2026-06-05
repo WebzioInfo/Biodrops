@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Archivo } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import ScrollProgress from "@/components/effects/ScrollProgress";
@@ -8,6 +8,12 @@ import Navbar from "@/components/layout/Navbar";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const archivo = Archivo({
+  subsets: ["latin"],
+  variable: "--font-archivo",
   display: "swap",
 });
 
@@ -62,8 +68,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
-      <body style={{ backgroundColor: "var(--bg-primary)" }}>
+    <html lang="en" className={`${inter.variable} ${archivo.variable}`} suppressHydrationWarning>
+      <body>
         <SmoothScrollProvider>
           <ScrollProgress />
           <Navbar />

@@ -13,17 +13,13 @@
   --text-dark: #070D0E;
   --text-muted: #6B7C80;
   --accent: #56C7D9;
-  
+
   --font-display: "Satoshi", sans-serif;
   --font-body: "Inter", sans-serif;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+.font-archivo {
+  font-family: var(--font-archivo), sans-serif;
 }
 
 html {
@@ -41,33 +37,32 @@ body {
 }
 
 ::selection {
-  background: var(--text-dark);
-  color: var(--bg-primary);
+  background: #facc15;
+  /* Vibrant BQMS Yellow */
+  color: #051c14;
+  /* Dark Teal/Black */
 }
 
 ::-webkit-scrollbar {
-  width: 0px; /* Hide scrollbar for absolute modern aesthetic */
+  width: 0px;
+  /* Hide scrollbar for absolute modern aesthetic */
 }
 
 /* ================================================================
    Typography
    ================================================================ */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  font-weight: 300;
-  color: var(--text-dark);
-}
+
 
 /* Base input overrides */
-input, textarea {
+input,
+textarea {
   font-family: var(--font-body);
   background: transparent;
   color: var(--text-dark);
 }
 
-input::placeholder, textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: rgba(107, 124, 128, 0.4);
 }
 

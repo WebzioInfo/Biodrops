@@ -20,8 +20,7 @@ export default function ProductShowcase() {
       <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 md:via-white/50 to-transparent pointer-events-none" />
 
       <div 
-        className="relative z-10 w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center"
-        style={{ paddingLeft: "max(1.5rem, 8vw)", paddingRight: "max(1.5rem, 8vw)" }}
+        className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 items-center"
       >
         
         {/* Left Side Content Container (Column span 7) */}
@@ -49,7 +48,7 @@ export default function ProductShowcase() {
           <div className="w-full h-px bg-[#070D0E]/10 mb-12" />
 
           {/* Asymmetric Minimalist Floating Blocks */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 w-full mt-8">
             {[
               { 
                 num: "01", 
@@ -83,7 +82,7 @@ export default function ProductShowcase() {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 1, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className={`relative overflow-hidden bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-xl rounded-3xl p-8 md:p-10 flex flex-col gap-6 shadow-[0_10px_30px_rgba(0,0,0,0.01)] hover:shadow-[0_20px_50px_rgba(86,199,217,0.08)] transition-all duration-500 group ${feature.yOffset}`}
+                className={`relative overflow-hidden bg-gradient-to-br from-white/80 to-white/20 backdrop-blur-xl rounded-xl p-4 md:p-6 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow duration-500 group ${feature.yOffset}`}
               >
                 {/* Glow Backdrop Gradient behind card content */}
                 <div className="absolute -inset-40 bg-[radial-gradient(circle_at_center,rgba(86,199,217,0.08)_0%,transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
@@ -99,7 +98,7 @@ export default function ProductShowcase() {
                   <span className="w-8 h-[2px] bg-[#56C7D9] transition-all duration-500 group-hover:w-16" />
                   
                   <h4 
-                    className="text-2xl md:text-3xl font-medium tracking-tight text-[#070D0E] group-hover:text-[#56C7D9] transition-colors duration-500 mt-2"
+                    className="text-base md:text-lg font-medium tracking-tight text-[#070D0E] group-hover:text-[#56C7D9] transition-colors duration-500 mt-2"
                     style={{ fontFamily: "'Satoshi', sans-serif" }}
                   >
                     {feature.title}

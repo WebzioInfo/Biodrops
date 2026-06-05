@@ -80,7 +80,7 @@ function ProcessCard({ step, index, scrollYProgress, totalSteps }: ProcessCardPr
       {/* Removed the background container to make it completely seamless */}
       <div className="absolute inset-0 z-0" />
       
-      <div className="relative z-10 flex flex-col items-center justify-center h-full py-6 md:py-20 px-4 md:px-16">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full py-6 md:py-8 px-4 md:px-6 lg:px-8">
         <div className="text-[#56C7D9] text-[0.65rem] md:text-sm font-semibold tracking-[0.3em] mb-2 md:mb-6 uppercase flex items-center gap-4">
           <span className="w-8 h-px bg-[#56C7D9]/50" />
           Stage {step.num}

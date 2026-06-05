@@ -13,8 +13,7 @@ export default function BQMSSection() {
       </div>
 
       <div 
-        className="relative z-10 w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-center"
-        style={{ paddingLeft: "max(1.5rem, 8vw)", paddingRight: "max(1.5rem, 8vw)" }}
+        className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center"
       >
         
         {/* Left Side: Text Content */}

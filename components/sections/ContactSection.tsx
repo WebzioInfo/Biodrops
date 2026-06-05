@@ -154,7 +154,7 @@ export default function ContactSection() {
         .cf-field {
           position: relative;
           padding-top: 20px;
-          margin-bottom: 32px;
+          margin-bottom: 16px;
           width: 100%;
           text-align: center;
         }
