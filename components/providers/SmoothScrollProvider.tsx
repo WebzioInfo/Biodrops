@@ -14,7 +14,7 @@ export default function SmoothScrollProvider({
 }) {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
@@ -22,16 +22,18 @@ export default function SmoothScrollProvider({
     // Sync Lenis with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
-    const tickerFn = (time: number) => {
-      lenis.raf(time * 1000);
-    };
+    let rafId: number;
 
-    gsap.ticker.add(tickerFn);
-    gsap.ticker.lagSmoothing(0);
+    function raf(time: number) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+
+    rafId = requestAnimationFrame(raf);
 
     return () => {
       lenis.destroy();
-      gsap.ticker.remove(tickerFn);
+      cancelAnimationFrame(rafId);
     };
   }, []);
 

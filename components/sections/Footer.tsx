@@ -5,20 +5,20 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="w-full py-20 bg-[#070D0E] text-white/50 overflow-hidden">
+    <footer className="w-full py-10 bg-[#070D0E] text-white/50 overflow-hidden">
       <div
         className="w-full max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 flex flex-col space-y-8"
       >
         {/* Top Section: Logo & Links */}
-        <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 border-b border-white/10 pb-8">
+        <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-3 border-b border-white/10 pb-8">
           {/* Logo & Biofix initiative */}
-          <div className="flex flex-col items-start gap-4">
+          <div className="flex flex-col items-start gap-2">
             <Image
               src="/images/logo.png"
               alt="Biodrops Logo"
-              width={180}
-              height={48}
-              className="h-11 w-auto object-contain"
+              width={360}
+              height={96}
+              className="h-18 w-auto object-contain"
               priority
             />
             <a
@@ -44,10 +44,14 @@ export default function Footer() {
           </div>
 
           {/* Navigation Links */}
-          <div className="flex items-center gap-8 text-[0.7rem] tracking-[0.2em] uppercase font-semibold text-white/70">
-            <Link href="#process" className="hover:text-[#cfef00] transition-colors">Process</Link>
-            <Link href="#why" className="hover:text-[#cfef00] transition-colors">Why Us</Link>
-            <Link href="#bqms" className="hover:text-[#cfef00] transition-colors">BQMS</Link>
+          <div className="flex flex-wrap justify-end gap-6 text-[0.65rem] tracking-[0.2em] uppercase font-semibold text-white/70">
+            <Link href="/about" className="hover:text-[#cfef00] transition-colors">About</Link>
+            <Link href="/process" className="hover:text-[#cfef00] transition-colors">Process</Link>
+            <Link href="/why-us" className="hover:text-[#cfef00] transition-colors">Why Us</Link>
+            <Link href="/certifications" className="hover:text-[#cfef00] transition-colors">Certifications</Link>
+            <Link href="/bqms" className="hover:text-[#cfef00] transition-colors">BQMS</Link>
+            <Link href="/faq" className="hover:text-[#cfef00] transition-colors">FAQ</Link>
+            <Link href="/KNOWYOURWATER" className="hover:text-[#cfef00] transition-colors">Verify Batch</Link>
           </div>
         </div>
 

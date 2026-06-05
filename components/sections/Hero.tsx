@@ -52,6 +52,11 @@ export default function Hero() {
           </motion.h1>
         </div>
 
+        {/* SEO Hidden Subheading */}
+        <h2 className="sr-only">
+          Biodrops - Premium Packaged Drinking Water and Mineral Water in Kerala. An initiative from Biofix Technology LLP.
+        </h2>
+
         <div className="overflow-hidden mt-10 max-w-xl mx-auto">
           <motion.p
             initial={{ y: "100%" }}

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRef } from "react";
+import Image from "next/image";
 
 export default function ProductShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -114,7 +115,29 @@ export default function ProductShowcase() {
         </div>
 
         {/* Right Side: Button positioned at the bottom of the product image area */}
-        <div className="lg:col-span-5 flex flex-col items-center justify-end w-full min-h-[300px] lg:self-stretch z-20 pb-6 lg:pb-12">
+        <div className="lg:col-span-5 flex flex-col items-center justify-end w-full min-h-[400px] lg:self-stretch z-20 pb-6 lg:pb-12">
+          
+          {/* Packaging Sleeve Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full max-w-[240px] mb-8 relative rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/40 group"
+          >
+            <div className="aspect-[3/4] relative">
+              <Image 
+                src="/Biodrops_sleeve.jpeg" 
+                alt="Biodrops 20L Jar Sleeve Design"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#070D0E]/80 to-transparent p-4 text-center pt-12">
+                <span className="text-white text-[0.65rem] tracking-[0.2em] uppercase font-semibold block transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">Signature Sleeve</span>
+              </div>
+            </div>
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}

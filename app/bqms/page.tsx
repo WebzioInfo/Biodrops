@@ -1,10 +1,18 @@
+import type { Metadata } from "next";
 import React from "react";
 import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
+import Footer from "@/components/sections/Footer";
 
-export const metadata = {
-  title: "BQMS - Biofix Quality Management System",
-  description: "A complete professional single window support system specially designed for mineral water plant management.",
+export const metadata: Metadata = {
+  title: "BQMS - Biofix Quality Management System | Biodrops",
+  description: "A complete professional single window support system specially designed for mineral water plant management. Manage lab, quality, licenses, and machinery effortlessly.",
+  keywords: ["BQMS", "Biofix Quality Management System", "Mineral Water Plant Management", "FSSAI Licensing", "BIS Licensing", "Water Quality Lab Setting", "Water Plant Operations", "Quality Control Training", "Packaged Drinking Water Management", "Biofix"],
+  openGraph: {
+    title: "BQMS - Biofix Quality Management System",
+    description: "A complete professional single window support system specially designed for mineral water plant management.",
+    images: [{ url: "/bqms_images/bqms_coin.png" }],
+  },
 };
 
 const bqmsFeatures = [
@@ -130,22 +138,22 @@ export default function BQMSPage() {
       </section>
 
       {/* Manage Less / Achieve More Section */}
-      <section className="py-16 md:py-24 bg-[#15b5a3] relative overflow-hidden font-archivo">
+      <section className="py-8 md:py-16 bg-[#15b5a3] relative overflow-hidden font-archivo">
         <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-row items-center justify-between gap-4 md:gap-12">
 
           {/* Left Text Content */}
           <div className="flex-1 text-left mx-40 z-10">
 
             <div className="mb-8 md:mb-12">
-              <h2 className="text-[2.5rem] md:text-[5rem] italic tracking-[5px] leading-none mb-2 md:mb-4" style={{ color: "#f4ec2c", fontWeight: 700, WebkitTextStroke: "1px #f4ec2c", letterSpacing: "0.01em" }}>Manage Less.</h2>
-              <p className="text-sm md:text-[1.4rem] text-white leading-tight">
+              <h2 className="text-[2.5rem] md:text-[4rem] italic tracking-[5px] leading-none mb-2" style={{ color: "#f4ec2c", fontWeight: 700, WebkitTextStroke: "1px #f4ec2c", letterSpacing: "0.01em" }}>Manage Less.</h2>
+              <p className="text-sm md:text-[1rem] text-white leading-tight">
                 BQMS, A complete professional single window support system specially designed for mineral water plant management.
               </p>
             </div>
 
             <div>
-              <h2 className="text-[2.5rem] md:text-[5rem] italic tracking-[5px] leading-none mb-2 md:mb-4" style={{ color: "#f4ec2c", fontWeight: 700, WebkitTextStroke: "1px #f4ec2c", letterSpacing: "0.01em" }}>Achieve More.</h2>
-              <ul className="text-sm md:text-[1.4rem] text-white space-y-1 md:space-y-1.5 leading-tight">
+              <h2 className="text-[2.5rem] md:text-[4rem] italic tracking-[5px] leading-none mb-2" style={{ color: "#f4ec2c", fontWeight: 700, WebkitTextStroke: "1px #f4ec2c", letterSpacing: "0.01em" }}>Achieve More.</h2>
+              <ul className="text-sm md:text-[1rem] text-white space-y-1 md:space-y-1.5 leading-tight">
                 <li>Stress Free Business and Effortless Operations</li>
                 <li>Focus on Sales and Marketing</li>
                 <li>Monthly Checkups and Reports</li>
@@ -171,25 +179,40 @@ export default function BQMSPage() {
       {/* Footer / Contact Section (Matches Screenshot Exactly) */}
       <section id="contact" className="py-16 bg-white font-archivo">
         <div className="container mx-auto px-6 max-w-7xl">
-          
+
           {/* Top Row: Logo & Contact */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-10">
             {/* Biofix Logo */}
             <div className="relative w-64 h-24 md:w-96 md:h-32 shrink-0">
-              <Image src="/biofix_logo.png" alt="Biofix Technology LLP" fill className="object-contain object-center md:object-left" />
+              {/* Mobile center aligned */}
+              <div
+                className="w-full h-full bg-[#15b5a3] md:hidden"
+                style={{
+                  WebkitMask: 'url(/biofix_logo.png) center / contain no-repeat',
+                  mask: 'url(/biofix_logo.png) center / contain no-repeat'
+                }}
+              />
+              {/* Desktop left aligned */}
+              <div
+                className="hidden md:block w-full h-full bg-[#15b5a3]"
+                style={{
+                  WebkitMask: 'url(/biofix_logo.png) left center / contain no-repeat',
+                  mask: 'url(/biofix_logo.png) left center / contain no-repeat'
+                }}
+              />
             </div>
 
             {/* Contact Details */}
             <div className="flex flex-col items-center md:items-end text-center md:text-right">
               {/* Call Button */}
-              <div className="border-[3px] border-[#15b5a3] rounded-full px-6 md:px-10 py-3 md:py-4 mb-4 inline-block">
+              <div className="border-[3px] border-[ ] rounded-full px-6 md:px-10 py-3 md:py-4 mb-4 inline-block">
                 <p className="text-xl md:text-[1.75rem] font-bold tracking-tight">
                   <span className="text-[#15b5a3]">Call/</span>
                   <a href="https://wa.me/917510510947" className="text-blue-600 underline decoration-blue-600 underline-offset-4 mx-1">Whatsapp</a>
                   <span className="text-[#15b5a3]"> Now: 7 510 510 947</span>
                 </p>
               </div>
-              
+
               {/* Address */}
               <p className="text-gray-800 text-sm md:text-lg font-semibold tracking-wide">
                 MC Building, Bypass Road, Kondotty, 673638 / <a href="https://biofixtechnology.com" className="hover:text-[#15b5a3] transition-colors">biofixtechnology.com</a>
@@ -201,17 +224,17 @@ export default function BQMSPage() {
           <hr className="border-gray-400 border-t-[1.5px] mb-10" />
 
           {/* Bottom Row: Certifications */}
-          <div className="flex flex-wrap justify-between items-center gap-6">
-            <Image src="/bqms_images/State_Emblem.jpeg" alt="State Emblem" width={70} height={90} className="object-contain mix-blend-multiply" />
-            <Image src="/bqms_images/ISO.jpeg" alt="ISO 9001:2015" width={90} height={90} className="object-contain mix-blend-multiply" />
-            <Image src="/bqms_images/MSME.jpeg" alt="MSME" width={140} height={70} className="object-contain mix-blend-multiply" />
-            <Image src="/bqms_images/kerala.jpeg" alt="Kerala PCB" width={130} height={70} className="object-contain mix-blend-multiply" />
+          <div className="flex mx-auto flex-wrap justify-between items-center gap-2">
+            <Image src="/bqms_images/State_Emblem.jpeg" alt="State Emblem" width={50} height={70} className="object-contain mix-blend-multiply" />
+            <Image src="/bqms_images/ISO.jpeg" alt="ISO 9001:2015" width={70} height={70} className="object-contain mix-blend-multiply" />
+            <Image src="/bqms_images/MSME.jpeg" alt="MSME" width={120} height={50} className="object-contain mix-blend-multiply" />
+            <Image src="/bqms_images/kerala.jpeg" alt="Kerala PCB" width={90} height={90} className="object-contain mix-blend-multiply" />
             <Image src="/bqms_images/LIFE.jpeg" alt="LIFE" width={110} height={70} className="object-contain mix-blend-multiply" />
-            <Image src="/bqms_images/page0_img16.jpeg" alt="Govt Approved Lab" width={100} height={100} className="object-contain mix-blend-multiply" />
           </div>
-          
+
         </div>
       </section>
+      <Footer />
     </div>
   );
 }

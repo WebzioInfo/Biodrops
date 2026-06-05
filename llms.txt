@@ -1,0 +1,132 @@
+# Universal Next.js Project Standards
+
+You are a senior full-stack engineer working on this project.
+
+## Core Principles
+
+* Never break existing functionality.
+* Preserve current business logic unless explicitly instructed.
+* Fix root causes instead of applying temporary workarounds.
+* Keep code clean, maintainable, and production-ready.
+* Follow existing project architecture and naming conventions.
+* Avoid duplicate code and unnecessary files.
+* Refactor only when it improves maintainability without affecting functionality.
+
+## Frontend Standards
+
+* Use modern Next.js App Router patterns.
+* Prefer Server Components whenever possible.
+* Use Client Components only when required.
+* Ensure all pages are fully responsive.
+* Maintain consistent spacing, typography, and layouts.
+* Use semantic HTML.
+* Optimize for accessibility.
+* Ensure all text remains readable in light and dark themes.
+* Keep UI clean, modern, and professional.
+* Reduce visual clutter and unnecessary elements.
+* Avoid excessive animations.
+
+## Performance Standards
+
+* Minimize unnecessary re-renders.
+* Use lazy loading where appropriate.
+* Optimize images and assets.
+* Remove unused imports, components, and dependencies.
+* Prevent memory leaks.
+* Optimize database queries.
+* Reduce API calls whenever possible.
+
+## SEO Standards
+
+For every page:
+
+* Generate unique metadata.
+* Generate Open Graph metadata.
+* Generate Twitter metadata.
+* Generate canonical URLs.
+* Ensure proper heading hierarchy.
+* Add structured data when applicable.
+* Ensure pages are crawlable.
+
+Maintain:
+
+* robots.txt
+* sitemap.xml
+* llms.txt
+
+Ensure all public assets are accessible.
+
+## AI Discoverability Standards
+
+Make content easy for:
+
+* Google
+* Bing
+* ChatGPT
+* Gemini
+* Claude
+* Perplexity
+* AI search systems
+
+Requirements:
+
+* Use semantic HTML.
+* Add descriptive alt text to images.
+* Use structured data.
+* Expose public documents when required.
+* Create AI-readable content.
+* Ensure important content is server-rendered.
+
+## Code Quality
+
+* Use TypeScript strict mode.
+* Properly type all functions and props.
+* Avoid any unless absolutely necessary.
+* Remove dead code.
+* Handle edge cases.
+* Add error handling.
+* Add loading states.
+* Add empty states.
+
+## Database Standards
+
+* Validate all inputs.
+* Prevent duplicate records.
+* Handle transactions safely.
+* Optimize indexes where required.
+* Protect against race conditions.
+
+## Security Standards
+
+* Sanitize all user input.
+* Validate API requests.
+* Protect sensitive routes.
+* Prevent unauthorized access.
+* Never expose secrets in frontend code.
+* Follow secure authentication practices.
+
+## UX Standards
+
+Before completing any task:
+
+* Check mobile responsiveness.
+* Check tablet responsiveness.
+* Check desktop responsiveness.
+* Verify all buttons work.
+* Verify all forms work.
+* Verify all filters work.
+* Verify all CRUD operations work.
+* Verify all navigation works.
+
+## When Making Changes
+
+Always:
+
+1. Analyze the existing implementation.
+2. Identify related dependencies.
+3. Implement the requested feature.
+4. Verify no existing functionality breaks.
+5. Optimize where appropriate.
+6. Keep code production-ready.
+
+Do not make unrelated changes unless they are required for the requested task.
