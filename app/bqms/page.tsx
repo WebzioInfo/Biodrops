@@ -205,7 +205,7 @@ export default function BQMSPage() {
             {/* Contact Details */}
             <div className="flex flex-col items-center md:items-end text-center md:text-right">
               {/* Call Button */}
-              <div className="border-[3px] border-[ ] rounded-full px-6 md:px-10 py-3 md:py-4 mb-4 inline-block">
+              <div className="border-[3px] border-[#15b5a3] rounded-full px-6 md:px-10 py-3 md:py-4 mb-4 inline-block">
                 <p className="text-xl md:text-[1.75rem] font-bold tracking-tight">
                   <span className="text-[#15b5a3]">Call/</span>
                   <a href="https://wa.me/917510510947" className="text-blue-600 underline decoration-blue-600 underline-offset-4 mx-1">Whatsapp</a>
