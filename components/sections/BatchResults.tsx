@@ -3,6 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import { VerifyBatchResponse } from "@/services/publicVerification";
 import { CheckCircle2, Factory, CalendarDays, ShieldCheck, Droplets, Download } from "lucide-react";
+import { calculateExpiryInfo } from "@/lib/date";
 
 interface BatchResultsProps {
   batch: VerifyBatchResponse;
@@ -80,6 +81,8 @@ export default function BatchResults({ batch }: BatchResultsProps) {
     return String(val);
   };
 
+  const expiryInfo = calculateExpiryInfo(batch.manufacturing.mfgDate, batch.manufacturing.shelfLife);
+
   return (
     <motion.div
       variants={containerVariants}
@@ -118,8 +121,8 @@ export default function BatchResults({ batch }: BatchResultsProps) {
             <h3 className="text-lg font-bold text-gray-900">Expiry</h3>
           </div>
           <div className="space-y-3">
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Best Before:</span> {displayVal(batch.manufacturing.bestBefore)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Shelf Life:</span> {displayVal(batch.manufacturing.shelfLife)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Best Before:</span> {displayVal(expiryInfo.bestBefore)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Shelf Life:</span> {displayVal(expiryInfo.shelfLife)}</p>
           </div>
         </motion.div>
 
