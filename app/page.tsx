@@ -2,6 +2,8 @@
 
 import Hero from "@/components/sections/Hero";
 import ProductShowcase from "@/components/sections/ProductShowcase";
+import PurificationProcess from "@/components/sections/PurificationProcess";
+import WhyBiodrops from "@/components/sections/WhyBiodrops";
 import ContactSection from "@/components/sections/ContactSection";
 import BQMSSection from "@/components/sections/BQMSSection";
 import Footer from "@/components/sections/Footer";
@@ -11,6 +13,8 @@ export default function HomePage() {
     <div className="relative z-10 bg-[#F4F6F8]">
       <Hero />
       <ProductShowcase />
+      <PurificationProcess />
+      <WhyBiodrops />
       <BQMSSection />
       <ContactSection />
       <Footer />
