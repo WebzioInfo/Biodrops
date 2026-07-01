@@ -1,45 +1,74 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/sections/Footer";
-import BatchResults from "@/components/sections/BatchResults";
-import { mockBatches, BatchDetails } from "@/data/mockBatches";
+import BatchResults, { BatchResultsSkeleton } from "@/components/sections/BatchResults";
 import { Search, Loader2, Factory, MapPin } from "lucide-react";
 import Image from "next/image";
+import { verifyBatch, VerifyBatchResponse } from "@/services/publicVerification";
 
-// Extract unique manufacturers
-const uniqueManufacturers = Array.from(
-  new Map(
-    Object.values(mockBatches).map((batch) => [batch.manufacturer.name, batch.manufacturer])
-  ).values()
-);
+const certifiedManufacturers = [
+  {
+    name: "Biofix Technology LLP",
+    location: "MC Building, Bypass Road, Kondotty, Kerala 673638",
+  },
+  {
+    name: "Aqua Pure Waters",
+    location: "Industrial Estate, Palakkad, Kerala 678001",
+  }
+];
 
 export default function KnowYourWaterPage() {
   const [batchNumber, setBatchNumber] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [result, setResult] = useState<BatchDetails | null>(null);
+  const [error, setError] = useState<{ title: string; message: string } | null>(null);
+  const [result, setResult] = useState<VerifyBatchResponse | null>(null);
+  
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!batchNumber.trim()) return;
+    
+    const sanitizedBatch = batchNumber.trim().replace(/\s+/g, ' ');
+    if (!sanitizedBatch) return;
+
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
 
     setLoading(true);
-    setError("");
+    setError(null);
     setResult(null);
 
-    // Simulate network request
-    setTimeout(() => {
-      const foundBatch = mockBatches[batchNumber.trim().toUpperCase()];
-      if (foundBatch) {
-        setResult(foundBatch);
-      } else {
-        setError("Batch not found. Please check your batch number and try again.");
+    try {
+      const data = await verifyBatch(sanitizedBatch, abortController.signal);
+      setResult(data);
+    } catch (err: any) {
+      if (err.name === 'AbortError') {
+        return; // Request was cancelled
       }
-      setLoading(false);
-    }, 800);
+      if (err.message === "BATCH_NOT_FOUND") {
+        setError({
+          title: "Batch Not Found",
+          message: "The entered batch number could not be verified. Please check the batch code and try again."
+        });
+      } else {
+        setError({
+          title: "Connection Error",
+          message: "Unable to connect to the verification server. Please try again later."
+        });
+      }
+    } finally {
+      if (abortControllerRef.current === abortController) {
+        setLoading(false);
+        abortControllerRef.current = null;
+      }
+    }
   };
 
   return (
@@ -86,7 +115,8 @@ export default function KnowYourWaterPage() {
                 placeholder="Enter Batch Number (e.g., BD-2026-06A)"
                 value={batchNumber}
                 onChange={(e) => setBatchNumber(e.target.value)}
-                className="w-full py-5 px-4 text-lg bg-transparent border-none focus:outline-none text-gray-900 placeholder:text-gray-400"
+                disabled={loading}
+                className="w-full py-5 px-4 text-lg bg-transparent border-none focus:outline-none text-gray-900 placeholder:text-gray-400 disabled:opacity-60"
               />
               <button
                 type="submit"
@@ -105,17 +135,29 @@ export default function KnowYourWaterPage() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute top-full left-0 w-full mt-4 p-4 bg-red-50 text-red-600 rounded-xl text-center text-sm border border-red-100"
+                className="absolute top-full left-0 w-full mt-4 p-4 bg-white shadow-xl shadow-red-500/5 rounded-2xl border border-red-100 flex flex-col items-center justify-center text-center gap-1"
               >
-                {error}
+                <p className="text-red-600 font-bold text-lg">{error.title}</p>
+                <p className="text-gray-500 text-sm">{error.message}</p>
               </motion.div>
             )}
           </AnimatePresence>
         </motion.div>
 
-        {/* Results Area */}
+        {/* Results / Loading Area */}
         <AnimatePresence mode="wait">
-          {result && (
+          {loading && (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              <BatchResultsSkeleton />
+            </motion.div>
+          )}
+          {result && !loading && (
             <motion.div
               key="results"
               initial={{ opacity: 0, y: 40 }}
@@ -142,7 +184,7 @@ export default function KnowYourWaterPage() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-              {uniqueManufacturers.map((mfg, idx) => (
+              {certifiedManufacturers.map((mfg, idx) => (
                 <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4 hover:shadow-md transition-shadow">
                   <div className="bg-[#15b5a3]/10 p-3 rounded-xl text-[#15b5a3] shrink-0">
                     <Factory className="w-6 h-6" />
@@ -172,3 +214,4 @@ export default function KnowYourWaterPage() {
     </main>
   );
 }
+
