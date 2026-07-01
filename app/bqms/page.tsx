@@ -139,21 +139,21 @@ export default function BQMSPage() {
 
       {/* Manage Less / Achieve More Section */}
       <section className="py-8 md:py-16 bg-[#15b5a3] relative overflow-hidden font-archivo">
-        <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-row items-center justify-between gap-4 md:gap-12">
+        <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
 
           {/* Left Text Content */}
-          <div className="flex-1 text-left mx-40 z-10">
+          <div className="flex-1 text-left w-full md:w-auto z-10 pl:6 lg:pl-10 xl:pl-20">
 
             <div className="mb-8 md:mb-12">
-              <h2 className="text-[2.5rem] md:text-[4rem] italic tracking-[5px] leading-none mb-2" style={{ color: "#f4ec2c", fontWeight: 700, WebkitTextStroke: "1px #f4ec2c", letterSpacing: "0.01em" }}>Manage Less.</h2>
-              <p className="text-sm md:text-[1rem] text-white leading-tight">
+              <h2 className="text-[2rem] md:text-[3rem] lg:text-[4rem] italic tracking-[3px] md:tracking-[5px] leading-none mb-3" style={{ color: "#f4ec2c", fontWeight: 700, WebkitTextStroke: "1px #f4ec2c", letterSpacing: "0.01em" }}>Manage Less.</h2>
+              <p className="text-[0.9rem] md:text-[1rem] lg:text-[1.1rem] text-white leading-relaxed max-w-lg">
                 BQMS, A complete professional single window support system specially designed for mineral water plant management.
               </p>
             </div>
 
             <div>
-              <h2 className="text-[2.5rem] md:text-[4rem] italic tracking-[5px] leading-none mb-2" style={{ color: "#f4ec2c", fontWeight: 700, WebkitTextStroke: "1px #f4ec2c", letterSpacing: "0.01em" }}>Achieve More.</h2>
-              <ul className="text-sm md:text-[1rem] text-white space-y-1 md:space-y-1.5 leading-tight">
+              <h2 className="text-[2rem] md:text-[3rem] lg:text-[4rem] italic tracking-[3px] md:tracking-[5px] leading-none mb-3" style={{ color: "#f4ec2c", fontWeight: 700, WebkitTextStroke: "1px #f4ec2c", letterSpacing: "0.01em" }}>Achieve More.</h2>
+              <ul className="text-[0.9rem] md:text-[1rem] lg:text-[1.1rem] text-white space-y-2 leading-relaxed list-disc list-inside ml-1">
                 <li>Stress Free Business and Effortless Operations</li>
                 <li>Focus on Sales and Marketing</li>
                 <li>Monthly Checkups and Reports</li>
@@ -164,7 +164,7 @@ export default function BQMSPage() {
           </div>
 
           {/* Right Content / Images */}
-          <div className="shrink-0 relative w-32 h-32 md:w-80 md:h-80 lg:w-[500px] lg:h-[500px] z-20">
+          <div className="shrink-0 relative w-48 h-48 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-[450px] lg:h-[450px] z-20 mt-8 md:mt-0">
             <Image
               src="/bqms_images/bqms_seal.png"
               alt="BQMS Quality Seal"
@@ -203,20 +203,32 @@ export default function BQMSPage() {
             </div>
 
             {/* Contact Details */}
-            <div className="flex flex-col items-center md:items-end text-center md:text-right">
+            <div className="flex flex-col items-center md:items-end text-center md:text-right gap-5">
               {/* Call Button */}
-              <div className="border-[3px] border-[#15b5a3] rounded-full px-6 md:px-10 py-3 md:py-4 mb-4 inline-block">
-                <p className="text-xl md:text-[1.75rem] font-bold tracking-tight">
-                  <span className="text-[#15b5a3]">Call/</span>
-                  <a href="https://wa.me/917510510947" className="text-blue-600 underline decoration-blue-600 underline-offset-4 mx-1">Whatsapp</a>
-                  <span className="text-[#15b5a3]"> Now: 7 510 510 947</span>
-                </p>
-              </div>
+              <a
+                href="https://wa.me/917510510947"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-white border-[3px] border-[#15b5a3] text-[#15b5a3] rounded-full overflow-hidden transition-all duration-300 hover:shadow-[0_8px_25px_rgba(21,181,163,0.35)] hover:-translate-y-1"
+              >
+                <div className="absolute inset-0 bg-[#15b5a3] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></div>
+                <span className="relative z-10 flex items-center gap-3 font-bold text-xl md:text-2xl tracking-wide group-hover:text-white transition-colors duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone-call"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /><path d="M14.05 2a9 9 0 0 1 8 7.94" /><path d="M14.05 6A5 5 0 0 1 18 10" /></svg>
+                  Call / WhatsApp: 7 510 510 947
+                </span>
+              </a>
 
               {/* Address */}
-              <p className="text-gray-800 text-sm md:text-lg font-semibold tracking-wide">
-                MC Building, Bypass Road, Kondotty, 673638 / <a href="https://biofixtechnology.com" className="hover:text-[#15b5a3] transition-colors">biofixtechnology.com</a>
-              </p>
+              <div className="flex flex-col items-center md:items-end gap-1.5 mt-2">
+                <p className="text-gray-600 text-sm md:text-base font-semibold tracking-wide flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#15b5a3]"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+                  MC Building, Bypass Road, Kondotty, 673638
+                </p>
+                <a href="https://biofixtechnology.com" target="_blank" rel="noopener noreferrer" className="text-[#15b5a3] font-bold text-base md:text-lg hover:text-teal-700 hover:underline underline-offset-4 transition-all flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /><path d="M2 12h20" /></svg>
+                  biofixtechnology.com
+                </a>
+              </div>
             </div>
           </div>
 
@@ -224,12 +236,13 @@ export default function BQMSPage() {
           <hr className="border-gray-400 border-t-[1.5px] mb-10" />
 
           {/* Bottom Row: Certifications */}
-          <div className="flex mx-auto flex-wrap justify-between items-center gap-2">
-            <Image src="/bqms_images/State_Emblem.jpeg" alt="State Emblem" width={50} height={70} className="object-contain mix-blend-multiply" />
-            <Image src="/bqms_images/ISO.jpeg" alt="ISO 9001:2015" width={70} height={70} className="object-contain mix-blend-multiply" />
-            <Image src="/bqms_images/MSME.jpeg" alt="MSME" width={120} height={50} className="object-contain mix-blend-multiply" />
-            <Image src="/bqms_images/kerala.jpeg" alt="Kerala PCB" width={90} height={90} className="object-contain mix-blend-multiply" />
-            <Image src="/bqms_images/LIFE.jpeg" alt="LIFE" width={110} height={70} className="object-contain mix-blend-multiply" />
+          <div className="grid grid-cols-2 md:flex md:flex-row md:flex-nowrap md:justify-between items-center justify-items-center gap-y-12 gap-x-8 md:gap-4 px-4 md:px-12 lg:px-24 mx-auto w-full max-w-6xl">
+            <Image src="/bqms_images/State_Emblem.jpeg" alt="State Emblem" width={50} height={70} className="object-contain mix-blend-multiply hover:scale-105 transition-transform" />
+            <Image src="/bqms_images/ISO.jpeg" alt="ISO 9001:2015" width={70} height={70} className="object-contain mix-blend-multiply hover:scale-105 transition-transform" />
+            <Image src="/bqms_images/MSME.jpeg" alt="MSME" width={120} height={50} className="object-contain mix-blend-multiply hover:scale-105 transition-transform" />
+            <Image src="/bqms_images/kerala.jpeg" alt="Kerala PCB" width={90} height={90} className="object-contain mix-blend-multiply hover:scale-105 transition-transform" />
+            <Image src="/bqms_images/LIFE.jpeg" alt="LIFE" width={110} height={70} className="object-contain mix-blend-multiply hover:scale-105 transition-transform" />
+            <Image src="/bqms_images/bqms_certificate.png" alt="BQMS Certificate" width={110} height={70} className="object-contain mix-blend-multiply hover:scale-105 transition-transform" />
           </div>
 
         </div>
