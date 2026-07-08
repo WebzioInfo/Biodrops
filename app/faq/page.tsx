@@ -1,7 +1,21 @@
-"use client";
-
-import { motion } from "framer-motion";
+import type { Metadata } from "next";
 import Footer from "@/components/sections/Footer";
+import FadeIn from "@/components/effects/FadeIn";
+
+export const unstable_instant = { prefetch: "static" };
+
+export const metadata: Metadata = {
+  title: "Frequently Asked Questions (FAQ) - BIODROPS",
+  description: "Get answers to frequently asked questions about BIODROPS water purity, GWA sourcing, BQMS systems, and bulk water supply in Kerala.",
+  alternates: {
+    canonical: "https://biodropsindia.com/faq",
+  },
+  openGraph: {
+    title: "Frequently Asked Questions (FAQ) - BIODROPS",
+    description: "Get answers to frequently asked questions about BIODROPS water purity, GWA sourcing, and BQMS systems.",
+    url: "https://biodropsindia.com/faq",
+  },
+};
 
 const faqs = [
   {
@@ -30,11 +44,7 @@ export default function FAQPage() {
   return (
     <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-32">
       <div className="max-w-4xl mx-auto px-6 py-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <FadeIn>
           <div className="inline-flex items-center gap-4 text-[0.7rem] tracking-[0.3em] uppercase text-[#6B7C80] font-medium mb-6">
             <span className="w-12 h-px bg-[#6B7C80]/30" />
             Knowledge Base
@@ -45,20 +55,16 @@ export default function FAQPage() {
           
           <div className="space-y-8">
             {faqs.map((faq, index) => (
-              <motion.div 
+              <div 
                 key={index}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white p-8 rounded-2xl shadow-sm border border-black/5"
               >
                 <h2 className="text-2xl font-serif text-[#070D0E] mb-4">{faq.question}</h2>
                 <p className="text-[#070D0E]/70 leading-relaxed text-lg">{faq.answer}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </FadeIn>
       </div>
       <Footer />
     </main>

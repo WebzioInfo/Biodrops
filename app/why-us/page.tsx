@@ -1,8 +1,22 @@
-"use client";
-
-import { motion } from "framer-motion";
+import type { Metadata } from "next";
 import Footer from "@/components/sections/Footer";
 import Image from "next/image";
+import { WhyUsHero, WhyUsGrid } from "@/components/sections/WhyUsClient";
+
+export const unstable_instant = { prefetch: "static" };
+
+export const metadata: Metadata = {
+  title: "Why Us - BIODROPS",
+  description: "Learn why BIODROPS is the leading packaged mineral water brand in Kerala. Pristine hydration, perfectly balanced pH, untouched by human hands, and 14-stage purified.",
+  alternates: {
+    canonical: "https://biodropsindia.com/why-us",
+  },
+  openGraph: {
+    title: "Why Us - BIODROPS",
+    description: "Learn why BIODROPS is the leading packaged mineral water brand in Kerala.",
+    url: "https://biodropsindia.com/why-us",
+  },
+};
 
 const values = [
   {
@@ -45,8 +59,8 @@ const values = [
 
 export default function WhyUsPage() {
   return (
-    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white">
-
+    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-32">
+ 
       {/* Hero Section */}
       <section className="relative w-full pt-40 pb-24 px-6 overflow-hidden bg-[#FFFFFF] text-[#070D0E]">
         <div className="absolute inset-0 z-0 pointer-events-none opacity-5">
@@ -54,73 +68,36 @@ export default function WhyUsPage() {
             src="/images/natural-source.jpg"
             alt="Natural Water Source"
             fill
+            sizes="100vw"
             className="object-cover"
+            priority
           />
         </div>
-
-        <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-flex items-center gap-4 text-[0.7rem] tracking-[0.3em] uppercase text-[#070D0E]/50 font-medium mb-6"
-          >
+ 
+        <WhyUsHero>
+          <div className="inline-flex items-center gap-4 text-[0.7rem] tracking-[0.3em] uppercase text-[#070D0E]/50 font-medium mb-6">
             <span className="w-12 h-px bg-[#070D0E]/20" />
             The Standard
             <span className="w-12 h-px bg-[#070D0E]/20" />
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-            className="text-[clamp(2.5rem,6vw,5rem)] font-light leading-[1.1] mb-6 font-serif"
-          >
+          </div>
+ 
+          <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-light leading-[1.1] mb-6 font-serif">
             Why Choose <span className="italic text-[#56C7D9] font-medium">Biodrops?</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="text-lg md:text-xl text-[#070D0E]/60 max-w-2xl font-light leading-relaxed"
-          >
+          </h1>
+ 
+          <p className="text-lg md:text-xl text-[#070D0E]/60 max-w-2xl font-light leading-relaxed">
             We don't just bottle water. We curate an experience of pristine hydration, engineered to fuel your body with the purest drop possible.
-          </motion.p>
-        </div>
+          </p>
+        </WhyUsHero>
       </section>
-
+ 
       {/* Values Grid */}
       <section className="py-24 px-6 bg-[#070D0E] text-white">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-            {values.map((val, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-                className="group relative bg-[#111A1B] p-10 md:p-14 rounded-3xl overflow-hidden border border-white/5 hover:border-[#cfef00]/30 transition-colors duration-500"
-              >
-                {/* Glow Effect */}
-                <div className="absolute -inset-px bg-gradient-to-r from-[#cfef00]/0 via-[#cfef00]/10 to-[#cfef00]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                <div className="relative z-10">
-                  <div className="w-16 h-16 rounded-2xl bg-white/5 text-[#cfef00] flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-[#cfef00] group-hover:text-black transition-all duration-300">
-                    {val.icon}
-                  </div>
-                  <h3 className="text-3xl font-serif mb-4 group-hover:text-[#cfef00] transition-colors duration-300">{val.title}</h3>
-                  <p className="text-white/60 leading-relaxed font-light text-lg">
-                    {val.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <WhyUsGrid values={values} />
         </div>
       </section>
-
+ 
       {/* CTA Section */}
       <section className="py-32 px-6 bg-[#cfef00] text-[#070D0E] text-center flex flex-col items-center justify-center">
         <h2 className="text-4xl md:text-6xl font-serif mb-8">Taste the Difference.</h2>
@@ -131,7 +108,7 @@ export default function WhyUsPage() {
           Contact Us Today
         </a>
       </section>
-
+ 
       <Footer />
     </main>
   );

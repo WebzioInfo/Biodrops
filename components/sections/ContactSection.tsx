@@ -11,8 +11,8 @@ function Field({ label, type = "text", name, value, onChange, required }: any) {
     <div className="relative pt-5 mb-4 w-full text-center">
       <label
         className={`absolute left-1/2 -translate-x-1/2 text-sm text-[#aaa] tracking-[0.01em] pointer-events-none transition-all duration-300 ease-in-out ${raised
-            ? "top-0.5 text-[11px] tracking-[0.08em] font-medium uppercase"
-            : "top-[22px] font-normal"
+          ? "top-0.5 text-[11px] tracking-[0.08em] font-medium uppercase"
+          : "top-[22px] font-normal"
           } ${focused ? "text-[#111]" : ""}`}
       >
         {label}
@@ -44,8 +44,8 @@ function Textarea({ label, name, value, onChange }: any) {
     <div className="relative pt-5 mb-4 w-full text-center">
       <label
         className={`absolute left-1/2 -translate-x-1/2 text-sm text-[#aaa] tracking-[0.01em] pointer-events-none transition-all duration-300 ease-in-out ${raised
-            ? "top-0.5 text-[11px] tracking-[0.08em] font-medium uppercase"
-            : "top-[22px] font-normal"
+          ? "top-0.5 text-[11px] tracking-[0.08em] font-medium uppercase"
+          : "top-[22px] font-normal"
           } ${focused ? "text-[#111]" : ""}`}
       >
         {label}

@@ -21,6 +21,8 @@ export const metadata: Metadata = {
   }
 };
 
+export const unstable_instant = { prefetch: "static" };
+
 export default function AboutAiPage() {
   return (
     <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-32">
