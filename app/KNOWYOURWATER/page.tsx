@@ -13,10 +13,12 @@ const certifiedManufacturers = [
   {
     name: "Biofix Technology LLP",
     location: "MC Building, Bypass Road, Kondotty, Kerala 673638",
+    code: "BT", // You can change this to the actual manufacturer code
   },
   {
-    name: "Aqua Pure Waters",
-    location: "Industrial Estate, Palakkad, Kerala 678001",
+    name: "Gangothri Aqua Proccessing Unit",
+    location: "Kokkur, Changarakulam, Kerala",
+    code: "GA", // You can change this to the actual manufacturer code
   }
 ];
 
@@ -25,19 +27,19 @@ export default function KnowYourWaterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<{ title: string; message: string } | null>(null);
   const [result, setResult] = useState<VerifyBatchResponse | null>(null);
-  
+
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const sanitizedBatch = batchNumber.trim().replace(/\s+/g, ' ');
     if (!sanitizedBatch) return;
 
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
-    
+
     const abortController = new AbortController();
     abortControllerRef.current = abortController;
 
@@ -182,12 +184,12 @@ export default function KnowYourWaterPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-2">BQMS Certified Manufacturers</h2>
               <p className="text-gray-500">Quality assured water from our verified partners.</p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
               {certifiedManufacturers.map((mfg, idx) => (
                 <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4 hover:shadow-md transition-shadow">
-                  <div className="bg-[#15b5a3]/10 p-3 rounded-xl text-[#15b5a3] shrink-0">
-                    <Factory className="w-6 h-6" />
+                  <div className="bg-[#15b5a3]/10 w-12 h-12 flex items-center justify-center rounded-xl text-[#15b5a3] font-bold text-xl shrink-0">
+                    {mfg.code}
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">{mfg.name}</h3>
@@ -202,9 +204,7 @@ export default function KnowYourWaterPage() {
 
             <div className="max-w-xs mx-auto opacity-50 flex flex-col items-center">
               <p className="text-sm text-center mb-4">You can find the batch number printed near the barcode on the jar sleeve.</p>
-              <div className="w-32 h-32 relative rounded-xl overflow-hidden grayscale border border-black/10">
-                <Image src="/Biodrops_sleeve.jpeg" alt="Sleeve Example" fill className="object-cover" />
-              </div>
+
             </div>
           </motion.div>
         )}

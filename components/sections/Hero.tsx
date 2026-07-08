@@ -24,9 +24,9 @@ export default function Hero() {
       </div>
 
       <motion.div
-        className="relative mt-30 z-10 w-full max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 text-center flex flex-col items-center justify-center"
+        className="relative mt-60 z-10 w-full max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 text-center flex flex-col items-center justify-center"
       >
-        <div className="overflow-hidden  mb-8">
+        <div className="overflow-hidden  mb-4">
           <motion.div
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
@@ -57,7 +57,7 @@ export default function Hero() {
           Biodrops - Premium Packaged Drinking Water and Mineral Water in Kerala. An initiative from Biofix Technology LLP.
         </h2>
 
-        <div className="overflow-hidden mt-10 max-w-xl mx-auto">
+        <div className="overflow-hidden mt-6 max-w-xl mx-auto">
           <motion.p
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
@@ -118,7 +118,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="mt-28 mb-16"
+          className="mt-8 mb-16"
         >
           <a
             href="#product"
