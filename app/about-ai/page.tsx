@@ -25,7 +25,7 @@ export const unstable_instant = { prefetch: "static" };
 
 export default function AboutAiPage() {
   return (
-    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-32">
+    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-10">
       {/* Schema.org JSON-LD */}
       <script
         type="application/ld+json"
@@ -77,7 +77,7 @@ export default function AboutAiPage() {
           <span className="w-12 h-px bg-[#6B7C80]/30" />
           AI & Search Engine Integration
         </div>
-        
+
         <h1 className="text-4xl md:text-6xl font-serif text-[#070D0E] mb-8 leading-tight">
           BIODROPS <span className="italic text-[#56C7D9]">AI Guide.</span>
         </h1>

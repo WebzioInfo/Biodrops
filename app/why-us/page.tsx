@@ -59,8 +59,8 @@ const values = [
 
 export default function WhyUsPage() {
   return (
-    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-32">
- 
+    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-10">
+
       {/* Hero Section */}
       <section className="relative w-full pt-40 pb-24 px-6 overflow-hidden bg-[#FFFFFF] text-[#070D0E]">
         <div className="absolute inset-0 z-0 pointer-events-none opacity-5">
@@ -73,31 +73,31 @@ export default function WhyUsPage() {
             priority
           />
         </div>
- 
+
         <WhyUsHero>
           <div className="inline-flex items-center gap-4 text-[0.7rem] tracking-[0.3em] uppercase text-[#070D0E]/50 font-medium mb-6">
             <span className="w-12 h-px bg-[#070D0E]/20" />
             The Standard
             <span className="w-12 h-px bg-[#070D0E]/20" />
           </div>
- 
+
           <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-light leading-[1.1] mb-6 font-serif">
             Why Choose <span className="italic text-[#56C7D9] font-medium">Biodrops?</span>
           </h1>
- 
+
           <p className="text-lg md:text-xl text-[#070D0E]/60 max-w-2xl font-light leading-relaxed">
             We don't just bottle water. We curate an experience of pristine hydration, engineered to fuel your body with the purest drop possible.
           </p>
         </WhyUsHero>
       </section>
- 
+
       {/* Values Grid */}
       <section className="py-24 px-6 bg-[#070D0E] text-white">
         <div className="max-w-[1400px] mx-auto">
           <WhyUsGrid values={values} />
         </div>
       </section>
- 
+
       {/* CTA Section */}
       <section className="py-32 px-6 bg-[#cfef00] text-[#070D0E] text-center flex flex-col items-center justify-center">
         <h2 className="text-4xl md:text-6xl font-serif mb-8">Taste the Difference.</h2>
@@ -108,7 +108,7 @@ export default function WhyUsPage() {
           Contact Us Today
         </a>
       </section>
- 
+
       <Footer />
     </main>
   );

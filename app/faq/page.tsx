@@ -42,7 +42,7 @@ const faqs = [
 
 export default function FAQPage() {
   return (
-    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-32">
+    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-10">
       <div className="max-w-4xl mx-auto px-6 py-24">
         <FadeIn>
           <div className="inline-flex items-center gap-4 text-[0.7rem] tracking-[0.3em] uppercase text-[#6B7C80] font-medium mb-6">
@@ -52,10 +52,10 @@ export default function FAQPage() {
           <h1 className="text-5xl md:text-7xl font-serif text-[#070D0E] mb-12 leading-tight">
             Frequently Asked <span className="italic text-[#56C7D9]">Questions.</span>
           </h1>
-          
+
           <div className="space-y-8">
             {faqs.map((faq, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white p-8 rounded-2xl shadow-sm border border-black/5"
               >

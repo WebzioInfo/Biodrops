@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function CertificationsPage() {
   return (
-    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-32">
+    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-10">
       <div className="max-w-5xl mx-auto px-6 py-24">
         <FadeIn>
           <div className="text-center mb-20">
@@ -38,7 +38,7 @@ export default function CertificationsPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
+
             {/* BIS Certification */}
             <div className="bg-white p-10 rounded-3xl shadow-sm border border-black/5 text-center group hover:shadow-xl transition-shadow duration-300">
               <div className="w-20 h-20 mx-auto bg-[#56C7D9]/10 text-[#56C7D9] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">

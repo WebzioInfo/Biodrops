@@ -205,7 +205,7 @@ export default function Footer() {
                   Cookie Policy
                 </Link>
               </li>
-              <li>
+              <li className="hidden">
                 <a
                   href="/llms.txt"
                   target="_blank"

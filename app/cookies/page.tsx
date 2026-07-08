@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function CookiesPage() {
   return (
-    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-32">
+    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-10">
       {/* Schema.org JSON-LD */}
       <script
         type="application/ld+json"
@@ -75,7 +75,7 @@ export default function CookiesPage() {
           <span className="w-12 h-px bg-[#6B7C80]/30" />
           Settings & Preferences
         </div>
-        
+
         <h1 className="text-4xl md:text-6xl font-serif text-[#070D0E] mb-8 leading-tight">
           Cookie <span className="italic text-[#56C7D9]">Policy.</span>
         </h1>
@@ -102,7 +102,7 @@ export default function CookiesPage() {
             <p>
               We classify the cookies used on our website (https://biodropsindia.com) into three primary categories:
             </p>
-            
+
             <div className="space-y-6 mt-4">
               <div className="p-4 bg-black/5 rounded-xl border border-black/5">
                 <h3 className="text-base font-bold text-[#070D0E] mb-2">A. Essential Cookies (Strictly Necessary)</h3>
