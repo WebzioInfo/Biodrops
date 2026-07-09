@@ -203,7 +203,7 @@ export default function KnowYourWaterPage() {
             <div className="max-w-xs mx-auto opacity-50 flex flex-col items-center">
               <p className="text-sm text-center mb-4">You can find the batch number printed near the barcode on the jar sleeve.</p>
               <div className="w-32 h-32 relative rounded-xl overflow-hidden grayscale border border-black/10">
-                <Image src="/Biodrops_sleeve.jpeg" alt="Sleeve Example" fill className="object-cover" />
+                <Image src="/Biodrops_sleeve.jpeg" alt="Sleeve Example" fill sizes="128px" className="object-cover" />
               </div>
             </div>
           </motion.div>

@@ -118,7 +118,7 @@ export default function BQMSPage() {
               <div key={index} className="group flex flex-col">
                 <h3 className="text-3xl mb-4" style={{ color: feature.titleColor, fontWeight: 700 }}>{feature.title}</h3>
                 <div className="w-full h-48 md:h-80 relative mb-6 overflow-hidden shadow-sm">
-                  <Image src={feature.image} alt={feature.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <Image src={feature.image} alt={feature.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
                 <ul className="space-y-3 text-gray-600">
                   {feature.items.map((item, idx) => (
