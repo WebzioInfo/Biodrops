@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://biodrops.com/sitemap.xml',
+    sitemap: 'https://biodropsindia.com/sitemap.xml',
   };
 }

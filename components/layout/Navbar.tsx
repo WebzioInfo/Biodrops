@@ -51,7 +51,7 @@ export default function Navbar() {
               : "bg-[#070D0E]/70 backdrop-blur-xl border border-white/5"
             }`}
         >
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" prefetch={false} className="flex items-center gap-3">
           <Image
             src="/images/logo.png"
             alt="Biodrops Logo"
@@ -61,29 +61,29 @@ export default function Navbar() {
             priority
           />
         </Link>
-
+ 
         <nav className="hidden md:flex items-center gap-4 md:gap-6">
-          <Link href="/process" className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
+          <Link href="/process" prefetch={false} className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
             Process
             <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#56C7D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
           </Link>
-          <Link href="/why-us" className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
+          <Link href="/why-us" prefetch={false} className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
             Why Us
             <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#56C7D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
           </Link>
-          <Link href="/bqms" className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
+          <Link href="/bqms" prefetch={false} className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
             BQMS
             <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#56C7D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
           </Link>
         </nav>
-
+ 
         <a
           href="/#contact"
           className="hidden md:inline-flex group relative items-center justify-center px-8 py-3 bg-[#cfef00] hover:bg-[#c4e201] rounded-full text-[0.75rem] font-bold tracking-[0.2em] uppercase text-black transition-all duration-200 hover:scale-105 active:scale-95 shadow-[0_4px_12px_rgba(207,239,0,0.25)] hover:shadow-[0_8px_20px_rgba(207,239,0,0.45)] overflow-hidden"
         >
           <span className="relative z-10">Contact</span>
         </a>
-
+ 
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -92,7 +92,7 @@ export default function Navbar() {
           {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
         </div>
-
+ 
         {/* Mobile Menu Dropdown */}
         <AnimatePresence>
           {isMobileMenuOpen && (
@@ -103,13 +103,13 @@ export default function Navbar() {
               transition={{ duration: 0.2 }}
               className="absolute top-full left-4 right-4 mt-4 bg-[#070D0E]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl flex flex-col items-center gap-6 md:hidden"
             >
-              <Link href="/process" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-bold tracking-[0.2em] uppercase text-white hover:text-[#56C7D9] transition-colors w-full text-center py-2 border-b border-white/5">
+              <Link href="/process" prefetch={false} onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-bold tracking-[0.2em] uppercase text-white hover:text-[#56C7D9] transition-colors w-full text-center py-2 border-b border-white/5">
                 Process
               </Link>
-              <Link href="/why-us" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-bold tracking-[0.2em] uppercase text-white hover:text-[#56C7D9] transition-colors w-full text-center py-2 border-b border-white/5">
+              <Link href="/why-us" prefetch={false} onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-bold tracking-[0.2em] uppercase text-white hover:text-[#56C7D9] transition-colors w-full text-center py-2 border-b border-white/5">
                 Why Us
               </Link>
-              <Link href="/bqms" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-bold tracking-[0.2em] uppercase text-white hover:text-[#56C7D9] transition-colors w-full text-center py-2 border-b border-white/5">
+              <Link href="/bqms" prefetch={false} onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-bold tracking-[0.2em] uppercase text-white hover:text-[#56C7D9] transition-colors w-full text-center py-2 border-b border-white/5">
                 BQMS
               </Link>
               <a

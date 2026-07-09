@@ -1,0 +1,24 @@
+{
+  "name": "BIODROPS Premium Packaged Drinking Water",
+  "short_name": "BIODROPS",
+  "description": "BIODROPS premium mineral water. Quality can be canned.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F4F6F8",
+  "theme_color": "#070D0E",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

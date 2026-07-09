@@ -1,0 +1,18 @@
+/* TEAM */
+Brand: BIODROPS
+Parent Brand: Biofix Technology LLP
+Initiative: An initiative from Biofix
+Official Website: https://biodropsindia.com
+
+/* DEVELOPER */
+Designed & Developed by: Webzio
+Developer URL: https://webziointernational.in
+Country: India
+
+/* SITE TECHNOLOGY */
+Framework: Next.js
+Styling: Tailwind CSS
+Animations: Framer Motion, GSAP
+Scroller: Lenis Smooth Scroll
+Database: Prisma ORM
+Hosting: Vercel

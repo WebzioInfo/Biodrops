@@ -39,11 +39,11 @@ export default function WhyBiodrops() {
   });
 
   return (
-    <section ref={containerRef} id="why" className="relative w-full h-[300vh] bg-[#F4F6F8]">
+    <section ref={containerRef} id="why" className="relative min-h-screen w-full h-[300vh] bg-[#F4F6F8]">
       <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden">
-        
+
         {/* Parallax Background */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 z-0 pointer-events-none"
           style={{
             backgroundImage: "url('/images/natural-source.jpg')",
@@ -54,22 +54,22 @@ export default function WhyBiodrops() {
           }}
         />
 
-        
+
         {/* Eyebrow Header */}
         <div className="absolute top-12 md:top-24 left-0 right-0 flex flex-col items-center justify-center z-20 pointer-events-none">
-           <div className="flex items-center gap-4 text-[0.65rem] tracking-[0.4em] uppercase text-[#070D0E]/50 font-medium mb-4">
+          <div className="flex items-center gap-4 text-[0.65rem] tracking-[0.4em] uppercase text-[#070D0E]/50 font-medium mb-4">
             <span className="w-8 h-px bg-[#070D0E]/20" />
             The Standard
             <span className="w-8 h-px bg-[#070D0E]/20" />
           </div>
         </div>
 
-        <div 
+        <div
           className="w-full max-w-5xl mx-auto px-4 md:px-6 lg:px-8 text-center flex flex-col items-center justify-center"
         >
           <div className="flex flex-col space-y-4 md:space-y-6 items-center justify-center w-full">
             {linesWithGlobalIndices.map((lineWords, lineIdx) => (
-              <p 
+              <p
                 key={lineIdx}
                 className="text-[clamp(1.4rem,4.5vw,3.8rem)] leading-[1.2] tracking-tight font-medium flex flex-wrap justify-center text-center w-full"
                 style={{ fontFamily: "'Satoshi', sans-serif" }}

@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const unstable_instant = { prefetch: "static" };
+
 const bqmsFeatures = [
   {
     title: "Lab & Water Quality",
@@ -169,6 +171,7 @@ export default function BQMSPage() {
               src="/bqms_images/bqms_seal.png"
               alt="BQMS Quality Seal"
               fill
+              sizes="(max-width: 768px) 100vw, 33vw"
               className="object-contain"
             />
           </div>

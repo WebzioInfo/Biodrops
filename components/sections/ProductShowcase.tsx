@@ -11,7 +11,7 @@ export default function ProductShowcase() {
     <section
       ref={containerRef}
       id="product"
-      className="relative w-full min-h-[100svh] py-24 md:py-32 flex justify-center items-center bg-cover bg-no-repeat"
+      className="relative w-full min-h-[100svh] py-24 md:py-32 flex justify-center items-center bg-cover bg-no-repeat overflow-hidden"
       style={{
         backgroundImage: "url('/images/premium-jar-studio.jpg')",
         backgroundPosition: "80% center", // Keep the jar anchored on the right side
@@ -38,11 +38,11 @@ export default function ProductShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
-            className="text-[clamp(3rem,6vw,5.5rem)] leading-[0.9] text-[#070D0E] tracking-tight mb-12"
+            className="text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.9] text-[#070D0E] tracking-tight mb-12"
             style={{ fontFamily: "'Satoshi', sans-serif" }}
           >
             Pure.<br />
-            <span className="text-[#56C7D9] italic font-medium">Uncompromised.</span>
+            <span className="text-[#56C7D9] italic font-medium break-words md:break-normal">Uncompromised.</span>
           </motion.h2>
 
           {/* Thin minimalist divider line */}
@@ -115,7 +115,7 @@ export default function ProductShowcase() {
         </div>
 
         {/* Right Side: Button positioned at the bottom of the product image area */}
-        <div className="lg:col-span-5 flex flex-col items-center justify-end w-full min-h-[400px] lg:self-stretch z-20 pb-6 lg:pb-12">
+        <div className="lg:col-span-5 flex flex-col items-center justify-end w-full min-h-[150px] lg:self-stretch z-20 pb-6 lg:pb-12">
 
 
 
@@ -124,20 +124,20 @@ export default function ProductShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full flex justify-center"
+            className="w-full flex justify-center px-4"
           >
             <a
               href="https://edrops.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center gap-6 px-[56px] py-[38px] bg-[#cfef00] hover:bg-[#c4e201] text-black text-[16px] font-bold uppercase tracking-[0.2em] rounded-full transition-all duration-200 transform active:scale-95 shadow-[0_8px_25px_rgba(207,239,0,0.3)] hover:shadow-[0_12px_35px_rgba(207,239,0,0.5)] min-w-[320px] sm:min-w-[340px] text-center"
+              className="group flex items-center justify-center gap-3 sm:gap-4 md:gap-6 px-8 sm:px-12 md:px-14 py-5 sm:py-7 md:py-8 bg-[#cfef00] hover:bg-[#c4e201] text-black text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.2em] rounded-full transition-all duration-300 transform hover:scale-[1.02] active:scale-95 shadow-[0_8px_25px_rgba(207,239,0,0.3)] hover:shadow-[0_12px_35px_rgba(207,239,0,0.5)] w-full max-w-[320px] sm:max-w-none sm:w-auto sm:min-w-[320px] md:min-w-[360px]"
             >
-              <span>Request Delivery</span>
+              <span className="whitespace-nowrap">Request Delivery</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 74 74"
-                className="w-[34px] h-[34px] transition-transform duration-300 ease-in-out group-hover:translate-x-[5px]"
+                className="w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 flex-shrink-0 transition-transform duration-300 ease-in-out group-hover:translate-x-1.5"
               >
                 <circle strokeWidth="3" stroke="black" r="35.5" cy="37" cx="37"></circle>
                 <path

@@ -18,13 +18,13 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://biodrops.com"),
+  metadataBase: new URL("https://biodropsindia.com"),
   title: {
-    default: "Biodrops — Premium Mineral Water | An Initiative from Biofix",
-    template: "%s | Biodrops by Biofix",
+    default: "BIODROPS — Premium Mineral Water | An Initiative from Biofix",
+    template: "%s | BIODROPS by Biofix",
   },
   description:
-    "Biodrops, an initiative from Biofix, delivers ultra-pure, 14-stage purified premium mineral water to your home and office. BIS and FSSAI certified safe drinking water in Kerala.",
+    "BIODROPS, an initiative from Biofix, delivers ultra-pure, 14-stage purified premium mineral water to your home and office. BIS and FSSAI certified safe drinking water in Kerala.",
   keywords: [
     "Packaged Drinking Water",
     "Mineral Water",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     "Drinking Water Kerala",
     "Mineral Water Kerala",
     "Packaged Drinking Water India",
-    "Biodrops",
+    "BIODROPS",
     "Biofix",
   ],
   authors: [{ name: "Biofix Technology LLP" }],
@@ -46,14 +46,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    title: "Biodrops — Premium Mineral Water | An Initiative from Biofix",
+    title: "BIODROPS — Premium Mineral Water | An Initiative from Biofix",
     description:
-      "Biodrops, an initiative from Biofix, delivers ultra-pure, 14-stage purified premium mineral water.",
-    siteName: "Biodrops by Biofix",
+      "BIODROPS, an initiative from Biofix, delivers ultra-pure, 14-stage purified premium mineral water.",
+    siteName: "BIODROPS by Biofix",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Biodrops — Premium Mineral Water",
+    title: "BIODROPS — Premium Mineral Water",
     description: "Premium mineral water for modern living. An initiative from Biofix.",
   },
   robots: {
@@ -80,6 +80,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${archivo.variable}`} suppressHydrationWarning>
       <head>
+        <link rel="author" href="/humans.txt" />
+        <link rel="manifest" href="/manifest.webmanifest" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -88,32 +90,53 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "Organization",
-                  "@id": "https://biofixtechnology.com/#organization",
-                  "name": "Biofix Technology LLP",
-                  "url": "https://biofixtechnology.com",
-                  "logo": "https://biodrops.com/images/biofix.png",
-                  "description": "Experts in water purification and BQMS quality management.",
-                  "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "MC Building, Bypass Road",
-                    "addressLocality": "Kondotty",
-                    "addressRegion": "Kerala",
-                    "postalCode": "673638",
-                    "addressCountry": "IN"
+                  "@id": "https://biodropsindia.com/#organization",
+                  "name": "BIODROPS",
+                  "alternateName": ["BIODROPS India", "BIODROPS Water"],
+                  "url": "https://biodropsindia.com",
+                  "logo": "https://biodropsindia.com/images/logo.png",
+                  "description": "Premium packaged drinking water brand. Quality can be canned.",
+                  "parentOrganization": {
+                    "@type": "Organization",
+                    "@id": "https://biofixtechnology.com/#parent_organization",
+                    "name": "Biofix Technology LLP",
+                    "url": "https://biofixtechnology.com"
+                  },
+                  "sameAs": [
+                    "https://www.instagram.com/biodrops.india",
+                    "https://facebook.com"
+                  ],
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+91-88845-77773",
+                    "contactType": "customer service",
+                    "email": "hello@biodrops.com",
+                    "areaServed": "IN",
+                    "availableLanguage": "English"
+                  }
+                },
+                {
+                  "@type": "Brand",
+                  "@id": "https://biodropsindia.com/#brand",
+                  "name": "BIODROPS",
+                  "slogan": "Quality can be canned.",
+                  "logo": "https://biodropsindia.com/images/logo.png",
+                  "parentBrand": {
+                    "@type": "Brand",
+                    "name": "Biofix"
                   }
                 },
                 {
                   "@type": "Product",
-                  "@id": "https://biodrops.com/#product",
-                  "name": "Biodrops Premium Mineral Water",
+                  "@id": "https://biodropsindia.com/#product",
+                  "name": "BIODROPS Premium Mineral Water 20L",
                   "brand": {
-                    "@type": "Brand",
-                    "name": "Biodrops"
+                    "@id": "https://biodropsindia.com/#brand"
                   },
                   "manufacturer": {
-                    "@id": "https://biofixtechnology.com/#organization"
+                    "@id": "https://biodropsindia.com/#organization"
                   },
-                  "description": "14-stage purified premium packaged drinking water.",
+                  "description": "14-stage purified premium packaged drinking water in a 20-liter heavy-duty jar featuring our signature BQMS pure lock safety sleeve.",
                   "category": "Packaged Drinking Water"
                 }
               ]
