@@ -19,19 +19,6 @@ export const metadata: Metadata = {
   },
 };
 
-const certifiedManufacturers = [
-  {
-    name: "Biofix Technology LLP",
-    location: "MC Building, Bypass Road, Kondotty, Kerala 673638",
-    code: "BT",
-  },
-  {
-    name: "Gangothri Aqua Proccessing Unit",
-    location: "Kokkur, Changarakulam, Kerala",
-    code: "GA",
-  }
-];
-
 export default function KnowYourWaterPage() {
   return (
     <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#15b5a3] selection:text-white flex flex-col">
@@ -53,7 +40,7 @@ export default function KnowYourWaterPage() {
           </FadeIn>
         </div>
 
-        <KnowYourWaterForm certifiedManufacturers={certifiedManufacturers} />
+        <KnowYourWaterForm />
       </div>
       <Footer />
     </main>

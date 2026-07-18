@@ -1,29 +1,47 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BatchResults, { BatchResultsSkeleton } from "@/components/sections/BatchResults";
-import { Search, Loader2, MapPin } from "lucide-react";
-import { verifyBatch, VerifyBatchResponse } from "@/services/publicVerification";
+import { Search, Loader2, MapPin, ShieldCheck, Mail, Phone, FileText } from "lucide-react";
+import { verifyBatch, VerifyBatchResponse, fetchOrganizations, Organization } from "@/services/publicVerification";
 import Image from "next/image";
 
-interface Manufacturer {
-  name: string;
-  location: string;
-  code: string;
+function getInitials(name: string) {
+  return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 }
 
-interface KnowYourWaterFormProps {
-  certifiedManufacturers: Manufacturer[];
-}
-
-export default function KnowYourWaterForm({ certifiedManufacturers }: KnowYourWaterFormProps) {
+export default function KnowYourWaterForm() {
   const [batchNumber, setBatchNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<{ title: string; message: string } | null>(null);
   const [result, setResult] = useState<VerifyBatchResponse | null>(null);
 
+  const [orgs, setOrgs] = useState<Organization[]>([]);
+  const [loadingOrgs, setLoadingOrgs] = useState(true);
+  const [orgsError, setOrgsError] = useState(false);
+
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadOrgs() {
+      try {
+        const response = await fetchOrganizations();
+        if (mounted) {
+          setOrgs(response.data || []);
+          setLoadingOrgs(false);
+        }
+      } catch (err) {
+        if (mounted) {
+          setOrgsError(true);
+          setLoadingOrgs(false);
+        }
+      }
+    }
+    loadOrgs();
+    return () => { mounted = false; };
+  }, []);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,28 +165,90 @@ export default function KnowYourWaterForm({ certifiedManufacturers }: KnowYourWa
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="max-w-4xl mx-auto mt-16"
+          className="max-w-6xl mx-auto mt-10"
         >
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">BQMS Certified Manufacturers</h2>
-            <p className="text-gray-500">Quality assured water from our verified partners.</p>
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-1">BQMS Certified Manufacturers</h2>
+            <p className="text-sm text-gray-500">Quality assured water from our verified partners.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-            {certifiedManufacturers.map((mfg, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4 hover:shadow-md transition-shadow">
-                <div className="bg-[#15b5a3]/10 w-12 h-12 flex items-center justify-center rounded-xl text-[#15b5a3] font-bold text-xl shrink-0">
-                  {mfg.code}
-                </div>
-                <div>
-                  <h3 className="font-bold text-gray-900 mb-1">{mfg.name}</h3>
-                  <div className="flex items-start gap-2 text-sm text-gray-500">
-                    <MapPin className="w-4 h-4 shrink-0 mt-0.5" />
-                    <p>{mfg.location}</p>
+          <div className="mb-10">
+            {loadingOrgs ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 animate-pulse">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="bg-gray-200 w-10 h-10 rounded-full shrink-0"></div>
+                      <div className="flex-1">
+                        <div className="h-4 bg-gray-200 rounded w-3/4 mb-1.5"></div>
+                        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-3 bg-gray-200 rounded w-full"></div>
+                      <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
+            ) : orgsError ? (
+              <div className="text-center p-6 bg-white/50 rounded-xl border border-red-100 max-w-lg mx-auto">
+                <p className="text-red-500 text-sm">Unable to load certified manufacturers. Please try again later.</p>
+              </div>
+            ) : orgs.length === 0 ? (
+              <div className="text-center p-6 bg-white/50 rounded-xl border border-gray-200 max-w-lg mx-auto">
+                <p className="text-gray-500 text-sm">No certified manufacturers available.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {orgs.map((org) => (
+                  <div key={org.id} className="bg-white p-4 rounded-[14px] shadow-sm border border-gray-100 flex flex-col hover:shadow-md hover:border-[#15b5a3]/30 hover:-translate-y-0.5 transition-all duration-300 group">
+                    <div className="flex items-start gap-3 mb-4">
+                      <div className="bg-[#15b5a3]/10 w-10 h-10 flex items-center justify-center rounded-full text-[#15b5a3] font-bold text-[14px] shrink-0 group-hover:scale-110 transition-transform">
+                        {getInitials(org.name)}
+                      </div>
+                      <div className="flex-1 min-w-0 pt-0.5">
+                        <h3 className="font-semibold text-gray-900 text-[15px] leading-tight line-clamp-2">{org.name}</h3>
+                        <div className="inline-flex items-center gap-1 text-[#15b5a3] mt-1.5 font-medium text-[11px]">
+                          <ShieldCheck className="w-3.5 h-3.5" />
+                          BQMS Verified
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 mt-auto text-[12.5px] text-gray-600">
+                      {org.address && (
+                        <div className="flex items-start gap-2">
+                          <MapPin className="w-3.5 h-3.5 shrink-0 mt-0.5 text-gray-400" />
+                          <p className="leading-tight">{org.address}</p>
+                        </div>
+                      )}
+                      
+                      {org.licenseNumber && (
+                        <div className="flex items-center gap-2">
+                          <FileText className="w-3.5 h-3.5 shrink-0 text-gray-400" />
+                          <p>{org.licenseNumber}</p>
+                        </div>
+                      )}
+
+                      {org.contactEmail && (
+                        <div className="flex items-center gap-2">
+                          <Mail className="w-3.5 h-3.5 shrink-0 text-gray-400" />
+                          <p className="truncate">{org.contactEmail}</p>
+                        </div>
+                      )}
+
+                      {org.contactPhone && (
+                        <div className="flex items-center gap-2">
+                          <Phone className="w-3.5 h-3.5 shrink-0 text-gray-400" />
+                          <p>{org.contactPhone}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="max-w-xs mx-auto opacity-50 flex flex-col items-center">

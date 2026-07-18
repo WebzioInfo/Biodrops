@@ -29,9 +29,7 @@ export interface VerifyBatchResponse {
   };
 }
 
-const BASE_URL = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? "http://localhost:3001"
-  : "https://bqms.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_BQMS_API_URL || "https://bqms.vercel.app";
 
 export async function verifyBatch(
   batchNumber: string,
@@ -53,5 +51,39 @@ export async function verifyBatch(
   }
 
   const data: VerifyBatchResponse = await response.json();
+  return data;
+}
+
+export interface Organization {
+  id: string;
+  name: string;
+  address: string | null;
+  licenseNumber: string | null;
+  contactEmail: string | null;
+  contactPhone: string | null;
+}
+
+export interface FetchOrganizationsResponse {
+  success: boolean;
+  data?: Organization[];
+  message?: string;
+}
+
+export async function fetchOrganizations(
+  signal?: AbortSignal
+): Promise<FetchOrganizationsResponse> {
+  const response = await fetch(`${BASE_URL}/api/public/organizations`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    signal,
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data: FetchOrganizationsResponse = await response.json();
   return data;
 }
