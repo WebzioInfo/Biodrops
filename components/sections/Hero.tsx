@@ -86,9 +86,9 @@ export default function Hero() {
               <Image
                 src="/images/biofix.png"
                 alt="Biofix Logo"
-                width={240}
-                height={72}
-                className="h-20 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                width={120}
+                height={36}
+                className="h-8 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300"
               />
             </span>
             <svg className="w-3.5 h-3.5 opacity-60 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -100,7 +100,7 @@ export default function Hero() {
           <span className="hidden sm:inline w-1.5 h-1.5 rounded-full bg-[#070D0E]/15" />
 
           <motion.a
-            href="#bqms"
+            href="bqms"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}

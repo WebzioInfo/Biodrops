@@ -3,8 +3,6 @@ import Footer from "@/components/sections/Footer";
 import Image from "next/image";
 import { WhyUsHero, WhyUsGrid } from "@/components/sections/WhyUsClient";
 
-export const unstable_instant = { prefetch: "static" };
-
 export const metadata: Metadata = {
   title: "Why Us - BIODROPS",
   description: "Learn why BIODROPS is the leading packaged mineral water brand in Kerala. Pristine hydration, perfectly balanced pH, untouched by human hands, and 14-stage purified.",

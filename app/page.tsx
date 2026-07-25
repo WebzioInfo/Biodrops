@@ -7,8 +7,6 @@ import ContactSection from "@/components/sections/ContactSection";
 import BQMSSection from "@/components/sections/BQMSSection";
 import Footer from "@/components/sections/Footer";
 
-export const unstable_instant = { prefetch: "static" };
-
 export const metadata: Metadata = {
   title: "BIODROPS | Pure, Mineral-Balanced Packaged Drinking Water",
   description: "BIODROPS is Kerala's premium packaged drinking water brand. Sourced and processed under the strict guidelines of Biofix Quality Management System (BQMS). Quality can be canned.",

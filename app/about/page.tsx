@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import FadeIn from "@/components/effects/FadeIn";
 import Footer from "@/components/sections/Footer";
 
-export const unstable_instant = { prefetch: "static" };
-
 export const metadata: Metadata = {
   title: "Our Story - BIODROPS",
   description: "Learn about the vision behind BIODROPS, a premium packaged drinking water brand launched by Biofix Technology LLP. Engineered for absolute purity.",
