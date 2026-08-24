@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import Footer from "@/components/sections/Footer";
 import { ProcessHero, ProcessStepsGrid } from "@/components/sections/ProcessClient";
 
-export const unstable_instant = { prefetch: "static" };
-
 export const metadata: Metadata = {
   title: "14-Stage Purification Process - BIODROPS",
   description: "Explore the meticulous 14-stage purification process of BIODROPS. Sourced from ground water, sand-filtered, RO purified, micro-filtered, and UV sterilized.",

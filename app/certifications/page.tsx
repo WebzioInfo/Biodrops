@@ -3,8 +3,6 @@ import Footer from "@/components/sections/Footer";
 import { ShieldCheck, Award, CheckCircle } from "lucide-react";
 import FadeIn from "@/components/effects/FadeIn";
 
-export const unstable_instant = { prefetch: "static" };
-
 export const metadata: Metadata = {
   title: "Certifications & Compliance - BIODROPS",
   description: "BIODROPS is fully certified under government guidelines, adhering to BIS IS 14543 standards and valid FSSAI food safety licenses under BQMS management.",

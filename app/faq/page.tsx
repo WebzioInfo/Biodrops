@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import Footer from "@/components/sections/Footer";
 import FadeIn from "@/components/effects/FadeIn";
 
-export const unstable_instant = { prefetch: "static" };
-
 export const metadata: Metadata = {
   title: "Frequently Asked Questions (FAQ) - BIODROPS",
   description: "Get answers to frequently asked questions about BIODROPS water purity, GWA sourcing, BQMS systems, and bulk water supply in Kerala.",

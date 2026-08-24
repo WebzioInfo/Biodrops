@@ -15,8 +15,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const unstable_instant = { prefetch: "static" };
-
 const bqmsFeatures = [
   {
     title: "Lab & Water Quality",

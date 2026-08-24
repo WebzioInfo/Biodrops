@@ -4,8 +4,6 @@ import Footer from "@/components/sections/Footer";
 import KnowYourWaterForm from "@/components/sections/KnowYourWaterForm";
 import FadeIn from "@/components/effects/FadeIn";
 
-export const unstable_instant = { prefetch: "static" };
-
 export const metadata: Metadata = {
   title: "Know Your Water - Verify Batch | BIODROPS",
   description: "Enter your BIODROPS 20L jar sleeve batch number to instantly verify raw water sourcing details, BQMS laboratory reports, and safety licenses.",
