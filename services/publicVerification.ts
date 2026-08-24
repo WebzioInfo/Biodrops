@@ -29,13 +29,20 @@ export interface VerifyBatchResponse {
   };
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_BQMS_API_URL || "https://bqms.vercel.app";
+const getBaseUrl = (): string => {
+  if (typeof window !== "undefined") {
+    // In browser: use same-origin relative endpoint to eliminate CORS errors completely
+    return "";
+  }
+  return process.env.NEXT_PUBLIC_BQMS_API_URL || process.env.BQMS_API_URL || "https://bqms.vercel.app";
+};
 
 export async function verifyBatch(
   batchNumber: string,
   signal?: AbortSignal
 ): Promise<VerifyBatchResponse> {
-  const response = await fetch(`${BASE_URL}/api/public/verify/${encodeURIComponent(batchNumber)}`, {
+  const baseUrl = getBaseUrl();
+  const response = await fetch(`${baseUrl}/api/public/verify/${encodeURIComponent(batchNumber)}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -72,7 +79,8 @@ export interface FetchOrganizationsResponse {
 export async function fetchOrganizations(
   signal?: AbortSignal
 ): Promise<FetchOrganizationsResponse> {
-  const response = await fetch(`${BASE_URL}/api/public/organizations`, {
+  const baseUrl = getBaseUrl();
+  const response = await fetch(`${baseUrl}/api/public/organizations`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -87,3 +95,4 @@ export async function fetchOrganizations(
   const data: FetchOrganizationsResponse = await response.json();
   return data;
 }
+

@@ -43,6 +43,53 @@ export default function KnowYourWaterForm() {
     return () => { mounted = false; };
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const batchParam = params.get("batch");
+      if (batchParam && batchParam.trim()) {
+        const sanitized = batchParam.trim().replace(/\s+/g, " ");
+        setBatchNumber(sanitized);
+
+        if (abortControllerRef.current) {
+          abortControllerRef.current.abort();
+        }
+
+        const abortController = new AbortController();
+        abortControllerRef.current = abortController;
+
+        setLoading(true);
+        setError(null);
+        setResult(null);
+
+        verifyBatch(sanitized, abortController.signal)
+          .then((data) => {
+            setResult(data);
+          })
+          .catch((err: any) => {
+            if (err.name === "AbortError") return;
+            if (err.message === "BATCH_NOT_FOUND") {
+              setError({
+                title: "Batch Not Found",
+                message: "The entered batch number could not be verified. Please check the batch code and try again."
+              });
+            } else {
+              setError({
+                title: "Connection Error",
+                message: "Unable to connect to the verification server. Please try again later."
+              });
+            }
+          })
+          .finally(() => {
+            if (abortControllerRef.current === abortController) {
+              setLoading(false);
+              abortControllerRef.current = null;
+            }
+          });
+      }
+    }
+  }, []);
+
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
 

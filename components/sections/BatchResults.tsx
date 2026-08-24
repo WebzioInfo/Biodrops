@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { VerifyBatchResponse } from "@/services/publicVerification";
-import { CheckCircle2, Factory, CalendarDays, ShieldCheck, Droplets, Download } from "lucide-react";
+import { CheckCircle2, Factory, CalendarDays, ShieldCheck, Droplets, Download, Loader2 } from "lucide-react";
 import { calculateExpiryInfo } from "@/lib/date";
+import { downloadWaterReportPdf } from "@/bqms-water-report-pdf";
+import { adaptVerifyBatchToWaterReport, getWaterReportFilename } from "@/lib/biodropsWaterReportAdapter";
 
 interface BatchResultsProps {
   batch: VerifyBatchResponse;
@@ -61,6 +64,8 @@ export function BatchResultsSkeleton() {
 }
 
 export default function BatchResults({ batch }: BatchResultsProps) {
+  const [downloading, setDownloading] = useState(false);
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
@@ -82,6 +87,20 @@ export default function BatchResults({ batch }: BatchResultsProps) {
   };
 
   const expiryInfo = calculateExpiryInfo(batch.manufacturing.mfgDate, batch.manufacturing.shelfLife);
+
+  const handleDownload = async () => {
+    if (downloading) return;
+    try {
+      setDownloading(true);
+      const reportContract = adaptVerifyBatchToWaterReport(batch);
+      const filename = getWaterReportFilename(batch.batchNumber);
+      await downloadWaterReportPdf(reportContract, filename);
+    } catch (error) {
+      console.error("Failed to generate water report PDF:", error);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   return (
     <motion.div
@@ -159,16 +178,21 @@ export default function BatchResults({ batch }: BatchResultsProps) {
           
           {/* Download Button */}
           <button
-            onClick={() => {
-              if (batch.report.available && batch.report.downloadUrl) {
-                window.open(batch.report.downloadUrl, '_blank');
-              }
-            }}
-            disabled={!batch.report.available}
-            className="mt-6 flex items-center justify-center gap-2 w-full py-2.5 bg-white border border-[#15b5a3] text-[#15b5a3] hover:bg-[#15b5a3] hover:text-white disabled:border-gray-200 disabled:text-gray-400 disabled:bg-gray-50 disabled:hover:bg-gray-50 transition-colors rounded-xl font-medium text-sm shadow-sm"
+            onClick={handleDownload}
+            disabled={downloading || batch.report.available === false}
+            className="mt-6 flex items-center justify-center gap-2 w-full py-2.5 bg-white border border-[#15b5a3] text-[#15b5a3] hover:bg-[#15b5a3] hover:text-white disabled:border-gray-200 disabled:text-gray-400 disabled:bg-gray-50 disabled:hover:bg-gray-50 transition-colors rounded-xl font-medium text-sm shadow-sm cursor-pointer disabled:cursor-not-allowed"
           >
-            <Download className="w-4 h-4" />
-            {batch.report.available ? "Download Water Report" : "Report Not Available"}
+            {downloading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Generating Water Report...
+              </>
+            ) : (
+              <>
+                <Download className="w-4 h-4" />
+                {batch.report.available !== false ? "Download Water Report" : "Report Not Available"}
+              </>
+            )}
           </button>
         </motion.div>
 
