@@ -40,11 +40,20 @@ export interface AquoraApiResponse<T> {
 }
 
 export interface AquoraBatchManufacturer {
+  id?: string;
   name: string | null;
+  code?: string;
+  subdomain?: string;
+  customDomain?: string | null;
+  logoUrl?: string | null;
   address: string | null;
   location: string | null;
+  licenseNumber?: string | null;
+  gstNumber?: string | null;
+  panNumber?: string | null;
   email?: string | null;
   phone?: string | null;
+  isBiodropsProduction?: boolean;
 }
 
 export interface AquoraBatchManufacturing {
@@ -96,17 +105,20 @@ export interface AquoraBatchVerificationResponse {
 /**
  * Returns base URL for API requests.
  * In browser environment: returns empty string to use same-origin relative proxy routes (/api/public/...).
- * In server environment: uses AQUORA_PUBLIC_API_URL or NEXT_PUBLIC_AQUORA_PUBLIC_API_URL.
+ * In server environment: uses configured environment variables with production fallback to https://aquora-backend.webziointernational.in.
  */
 export const getAquoraBaseUrl = (): string => {
   if (typeof window !== "undefined") {
     return "";
   }
-  return (
+  const raw =
     process.env.AQUORA_PUBLIC_API_URL ||
     process.env.NEXT_PUBLIC_AQUORA_PUBLIC_API_URL ||
-    "http://localhost:5000"
-  );
+    process.env.NEXT_PUBLIC_AQUORA_API_URL ||
+    process.env.AQUORA_API_URL ||
+    "https://aquora-backend.webziointernational.in";
+
+  return raw.trim().replace(/\/+$/, "");
 };
 
 /**

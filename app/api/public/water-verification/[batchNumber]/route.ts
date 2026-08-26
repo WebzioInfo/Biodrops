@@ -1,39 +1,61 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const AQUORA_PUBLIC_API_URL =
-  process.env.AQUORA_PUBLIC_API_URL ||
-  process.env.NEXT_PUBLIC_AQUORA_PUBLIC_API_URL ||
-  "http://localhost:5000";
+function getUpstreamBaseUrl(): string {
+  const url =
+    process.env.AQUORA_PUBLIC_API_URL ||
+    process.env.NEXT_PUBLIC_AQUORA_PUBLIC_API_URL ||
+    process.env.NEXT_PUBLIC_AQUORA_API_URL ||
+    process.env.AQUORA_API_URL ||
+    "https://aquora-backend.webziointernational.in";
+
+  return url.trim().replace(/\/+$/, "");
+}
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ batchNumber: string }> }
 ) {
-  try {
-    const { batchNumber } = await params;
-    if (!batchNumber) {
-      return NextResponse.json(
-        { success: false, verified: false, message: "Batch number parameter is required" },
-        { status: 400 }
-      );
-    }
+  const { batchNumber } = await params;
+  if (!batchNumber) {
+    return NextResponse.json(
+      { success: false, verified: false, code: "INVALID_BATCH_NUMBER", message: "Batch number parameter is required" },
+      { status: 400 }
+    );
+  }
 
-    const upstreamUrl = `${AQUORA_PUBLIC_API_URL}/api/public/water/batches/${encodeURIComponent(batchNumber)}`;
+  const upstreamBase = getUpstreamBaseUrl();
+  const upstreamUrl = `${upstreamBase}/api/public/water/batches/${encodeURIComponent(batchNumber)}`;
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
 
     const res = await fetch(upstreamUrl, {
       headers: {
         "Content-Type": "application/json",
       },
+      signal: controller.signal,
       cache: "no-store",
     });
+    clearTimeout(timeoutId);
 
     const data = await res.json();
     return NextResponse.json(data, { status: res.status });
-  } catch (error: unknown) {
-    console.error("Error verifying batch from upstream Aquora Public API:", error);
+  } catch (error: any) {
+    const isTimeout = error.name === "AbortError";
+    const errorCode = isTimeout ? "AQUORA_TIMEOUT" : "AQUORA_CONNECTION_FAILED";
+    console.error(`[Aquora Batch Verification Proxy Failure] Code: ${errorCode}, Upstream: ${upstreamUrl}, Message: ${error.message}`);
+
     return NextResponse.json(
-      { success: false, verified: false, message: "Internal server error verifying batch" },
-      { status: 500 }
+      {
+        success: false,
+        verified: false,
+        code: errorCode,
+        message: isTimeout
+          ? "Aquora batch verification request timed out."
+          : "Internal server error verifying batch with Aquora.",
+      },
+      { status: isTimeout ? 504 : 502 }
     );
   }
 }

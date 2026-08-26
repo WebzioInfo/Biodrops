@@ -1,35 +1,53 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const AQUORA_PUBLIC_API_URL =
-  process.env.AQUORA_PUBLIC_API_URL ||
-  process.env.NEXT_PUBLIC_AQUORA_PUBLIC_API_URL ||
-  "http://localhost:5000";
+function getUpstreamBaseUrl(): string {
+  const url =
+    process.env.AQUORA_PUBLIC_API_URL ||
+    process.env.NEXT_PUBLIC_AQUORA_PUBLIC_API_URL ||
+    process.env.NEXT_PUBLIC_AQUORA_API_URL ||
+    process.env.AQUORA_API_URL ||
+    "https://aquora-backend.webziointernational.in";
+
+  return url.trim().replace(/\/+$/, "");
+}
 
 export async function GET(request: NextRequest) {
+  const upstreamBase = getUpstreamBaseUrl();
+  const { searchParams } = new URL(request.url);
+  const search = searchParams.get("search");
+  const page = searchParams.get("page");
+  const pageSize = searchParams.get("pageSize");
+
+  const upstreamParams = new URLSearchParams();
+  if (search) upstreamParams.set("search", search);
+  if (page) upstreamParams.set("page", page);
+  if (pageSize) upstreamParams.set("pageSize", pageSize);
+
+  const queryString = upstreamParams.toString() ? `?${upstreamParams.toString()}` : "";
+  const upstreamUrl = `${upstreamBase}/api/public/manufacturers${queryString}`;
+
   try {
-    const { searchParams } = new URL(request.url);
-    const search = searchParams.get("search");
-    const page = searchParams.get("page");
-    const pageSize = searchParams.get("pageSize");
-
-    const upstreamParams = new URLSearchParams();
-    if (search) upstreamParams.set("search", search);
-    if (page) upstreamParams.set("page", page);
-    if (pageSize) upstreamParams.set("pageSize", pageSize);
-
-    const queryString = upstreamParams.toString() ? `?${upstreamParams.toString()}` : "";
-    const upstreamUrl = `${AQUORA_PUBLIC_API_URL}/api/public/manufacturers${queryString}`;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
 
     const res = await fetch(upstreamUrl, {
       headers: {
         "Content-Type": "application/json",
       },
+      signal: controller.signal,
       next: { revalidate: 60 },
     });
+    clearTimeout(timeoutId);
 
     if (!res.ok) {
+      console.error(`[Aquora Upstream Error] URL: ${upstreamUrl}, Status: ${res.status}, StatusText: ${res.statusText}`);
       return NextResponse.json(
-        { success: false, message: `Upstream Aquora Public API error: ${res.statusText}` },
+        {
+          success: false,
+          code: "AQUORA_HTTP_ERROR",
+          message: `Upstream Aquora Public API error: ${res.statusText}`,
+          statusCode: res.status,
+        },
         { status: res.status }
       );
     }
@@ -42,10 +60,19 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error: any) {
-    console.error("Error fetching manufacturers from upstream Aquora Public API:", error);
+    const isTimeout = error.name === "AbortError";
+    const errorCode = isTimeout ? "AQUORA_TIMEOUT" : "AQUORA_CONNECTION_FAILED";
+    console.error(`[Aquora Proxy Failure] Code: ${errorCode}, Upstream: ${upstreamUrl}, Message: ${error.message}`);
+
     return NextResponse.json(
-      { success: false, message: "Internal server error fetching manufacturers" },
-      { status: 500 }
+      {
+        success: false,
+        code: errorCode,
+        message: isTimeout
+          ? "Aquora upstream API request timed out."
+          : "Internal server error connecting to Aquora upstream API.",
+      },
+      { status: isTimeout ? 504 : 502 }
     );
   }
 }
