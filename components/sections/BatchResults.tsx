@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import { motion, Variants } from "framer-motion";
-import { VerifyBatchResponse } from "@/services/publicVerification";
+import { AquoraBatchVerificationResponse } from "@/services/aquoraPublicApi";
 import { CheckCircle2, Factory, CalendarDays, ShieldCheck, Droplets, Download, Loader2 } from "lucide-react";
-import { calculateExpiryInfo } from "@/lib/date";
 import { downloadWaterReportPdf } from "@/bqms-water-report-pdf";
 import { adaptVerifyBatchToWaterReport, getWaterReportFilename } from "@/lib/biodropsWaterReportAdapter";
 
 interface BatchResultsProps {
-  batch: VerifyBatchResponse;
+  batch: AquoraBatchVerificationResponse;
 }
 
 export function BatchResultsSkeleton() {
@@ -86,14 +85,20 @@ export default function BatchResults({ batch }: BatchResultsProps) {
     return String(val);
   };
 
-  const expiryInfo = calculateExpiryInfo(batch.manufacturing.mfgDate, batch.manufacturing.shelfLife);
+  const data = batch.data;
+  const batchNo = data?.batchNumber || "—";
+  const mfg = data?.manufacturing?.manufacturedDate;
+  const shelfLife = data?.expiry?.shelfLifeMonths
+    ? `${data.expiry.shelfLifeMonths} Months`
+    : "6 Months";
+  const bestBefore = data?.expiry?.bestBefore;
 
   const handleDownload = async () => {
-    if (downloading) return;
+    if (downloading || !data) return;
     try {
       setDownloading(true);
       const reportContract = adaptVerifyBatchToWaterReport(batch);
-      const filename = getWaterReportFilename(batch.batchNumber);
+      const filename = getWaterReportFilename(batchNo);
       await downloadWaterReportPdf(reportContract, filename);
     } catch (error) {
       console.error("Failed to generate water report PDF:", error);
@@ -113,7 +118,7 @@ export default function BatchResults({ batch }: BatchResultsProps) {
         <CheckCircle2 className="text-[#15b5a3] w-8 h-8" />
         <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Verified Batch Details</h2>
         <span className="ml-auto bg-[#15b5a3]/10 text-[#15b5a3] px-4 py-1.5 rounded-full font-mono font-medium text-sm">
-          {displayVal(batch.batchNumber)}
+          {displayVal(batchNo)}
         </span>
       </div>
 
@@ -126,10 +131,10 @@ export default function BatchResults({ batch }: BatchResultsProps) {
             <h3 className="text-lg font-bold text-gray-900">Manufacturer</h3>
           </div>
           <div className="space-y-3">
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Name:</span> {displayVal(batch.manufacturer.name)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Address:</span> {displayVal(batch.manufacturer.address)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Location:</span> {displayVal(batch.manufacturer.location)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">MFG Date:</span> {displayVal(batch.manufacturing.mfgDate)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Name:</span> {displayVal(data?.manufacturer?.name)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Address:</span> {displayVal(data?.manufacturer?.address)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Location:</span> {displayVal(data?.manufacturer?.location)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">MFG Date:</span> {displayVal(mfg)}</p>
           </div>
         </motion.div>
 
@@ -140,8 +145,8 @@ export default function BatchResults({ batch }: BatchResultsProps) {
             <h3 className="text-lg font-bold text-gray-900">Expiry</h3>
           </div>
           <div className="space-y-3">
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Best Before:</span> {displayVal(expiryInfo.bestBefore)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Shelf Life:</span> {displayVal(expiryInfo.shelfLife)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Best Before:</span> {displayVal(bestBefore)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Shelf Life:</span> {displayVal(shelfLife)}</p>
           </div>
         </motion.div>
 
@@ -152,8 +157,8 @@ export default function BatchResults({ batch }: BatchResultsProps) {
             <h3 className="text-lg font-bold text-gray-900">Licenses & Approvals</h3>
           </div>
           <div className="space-y-3">
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">FSSAI:</span> {displayVal(batch.licenses.fssai)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">BIS:</span> {displayVal(batch.licenses.bis)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">FSSAI:</span> {displayVal(data?.licenses?.fssai)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">BIS:</span> {displayVal(data?.licenses?.bis)}</p>
           </div>
         </motion.div>
 
@@ -164,22 +169,17 @@ export default function BatchResults({ batch }: BatchResultsProps) {
             <h3 className="text-lg font-bold text-gray-900">Water Quality</h3>
           </div>
           <div className="space-y-3 flex-1">
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">pH Level:</span> {displayVal(batch.waterQuality.ph)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">TDS:</span> {displayVal(batch.waterQuality.tds)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Turbidity:</span> {displayVal(batch.waterQuality.turbidity)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Microbiology:</span> {displayVal(batch.waterQuality.microbiology)}</p>
-            <div className="flex items-center gap-2">
-              <span className="font-medium text-gray-900 text-sm">Sterilization:</span>
-              {batch.waterQuality.uv === true && <span className="bg-[#15b5a3]/10 text-[#15b5a3] text-xs px-2 py-0.5 rounded-full font-medium">UV</span>}
-              {batch.waterQuality.ozone === true && <span className="bg-[#15b5a3]/10 text-[#15b5a3] text-xs px-2 py-0.5 rounded-full font-medium">Ozone</span>}
-              {(batch.waterQuality.uv !== true && batch.waterQuality.ozone !== true) && <span className="text-sm text-gray-600">—</span>}
-            </div>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">pH Level:</span> {displayVal(data?.waterQuality?.ph)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">TDS:</span> {displayVal(data?.waterQuality?.tds)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Turbidity:</span> {displayVal(data?.waterQuality?.turbidity)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Microbiology:</span> {displayVal(data?.waterQuality?.microbiology)}</p>
+            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Sterilization:</span> {displayVal(data?.waterQuality?.sterilization)}</p>
           </div>
           
           {/* Download Button */}
           <button
             onClick={handleDownload}
-            disabled={downloading || batch.report.available === false}
+            disabled={downloading || data?.report?.available === false}
             className="mt-6 flex items-center justify-center gap-2 w-full py-2.5 bg-white border border-[#15b5a3] text-[#15b5a3] hover:bg-[#15b5a3] hover:text-white disabled:border-gray-200 disabled:text-gray-400 disabled:bg-gray-50 disabled:hover:bg-gray-50 transition-colors rounded-xl font-medium text-sm shadow-sm cursor-pointer disabled:cursor-not-allowed"
           >
             {downloading ? (
@@ -190,7 +190,7 @@ export default function BatchResults({ batch }: BatchResultsProps) {
             ) : (
               <>
                 <Download className="w-4 h-4" />
-                {batch.report.available !== false ? "Download Water Report" : "Report Not Available"}
+                {data?.report?.available !== false ? "Download Water Report" : "Report Not Available"}
               </>
             )}
           </button>

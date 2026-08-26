@@ -1,6 +1,6 @@
-import { VerifyBatchResponse } from "@/services/publicVerification";
-import { WaterReportInputContract, QualityStatus } from "@/bqms-water-report-pdf";
-import { calculateExpiryInfo, parseISODate, formatReadableDate } from "@/lib/date";
+import { AquoraBatchVerificationResponse } from "../services/aquoraPublicApi";
+import { WaterReportInputContract, QualityStatus } from "../bqms-water-report-pdf";
+import { parseISODate, formatReadableDate } from "./date";
 
 export interface AdapterOptions {
   origin?: string;
@@ -70,50 +70,46 @@ export function getBiodropsVerificationUrl(batchNumber: string, customOrigin?: s
       ? window.location.origin
       : process.env.NEXT_PUBLIC_APP_URL || "https://biodropsindia.com");
 
-  return `${base}/KNOWYOURWATER?batch=${encodeURIComponent(batchNumber)}`;
+  return `${base}/know-your-water?batch=${encodeURIComponent(batchNumber)}`;
 }
 
 /**
- * Adapts real Biodrops VerifyBatchResponse into the exact WaterReportInputContract
- * consumed by the transferred BQMS Water Report PDF generator.
+ * Adapts Aquora Batch Verification Response into WaterReportInputContract
+ * consumed by the in-browser Water Report PDF generator.
  */
 export function adaptVerifyBatchToWaterReport(
-  batch: VerifyBatchResponse,
+  batch: AquoraBatchVerificationResponse,
   options?: AdapterOptions
 ): WaterReportInputContract {
-  const batchNo = batch.batchNumber || "—";
+  const data = batch.data;
+  const batchNo = data?.batchNumber || "—";
   const reportNumber = options?.reportNumber || `RPT-${batchNo}`;
   const sampleCode = batchNo;
 
   // Manufacturer Details
-  const clientName = batch.manufacturer?.name || "BIODROPS Certified Manufacturer";
-  const clientAddress = batch.manufacturer?.address || undefined;
-  const location = batch.manufacturer?.location || "Plant Facility";
+  const clientName = data?.manufacturer?.name || "BIODROPS Certified Manufacturer";
+  const clientAddress = data?.manufacturer?.address || undefined;
+  const location = data?.manufacturer?.location || "Plant Facility";
 
   // Manufacturing and Expiry Dates
-  const parsedMfg = parseISODate(batch.manufacturing?.mfgDate);
+  const mfgRaw = data?.manufacturing?.manufacturedDate;
+  const parsedMfg = parseISODate(mfgRaw);
   const productionDate = parsedMfg
     ? formatReadableDate(parsedMfg)
-    : (batch.manufacturing?.mfgDate || "—");
+    : (mfgRaw || "—");
 
-  const expiryInfo = calculateExpiryInfo(
-    batch.manufacturing?.mfgDate,
-    batch.manufacturing?.shelfLife
-  );
-
-  const bestBefore =
-    expiryInfo.bestBefore !== "—"
-      ? `${expiryInfo.bestBefore} (${expiryInfo.shelfLife})`
-      : "—";
+  const bestBefore = data?.expiry?.bestBefore
+    ? `${data.expiry.bestBefore} (${data.expiry.shelfLifeMonths ? `${data.expiry.shelfLifeMonths} Months` : "6 Months"})`
+    : "—";
 
   // Dynamic QR Verification URL
   const verificationUrl = getBiodropsVerificationUrl(batchNo, options?.origin);
 
   // Parameter Evaluation
-  const phStatus = resolvePhStatus(batch.waterQuality?.ph);
-  const tdsStatus = resolveTdsStatus(batch.waterQuality?.tds);
-  const turbStatus = resolveTurbidityStatus(batch.waterQuality?.turbidity);
-  const microStatus = resolveMicroStatus(batch.waterQuality?.microbiology);
+  const phStatus = resolvePhStatus(data?.waterQuality?.ph);
+  const tdsStatus = resolveTdsStatus(data?.waterQuality?.tds);
+  const turbStatus = resolveTurbidityStatus(data?.waterQuality?.turbidity);
+  const microStatus = resolveMicroStatus(data?.waterQuality?.microbiology);
 
   // Overall compliance check
   const hasFailure =
@@ -128,43 +124,38 @@ export function adaptVerifyBatchToWaterReport(
 
   const overallStatus: QualityStatus = hasFailure ? "FAIL" : "APPROVED";
 
-  // Multi-barrier Sterilization & Licenses in Remarks
-  const sterilizationList: string[] = [];
-  if (batch.waterQuality?.uv === true) sterilizationList.push("UV Disinfection");
-  if (batch.waterQuality?.ozone === true) sterilizationList.push("Ozonisation");
-
   const remarksList: string[] = [
     "OBSERVATIONS & COMPLIANCE:",
     "1. The water sample complies with standard specifications for Packaged Drinking Water (IS 14543 / IS 10500).",
   ];
 
-  if (batch.licenses?.fssai || batch.licenses?.bis) {
+  if (data?.licenses?.fssai || data?.licenses?.bis) {
     const licInfo = [
-      batch.licenses?.fssai ? `FSSAI Lic No: ${batch.licenses.fssai}` : null,
-      batch.licenses?.bis ? `BIS CM/L No: ${batch.licenses.bis}` : null,
+      data?.licenses?.fssai ? `FSSAI Lic No: ${data.licenses.fssai}` : null,
+      data?.licenses?.bis ? `BIS CM/L No: ${data.licenses.bis}` : null,
     ]
       .filter(Boolean)
       .join(" | ");
     remarksList.push(`2. Plant Licenses: ${licInfo}`);
   }
 
-  if (sterilizationList.length > 0) {
-    remarksList.push(`3. Sterilization System: ${sterilizationList.join(" + ")} (Active)`);
+  if (data?.waterQuality?.sterilization) {
+    remarksList.push(`3. Sterilization System: ${data.waterQuality.sterilization} (Active)`);
   }
 
   const remarks = remarksList.join("\n");
 
-  // Real Parameter Rows mapped to BQMS Structure
+  // Real Parameter Rows mapped to Water Report Structure
   const parameters = [
     // Physical Parameters
     {
       name: "pH",
       category: "PHYSICAL" as const,
       result:
-        batch.waterQuality?.ph !== null &&
-        batch.waterQuality?.ph !== undefined &&
-        batch.waterQuality?.ph !== ""
-          ? String(batch.waterQuality.ph)
+        data?.waterQuality?.ph !== null &&
+        data?.waterQuality?.ph !== undefined &&
+        data?.waterQuality?.ph !== ""
+          ? String(data.waterQuality.ph)
           : "—",
       unit: "—",
       standard: "6.5 - 8.5",
@@ -174,10 +165,10 @@ export function adaptVerifyBatchToWaterReport(
       name: "TDS",
       category: "PHYSICAL" as const,
       result:
-        batch.waterQuality?.tds !== null &&
-        batch.waterQuality?.tds !== undefined &&
-        batch.waterQuality?.tds !== ""
-          ? String(batch.waterQuality.tds)
+        data?.waterQuality?.tds !== null &&
+        data?.waterQuality?.tds !== undefined &&
+        data?.waterQuality?.tds !== ""
+          ? String(data.waterQuality.tds)
           : "—",
       unit: "mg/L",
       standard: "≤ 500",
@@ -187,10 +178,10 @@ export function adaptVerifyBatchToWaterReport(
       name: "Turbidity",
       category: "PHYSICAL" as const,
       result:
-        batch.waterQuality?.turbidity !== null &&
-        batch.waterQuality?.turbidity !== undefined &&
-        batch.waterQuality?.turbidity !== ""
-          ? String(batch.waterQuality.turbidity)
+        data?.waterQuality?.turbidity !== null &&
+        data?.waterQuality?.turbidity !== undefined &&
+        data?.waterQuality?.turbidity !== ""
+          ? String(data.waterQuality.turbidity)
           : "—",
       unit: "NTU",
       standard: "≤ 1",
@@ -259,8 +250,8 @@ export function adaptVerifyBatchToWaterReport(
     {
       name: "E.coli",
       category: "MICROBIOLOGY" as const,
-      result: batch.waterQuality?.microbiology
-        ? batch.waterQuality.microbiology.toLowerCase().includes("present")
+      result: data?.waterQuality?.microbiology
+        ? data.waterQuality.microbiology.toLowerCase().includes("present")
           ? "Present"
           : "Absent"
         : "Absent",
@@ -271,8 +262,8 @@ export function adaptVerifyBatchToWaterReport(
     {
       name: "Coliform",
       category: "MICROBIOLOGY" as const,
-      result: batch.waterQuality?.microbiology
-        ? batch.waterQuality.microbiology.toLowerCase().includes("present")
+      result: data?.waterQuality?.microbiology
+        ? data.waterQuality.microbiology.toLowerCase().includes("present")
           ? "Present"
           : "Absent"
         : "Absent",

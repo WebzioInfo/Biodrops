@@ -1,98 +1,65 @@
-export interface VerifyBatchResponse {
+/**
+ * BioDrops Public Verification Services
+ * 
+ * Re-exports from centralized Aquora Public API layer with backward-compatible adapters.
+ */
+
+import {
+  AquoraManufacturerDto,
+  AquoraBatchVerificationResponse,
+  fetchAquoraManufacturers,
+  verifyAquoraBatch,
+} from "./aquoraPublicApi";
+
+export type Manufacturer = AquoraManufacturerDto;
+export type Organization = AquoraManufacturerDto;
+
+export interface FetchManufacturersResponse {
   success: boolean;
-  batchNumber: string;
-  manufacturer: {
-    name: string | null;
-    address: string | null;
-    location: string | null;
-  };
-  manufacturing: {
-    mfgDate: string | null;
-    bestBefore: string | null;
-    shelfLife: string | null;
-  };
-  licenses: {
-    fssai: string | null;
-    bis: string | null;
-  };
-  waterQuality: {
-    ph: number | string | null;
-    tds: number | string | null;
-    turbidity: string | null;
-    microbiology: string | null;
-    uv: boolean | null;
-    ozone: boolean | null;
-  };
-  report: {
-    available: boolean;
-    downloadUrl: string | null;
-  };
-}
-
-const getBaseUrl = (): string => {
-  if (typeof window !== "undefined") {
-    // In browser: use same-origin relative endpoint to eliminate CORS errors completely
-    return "";
-  }
-  return process.env.NEXT_PUBLIC_BQMS_API_URL || process.env.BQMS_API_URL || "https://bqms.vercel.app";
-};
-
-export async function verifyBatch(
-  batchNumber: string,
-  signal?: AbortSignal
-): Promise<VerifyBatchResponse> {
-  const baseUrl = getBaseUrl();
-  const response = await fetch(`${baseUrl}/api/public/verify/${encodeURIComponent(batchNumber)}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    signal,
-  });
-
-  if (!response.ok) {
-    if (response.status === 404) {
-      throw new Error("BATCH_NOT_FOUND");
-    }
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  const data: VerifyBatchResponse = await response.json();
-  return data;
-}
-
-export interface Organization {
-  id: string;
-  name: string;
-  address: string | null;
-  licenseNumber: string | null;
-  contactEmail: string | null;
-  contactPhone: string | null;
-}
-
-export interface FetchOrganizationsResponse {
-  success: boolean;
-  data?: Organization[];
+  data: Manufacturer[];
   message?: string;
+}
+
+export type FetchOrganizationsResponse = FetchManufacturersResponse;
+export type VerifyBatchResponse = AquoraBatchVerificationResponse;
+
+/**
+ * Fetches manufacturers from the Aquora Public API.
+ */
+export async function getManufacturers(
+  signal?: AbortSignal
+): Promise<FetchManufacturersResponse> {
+  try {
+    const items = await fetchAquoraManufacturers(undefined, signal);
+    return {
+      success: true,
+      data: items,
+      message: "Manufacturers retrieved successfully.",
+    };
+  } catch (error: any) {
+    if (error.name === "AbortError") throw error;
+    return {
+      success: false,
+      data: [],
+      message: error.message || "Failed to fetch manufacturers",
+    };
+  }
 }
 
 export async function fetchOrganizations(
   signal?: AbortSignal
 ): Promise<FetchOrganizationsResponse> {
-  const baseUrl = getBaseUrl();
-  const response = await fetch(`${baseUrl}/api/public/organizations`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    signal,
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  const data: FetchOrganizationsResponse = await response.json();
-  return data;
+  return getManufacturers(signal);
 }
 
+/**
+ * Verifies batch with the Aquora Public API.
+ */
+export async function verifyBatch(
+  batchNumber: string,
+  signal?: AbortSignal
+): Promise<VerifyBatchResponse> {
+  return verifyAquoraBatch(batchNumber, signal);
+}
+
+export * from "./aquoraPublicApi";

@@ -7,7 +7,18 @@ const AQUORA_PUBLIC_API_URL =
 
 export async function GET(request: NextRequest) {
   try {
-    const upstreamUrl = `${AQUORA_PUBLIC_API_URL}/api/public/manufacturers`;
+    const { searchParams } = new URL(request.url);
+    const search = searchParams.get("search");
+    const page = searchParams.get("page");
+    const pageSize = searchParams.get("pageSize");
+
+    const upstreamParams = new URLSearchParams();
+    if (search) upstreamParams.set("search", search);
+    if (page) upstreamParams.set("page", page);
+    if (pageSize) upstreamParams.set("pageSize", pageSize);
+
+    const queryString = upstreamParams.toString() ? `?${upstreamParams.toString()}` : "";
+    const upstreamUrl = `${AQUORA_PUBLIC_API_URL}/api/public/manufacturers${queryString}`;
 
     const res = await fetch(upstreamUrl, {
       headers: {
@@ -31,9 +42,9 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error: any) {
-    console.error("Error fetching organizations from upstream Aquora Public API:", error);
+    console.error("Error fetching manufacturers from upstream Aquora Public API:", error);
     return NextResponse.json(
-      { success: false, message: "Internal server error fetching organizations" },
+      { success: false, message: "Internal server error fetching manufacturers" },
       { status: 500 }
     );
   }

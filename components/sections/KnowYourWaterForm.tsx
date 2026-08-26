@@ -4,45 +4,48 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BatchResults, { BatchResultsSkeleton } from "@/components/sections/BatchResults";
 import { Search, Loader2, MapPin, ShieldCheck, Mail, Phone, FileText } from "lucide-react";
-import { verifyBatch, VerifyBatchResponse, fetchOrganizations, Organization } from "@/services/publicVerification";
+import { verifyAquoraBatch, fetchAquoraManufacturers, AquoraManufacturerDto, AquoraBatchVerificationResponse } from "@/services/aquoraPublicApi";
 import Image from "next/image";
 
 function getInitials(name: string) {
-  return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  if (!name) return "MP";
+  return name.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase() || "MP";
 }
 
 export default function KnowYourWaterForm() {
   const [batchNumber, setBatchNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<{ title: string; message: string } | null>(null);
-  const [result, setResult] = useState<VerifyBatchResponse | null>(null);
+  const [result, setResult] = useState<AquoraBatchVerificationResponse | null>(null);
 
-  const [orgs, setOrgs] = useState<Organization[]>([]);
-  const [loadingOrgs, setLoadingOrgs] = useState(true);
-  const [orgsError, setOrgsError] = useState(false);
+  const [manufacturers, setManufacturers] = useState<AquoraManufacturerDto[]>([]);
+  const [loadingManufacturers, setLoadingManufacturers] = useState(true);
+  const [manufacturersError, setManufacturersError] = useState(false);
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
+  // Load verified BioDrops production manufacturers on mount
   useEffect(() => {
     let mounted = true;
-    async function loadOrgs() {
+    async function loadManufacturers() {
       try {
-        const response = await fetchOrganizations();
+        const items = await fetchAquoraManufacturers();
         if (mounted) {
-          setOrgs(response.data || []);
-          setLoadingOrgs(false);
+          setManufacturers(items || []);
+          setLoadingManufacturers(false);
         }
       } catch (err) {
         if (mounted) {
-          setOrgsError(true);
-          setLoadingOrgs(false);
+          setManufacturersError(true);
+          setLoadingManufacturers(false);
         }
       }
     }
-    loadOrgs();
+    loadManufacturers();
     return () => { mounted = false; };
   }, []);
 
+  // Handle URL query param ?batch=...
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
@@ -62,12 +65,22 @@ export default function KnowYourWaterForm() {
         setError(null);
         setResult(null);
 
-        verifyBatch(sanitized, abortController.signal)
+        verifyAquoraBatch(sanitized, abortController.signal)
           .then((data) => {
-            setResult(data);
+            if (data.success && data.verified && data.data) {
+              setResult(data);
+              setError(null);
+            } else {
+              setResult(null);
+              setError({
+                title: "Batch Not Found",
+                message: data.message || "The entered batch number could not be verified. Please check the code and try again."
+              });
+            }
           })
           .catch((err: any) => {
             if (err.name === "AbortError") return;
+            setResult(null);
             if (err.message === "BATCH_NOT_FOUND") {
               setError({
                 title: "Batch Not Found",
@@ -76,7 +89,7 @@ export default function KnowYourWaterForm() {
             } else {
               setError({
                 title: "Connection Error",
-                message: "Unable to connect to the verification server. Please try again later."
+                message: "Unable to connect to the Aquora verification server. Please try again later."
               });
             }
           })
@@ -108,12 +121,22 @@ export default function KnowYourWaterForm() {
     setResult(null);
 
     try {
-      const data = await verifyBatch(sanitizedBatch, abortController.signal);
-      setResult(data);
+      const data = await verifyAquoraBatch(sanitizedBatch, abortController.signal);
+      if (data.success && data.verified && data.data) {
+        setResult(data);
+        setError(null);
+      } else {
+        setResult(null);
+        setError({
+          title: "Batch Not Found",
+          message: data.message || "The entered batch number could not be verified. Please check the code and try again."
+        });
+      }
     } catch (err: any) {
       if (err.name === 'AbortError') {
         return; // Request was cancelled
       }
+      setResult(null);
       if (err.message === "BATCH_NOT_FOUND") {
         setError({
           title: "Batch Not Found",
@@ -122,7 +145,7 @@ export default function KnowYourWaterForm() {
       } else {
         setError({
           title: "Connection Error",
-          message: "Unable to connect to the verification server. Please try again later."
+          message: "Unable to connect to the Aquora verification server. Please try again later."
         });
       }
     } finally {
@@ -148,7 +171,7 @@ export default function KnowYourWaterForm() {
             </div>
             <input
               type="text"
-              placeholder="Enter Batch Number (e.g., BD-2026-06A)"
+              placeholder="Enter Batch Number (e.g., 1234 or B-1234)"
               value={batchNumber}
               onChange={(e) => setBatchNumber(e.target.value)}
               disabled={loading}
@@ -215,12 +238,12 @@ export default function KnowYourWaterForm() {
           className="max-w-6xl mx-auto mt-10"
         >
           <div className="text-center mb-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-1">BQMS Certified Manufacturers</h2>
-            <p className="text-sm text-gray-500">Quality assured water from our verified partners.</p>
+            <h2 className="text-xl font-bold text-gray-900 mb-1">Certified Manufacturers</h2>
+            <p className="text-sm text-gray-500">Quality assured water from our verified production partners.</p>
           </div>
 
           <div className="mb-10">
-            {loadingOrgs ? (
+            {loadingManufacturers ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {[1, 2, 3, 4].map((i) => (
                   <div key={i} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 animate-pulse">
@@ -238,57 +261,67 @@ export default function KnowYourWaterForm() {
                   </div>
                 ))}
               </div>
-            ) : orgsError ? (
+            ) : manufacturersError ? (
               <div className="text-center p-6 bg-white/50 rounded-xl border border-red-100 max-w-lg mx-auto">
                 <p className="text-red-500 text-sm">Unable to load certified manufacturers. Please try again later.</p>
               </div>
-            ) : orgs.length === 0 ? (
+            ) : manufacturers.length === 0 ? (
               <div className="text-center p-6 bg-white/50 rounded-xl border border-gray-200 max-w-lg mx-auto">
                 <p className="text-gray-500 text-sm">No certified manufacturers available.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {orgs.map((org) => (
-                  <div key={org.id} className="bg-white p-4 rounded-[14px] shadow-sm border border-gray-100 flex flex-col hover:shadow-md hover:border-[#15b5a3]/30 hover:-translate-y-0.5 transition-all duration-300 group">
+                {manufacturers.map((mfg) => (
+                  <div key={mfg.id} className="bg-white p-4 rounded-[14px] shadow-sm border border-gray-100 flex flex-col hover:shadow-md hover:border-[#15b5a3]/30 hover:-translate-y-0.5 transition-all duration-300 group">
                     <div className="flex items-start gap-3 mb-4">
-                      <div className="bg-[#15b5a3]/10 w-10 h-10 flex items-center justify-center rounded-full text-[#15b5a3] font-bold text-[14px] shrink-0 group-hover:scale-110 transition-transform">
-                        {getInitials(org.name)}
-                      </div>
+                      {mfg.logoUrl ? (
+                        <Image
+                          src={mfg.logoUrl}
+                          alt={mfg.name}
+                          width={40}
+                          height={40}
+                          className="w-10 h-10 rounded-full object-cover shrink-0 border border-gray-100"
+                        />
+                      ) : (
+                        <div className="bg-[#15b5a3]/10 w-10 h-10 flex items-center justify-center rounded-full text-[#15b5a3] font-bold text-[14px] shrink-0 group-hover:scale-110 transition-transform">
+                          {getInitials(mfg.name)}
+                        </div>
+                      )}
                       <div className="flex-1 min-w-0 pt-0.5">
-                        <h3 className="font-semibold text-gray-900 text-[15px] leading-tight line-clamp-2">{org.name}</h3>
+                        <h3 className="font-semibold text-gray-900 text-[15px] leading-tight line-clamp-2">{mfg.name}</h3>
                         <div className="inline-flex items-center gap-1 text-[#15b5a3] mt-1.5 font-medium text-[11px]">
                           <ShieldCheck className="w-3.5 h-3.5" />
-                          BQMS Verified
+                          Verified Partner
                         </div>
                       </div>
                     </div>
 
                     <div className="space-y-2 mt-auto text-[12.5px] text-gray-600">
-                      {org.address && (
+                      {mfg.address && (
                         <div className="flex items-start gap-2">
                           <MapPin className="w-3.5 h-3.5 shrink-0 mt-0.5 text-gray-400" />
-                          <p className="leading-tight">{org.address}</p>
+                          <p className="leading-tight">{mfg.address}</p>
                         </div>
                       )}
                       
-                      {org.licenseNumber && (
+                      {mfg.licenseNumber && (
                         <div className="flex items-center gap-2">
                           <FileText className="w-3.5 h-3.5 shrink-0 text-gray-400" />
-                          <p>{org.licenseNumber}</p>
+                          <p>{mfg.licenseNumber}</p>
                         </div>
                       )}
 
-                      {org.contactEmail && (
+                      {mfg.email && (
                         <div className="flex items-center gap-2">
                           <Mail className="w-3.5 h-3.5 shrink-0 text-gray-400" />
-                          <p className="truncate">{org.contactEmail}</p>
+                          <p className="truncate">{mfg.email}</p>
                         </div>
                       )}
 
-                      {org.contactPhone && (
+                      {mfg.phone && (
                         <div className="flex items-center gap-2">
                           <Phone className="w-3.5 h-3.5 shrink-0 text-gray-400" />
-                          <p>{org.contactPhone}</p>
+                          <p>{mfg.phone}</p>
                         </div>
                       )}
                     </div>
