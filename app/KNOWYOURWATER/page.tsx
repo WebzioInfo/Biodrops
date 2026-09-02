@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/sections/Footer";
 import KnowYourWaterForm from "@/components/sections/KnowYourWaterForm";
 import FadeIn from "@/components/effects/FadeIn";
@@ -20,9 +19,7 @@ export const metadata: Metadata = {
 export default function KnowYourWaterPage() {
   return (
     <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#15b5a3] selection:text-white flex flex-col">
-      <Navbar />
-
-      <div className="flex-grow pt-10 pb-24 px-4 sm:px-6 relative">
+      <div className="flex-grow pt-28 md:pt-32 pb-24 px-4 sm:px-6 relative">
         {/* Background Accents */}
         <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-[#e0f2f1] to-transparent -z-10" />
 
