@@ -1,23 +1,48 @@
 "use client";
 
-import { motion } from "framer-motion";
 import React from "react";
+import ScrollFade, { type ScrollFadeDirection } from "./ScrollFade";
 
-interface FadeInProps {
+export interface FadeInProps {
   children: React.ReactNode;
   delay?: number;
   duration?: number;
   y?: number;
+  direction?: ScrollFadeDirection;
+  amount?: number | "some" | "all";
+  margin?: string;
+  className?: string;
+  blur?: boolean;
+  style?: React.CSSProperties;
 }
 
-export default function FadeIn({ children, delay = 0, duration = 0.8, y = 20 }: FadeInProps) {
+export default function FadeIn({
+  children,
+  delay = 0,
+  duration = 0.55,
+  y = 24,
+  direction = "up",
+  amount = 0.25,
+  margin,
+  className = "",
+  blur = false,
+  style,
+}: FadeInProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration, delay, ease: "easeOut" }}
+    <ScrollFade
+      delay={delay}
+      duration={duration}
+      yOffset={y}
+      direction={direction}
+      amount={amount}
+      margin={margin}
+      className={className}
+      blur={blur}
+      style={style}
     >
       {children}
-    </motion.div>
+    </ScrollFade>
   );
 }
+
+export { ScrollFade };

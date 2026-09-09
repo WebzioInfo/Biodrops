@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 import Footer from "@/components/sections/Footer";
+import ScrollFade from "@/components/effects/ScrollFade";
 
 export const metadata: Metadata = {
   title: "BQMS - Biofix Quality Management System | Biodrops",
@@ -71,10 +72,13 @@ export default function BQMSPage() {
           </div>
         </div>
 
-        <div className="container mx-auto px-6 relative z-10 flex flex-col-reverse lg:flex-row items-center gap-12">
-
-          <div className="flex-1 md:pl-30 text-start
-           lg:text-left z-10">
+        <ScrollFade
+          amount={0.2}
+          duration={0.6}
+          yOffset={24}
+          className="container mx-auto px-6 relative z-10 flex flex-col-reverse lg:flex-row items-center gap-12"
+        >
+          <div className="flex-1 md:pl-30 text-start lg:text-left z-10">
             <h1 className="text-4xl md:text-5xl lg:text-[4rem] font-bold tracking-tight text-white mb-6 leading-tight">
               Single window <br />
               system specially <br />
@@ -99,23 +103,30 @@ export default function BQMSPage() {
               />
             </div>
           </div>
-        </div>
+        </ScrollFade>
 
       </section>
 
       {/* About Section (Archivo Font) */}
       <section id="features" className="py-24 font-archivo bg-white relative">
         <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-3xl mx-auto text-center mb-26">
+          <ScrollFade amount={0.25} duration={0.6} className="max-w-3xl mx-auto text-center mb-26">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">What is BQMS?</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
               BQMS (Biofix Quality Management System) is an integrated quality management solution designed for mineral water plants to simplify and manage laboratory operations, FSSAI compliance, documentation, testing schedules, reporting, and quality monitoring under one system. BQMS helps plant owners maintain standards efficiently while reducing operational stress, delays, and compliance risks.
             </p>
-          </div>
+          </ScrollFade>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-26">
             {bqmsFeatures.map((feature, index) => (
-              <div key={index} className="group flex flex-col">
+              <ScrollFade
+                key={index}
+                amount={0.2}
+                delay={index * 0.1}
+                duration={0.55}
+                yOffset={24}
+                className="group flex flex-col"
+              >
                 <h3 className="text-3xl mb-4" style={{ color: feature.titleColor, fontWeight: 700 }}>{feature.title}</h3>
                 <div className="w-full h-48 md:h-80 relative mb-6 overflow-hidden shadow-sm">
                   <Image src={feature.image} alt={feature.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -131,7 +142,7 @@ export default function BQMSPage() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </ScrollFade>
             ))}
           </div>
         </div>
@@ -139,8 +150,12 @@ export default function BQMSPage() {
 
       {/* Manage Less / Achieve More Section */}
       <section className="py-8 md:py-16 bg-[#15b5a3] relative overflow-hidden font-archivo">
-        <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
-
+        <ScrollFade
+          amount={0.2}
+          duration={0.6}
+          yOffset={24}
+          className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12"
+        >
           {/* Left Text Content */}
           <div className="flex-1 text-left w-full md:w-auto z-10 pl:6 lg:pl-10 xl:pl-20">
 
@@ -173,14 +188,17 @@ export default function BQMSPage() {
               className="object-contain"
             />
           </div>
-
-        </div>
+        </ScrollFade>
       </section>
 
       {/* Footer / Contact Section (Matches Screenshot Exactly) */}
       <section id="contact" className="py-16 bg-white font-archivo">
-        <div className="container mx-auto px-6 max-w-7xl">
-
+        <ScrollFade
+          amount={0.2}
+          duration={0.6}
+          yOffset={24}
+          className="container mx-auto px-6 max-w-7xl"
+        >
           {/* Top Row: Logo & Contact */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-10">
             {/* Biofix Logo */}
@@ -245,8 +263,7 @@ export default function BQMSPage() {
             <Image src="/bqms_images/LIFE.jpeg" alt="LIFE" width={110} height={70} className="object-contain mix-blend-multiply hover:scale-105 transition-transform" />
             <Image src="/bqms_images/bqms_certificate.png" alt="BQMS Certificate" width={110} height={70} className="object-contain mix-blend-multiply hover:scale-105 transition-transform" />
           </div>
-
-        </div>
+        </ScrollFade>
       </section>
       <Footer />
     </div>

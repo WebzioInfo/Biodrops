@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Footer from "@/components/sections/Footer";
-import FadeIn from "@/components/effects/FadeIn";
+import ScrollFade from "@/components/effects/ScrollFade";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions (FAQ) - BIODROPS",
@@ -42,27 +42,31 @@ export default function FAQPage() {
   return (
     <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-10">
       <div className="max-w-4xl mx-auto px-6 py-24">
-        <FadeIn>
+        <ScrollFade amount={0.25} duration={0.6} className="mb-12">
           <div className="inline-flex items-center gap-4 text-[0.7rem] tracking-[0.3em] uppercase text-[#6B7C80] font-medium mb-6">
             <span className="w-12 h-px bg-[#6B7C80]/30" />
             Knowledge Base
           </div>
-          <h1 className="text-5xl md:text-7xl font-serif text-[#070D0E] mb-12 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-serif text-[#070D0E] leading-tight">
             Frequently Asked <span className="italic text-[#56C7D9]">Questions.</span>
           </h1>
+        </ScrollFade>
 
-          <div className="space-y-8">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-2xl shadow-sm border border-black/5"
-              >
-                <h2 className="text-2xl font-serif text-[#070D0E] mb-4">{faq.question}</h2>
-                <p className="text-[#070D0E]/70 leading-relaxed text-lg">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </FadeIn>
+        <div className="space-y-8">
+          {faqs.map((faq, index) => (
+            <ScrollFade
+              key={index}
+              amount={0.2}
+              delay={index * 0.08}
+              duration={0.55}
+              yOffset={20}
+              className="bg-white p-8 rounded-2xl shadow-sm border border-black/5"
+            >
+              <h2 className="text-2xl font-serif text-[#070D0E] mb-4">{faq.question}</h2>
+              <p className="text-[#070D0E]/70 leading-relaxed text-lg">{faq.answer}</p>
+            </ScrollFade>
+          ))}
+        </div>
       </div>
       <Footer />
     </main>

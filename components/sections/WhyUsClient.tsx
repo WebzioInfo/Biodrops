@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import ScrollFade from "@/components/effects/ScrollFade";
 import React from "react";
 
 interface ValueItem {
@@ -15,14 +15,14 @@ interface WhyUsClientProps {
 
 export function WhyUsHero({ children }: { children: React.ReactNode }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+    <ScrollFade
+      amount={0.2}
+      duration={0.6}
+      yOffset={20}
       className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center"
     >
       {children}
-    </motion.div>
+    </ScrollFade>
   );
 }
 
@@ -30,12 +30,12 @@ export function WhyUsGrid({ values }: WhyUsClientProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
       {values.map((val, index) => (
-        <motion.div
+        <ScrollFade
           key={index}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+          amount={0.2}
+          delay={index * 0.1}
+          duration={0.55}
+          yOffset={24}
           className="group relative bg-[#111A1B] p-10 md:p-14 rounded-3xl overflow-hidden border border-white/5 hover:border-[#cfef00]/30 transition-colors duration-500"
         >
           {/* Glow Effect */}
@@ -50,7 +50,7 @@ export function WhyUsGrid({ values }: WhyUsClientProps) {
               {val.desc}
             </p>
           </div>
-        </motion.div>
+        </ScrollFade>
       ))}
     </div>
   );

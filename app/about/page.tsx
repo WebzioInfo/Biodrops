@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import FadeIn from "@/components/effects/FadeIn";
+import ScrollFade from "@/components/effects/ScrollFade";
 import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-10">
       <div className="max-w-4xl mx-auto px-6 py-24">
-        <FadeIn>
+        <ScrollFade amount={0.25} duration={0.6}>
           <div className="inline-flex items-center gap-4 text-[0.7rem] tracking-[0.3em] uppercase text-[#6B7C80] font-medium mb-6">
             <span className="w-12 h-px bg-[#6B7C80]/30" />
             Our Story
@@ -27,7 +27,9 @@ export default function AboutPage() {
           <h1 className="text-5xl md:text-7xl font-serif text-[#070D0E] mb-8 leading-tight">
             The Vision Behind <span className="italic text-[#56C7D9]">Biodrops.</span>
           </h1>
+        </ScrollFade>
 
+        <ScrollFade amount={0.2} delay={0.1} duration={0.6} yOffset={20}>
           <div className="prose prose-lg prose-gray max-w-none text-[#070D0E]/80">
             <p className="lead text-xl md:text-2xl font-light mb-8">
               Biodrops is a premium packaged drinking water brand, an ambitious initiative launched by <strong>Biofix Technology LLP</strong>.
@@ -46,7 +48,7 @@ export default function AboutPage() {
               By controlling the entire manufacturing pipeline—from raw water sourcing to 14-stage RO purification, UV sterilization, and final packaging—Biodrops ensures that every 20L jar meets the strict standards set by the Bureau of Indian Standards (BIS) and the Food Safety and Standards Authority of India (FSSAI).
             </p>
           </div>
-        </FadeIn>
+        </ScrollFade>
       </div>
       <Footer />
     </main>

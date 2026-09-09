@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Footer from "@/components/sections/Footer";
 import Image from "next/image";
 import { WhyUsHero, WhyUsGrid } from "@/components/sections/WhyUsClient";
+import ScrollFade from "@/components/effects/ScrollFade";
 
 export const metadata: Metadata = {
   title: "Why Us - BIODROPS",
@@ -98,13 +99,15 @@ export default function WhyUsPage() {
 
       {/* CTA Section */}
       <section className="py-32 px-6 bg-[#cfef00] text-[#070D0E] text-center flex flex-col items-center justify-center">
-        <h2 className="text-4xl md:text-6xl font-serif mb-8">Taste the Difference.</h2>
-        <a
-          href="/#contact"
-          className="group relative inline-flex items-center justify-center px-10 py-4 bg-[#070D0E] hover:bg-[#111] rounded-full text-[0.8rem] font-bold tracking-[0.2em] uppercase text-white transition-all duration-300 hover:scale-105 shadow-[0_10px_30px_rgba(7,13,14,0.3)]"
-        >
-          Contact Us Today
-        </a>
+        <ScrollFade amount={0.2} duration={0.6} yOffset={24} className="flex flex-col items-center justify-center">
+          <h2 className="text-4xl md:text-6xl font-serif mb-8">Taste the Difference.</h2>
+          <a
+            href="/#contact"
+            className="group relative inline-flex items-center justify-center px-10 py-4 bg-[#070D0E] hover:bg-[#111] rounded-full text-[0.8rem] font-bold tracking-[0.2em] uppercase text-white transition-all duration-300 hover:scale-105 shadow-[0_10px_30px_rgba(7,13,14,0.3)]"
+          >
+            Contact Us Today
+          </a>
+        </ScrollFade>
       </section>
 
       <Footer />

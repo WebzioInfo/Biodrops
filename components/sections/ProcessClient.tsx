@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import ScrollFade from "@/components/effects/ScrollFade";
 import React from "react";
 
 interface StepItem {
@@ -17,34 +17,40 @@ interface ProcessStepsGridProps {
 export function ProcessHero() {
   return (
     <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+      <ScrollFade
+        amount={0.2}
+        duration={0.55}
+        yOffset={16}
         className="inline-flex items-center gap-4 text-[0.7rem] tracking-[0.3em] uppercase text-white/60 font-medium mb-6"
       >
         <span className="w-12 h-px bg-[#cfef00]/50" />
         The Standard of Purity
         <span className="w-12 h-px bg-[#cfef00]/50" />
-      </motion.div>
+      </ScrollFade>
 
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+      <ScrollFade
+        amount={0.2}
+        delay={0.1}
+        duration={0.6}
+        yOffset={24}
         className="text-[clamp(2.5rem,6vw,5rem)] font-light leading-[1.1] mb-6 font-serif"
       >
-        Fourteen Stages of <span className="italic text-[#cfef00] font-medium">Perfection.</span>
-      </motion.h1>
+        <h1>
+          Fourteen Stages of <span className=" text-[#cfef00] font-medium">Perfection.</span>
+        </h1>
+      </ScrollFade>
 
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+      <ScrollFade
+        amount={0.2}
+        delay={0.18}
+        duration={0.55}
+        yOffset={20}
         className="text-lg md:text-xl text-white/60 max-w-2xl font-light leading-relaxed"
       >
-        Discover the meticulous, state-of-the-art purification process that transforms raw natural water into the pristine, perfectly balanced Biodrops standard.
-      </motion.p>
+        <p>
+          Discover the meticulous, state-of-the-art purification process that transforms raw natural water into the pristine, perfectly balanced Biodrops standard.
+        </p>
+      </ScrollFade>
     </div>
   );
 }
@@ -55,15 +61,13 @@ export function ProcessStepsGrid({ steps }: ProcessStepsGridProps) {
       {steps.map((step, index) => {
         const isEven = index % 2 === 0;
         return (
-          <motion.div
+          <ScrollFade
             key={step.num}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className={`flex flex-col md:flex-row gap-8 md:gap-16 items-center ${
-              !isEven ? "md:flex-row-reverse" : ""
-            }`}
+            amount={0.2}
+            duration={0.6}
+            yOffset={32}
+            className={`flex flex-col md:flex-row gap-8 md:gap-16 items-center ${!isEven ? "md:flex-row-reverse" : ""
+              }`}
           >
             {/* Visual Number Container */}
             <div className="w-full md:w-1/2 flex justify-center relative">
@@ -91,7 +95,7 @@ export function ProcessStepsGrid({ steps }: ProcessStepsGridProps) {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </ScrollFade>
         );
       })}
     </div>

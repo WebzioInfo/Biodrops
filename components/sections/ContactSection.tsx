@@ -2,18 +2,20 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import ScrollFade from "@/components/effects/ScrollFade";
 
 function Field({ label, type = "text", name, value, onChange, required }: any) {
   const [focused, setFocused] = useState(false);
-  const raised = focused || value;
+  const raised = focused || Boolean(value);
 
   return (
-    <div className="relative pt-5 mb-4 w-full text-center">
+    <div className="relative pt-6 pb-1 mb-5 w-full text-center group" style={{ fontFamily: "'Inter', sans-serif" }}>
       <label
-        className={`absolute left-1/2 -translate-x-1/2 text-sm text-[#aaa] tracking-[0.01em] pointer-events-none transition-all duration-300 ease-in-out ${raised
-          ? "top-0.5 text-[11px] tracking-[0.08em] font-medium uppercase"
-          : "top-[22px] font-normal"
-          } ${focused ? "text-[#111]" : ""}`}
+        className={`absolute left-1/2 -translate-x-1/2 pointer-events-none transition-all duration-300 ease-out select-none ${
+          raised
+            ? "top-0.5 text-[0.68rem] tracking-[0.15em] font-semibold uppercase text-[#56C7D9]"
+            : "top-[26px] text-sm md:text-[0.95rem] tracking-normal font-light text-[#6B7C80]"
+        } ${focused ? "text-[#56C7D9]" : raised ? "text-[#6B7C80]" : ""}`}
       >
         {label}
       </label>
@@ -25,12 +27,15 @@ function Field({ label, type = "text", name, value, onChange, required }: any) {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         required={required}
-        className="w-full bg-transparent border-none border-b border-[#ddd] focus:border-[#111] py-2 px-0 font-sans text-[15px] text-[#111] outline-none text-center transition-colors duration-300 ease-in-out"
+        className="w-full bg-transparent border-none border-b border-[#070D0E]/15 py-2.5 px-2 font-sans text-sm md:text-base text-[#070D0E] outline-none text-center transition-colors duration-300"
         autoComplete="off"
+        style={{ fontFamily: "'Inter', sans-serif" }}
       />
+      {/* Animated active underline */}
       <span
-        className={`block absolute bottom-0 left-0 right-0 h-[1px] w-full bg-[#111] origin-center transition-transform duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] ${focused ? "scale-x-100" : "scale-x-0"
-          }`}
+        className={`block absolute bottom-0 left-0 right-0 h-[2px] w-full bg-[#56C7D9] origin-center transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          focused ? "scale-x-100" : "scale-x-0"
+        }`}
       />
     </div>
   );
@@ -38,15 +43,16 @@ function Field({ label, type = "text", name, value, onChange, required }: any) {
 
 function Textarea({ label, name, value, onChange }: any) {
   const [focused, setFocused] = useState(false);
-  const raised = focused || value;
+  const raised = focused || Boolean(value);
 
   return (
-    <div className="relative pt-5 mb-4 w-full text-center">
+    <div className="relative pt-6 pb-1 mb-6 w-full text-center group" style={{ fontFamily: "'Inter', sans-serif" }}>
       <label
-        className={`absolute left-1/2 -translate-x-1/2 text-sm text-[#aaa] tracking-[0.01em] pointer-events-none transition-all duration-300 ease-in-out ${raised
-          ? "top-0.5 text-[11px] tracking-[0.08em] font-medium uppercase"
-          : "top-[22px] font-normal"
-          } ${focused ? "text-[#111]" : ""}`}
+        className={`absolute left-1/2 -translate-x-1/2 pointer-events-none transition-all duration-300 ease-out select-none ${
+          raised
+            ? "top-0.5 text-[0.68rem] tracking-[0.15em] font-semibold uppercase text-[#56C7D9]"
+            : "top-[26px] text-sm md:text-[0.95rem] tracking-normal font-light text-[#6B7C80]"
+        } ${focused ? "text-[#56C7D9]" : raised ? "text-[#6B7C80]" : ""}`}
       >
         {label}
       </label>
@@ -56,12 +62,15 @@ function Textarea({ label, name, value, onChange }: any) {
         onChange={onChange}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        rows={5}
-        className="w-full bg-transparent border-none border-b border-[#ddd] focus:border-[#111] py-2 px-0 font-sans text-[15px] text-[#111] outline-none text-center transition-colors duration-300 ease-in-out resize-none leading-[1.6]"
+        rows={4}
+        className="w-full bg-transparent border-none border-b border-[#070D0E]/15 py-2.5 px-2 font-sans text-sm md:text-base text-[#070D0E] outline-none text-center transition-colors duration-300 resize-none leading-relaxed"
+        style={{ fontFamily: "'Inter', sans-serif" }}
       />
+      {/* Animated active underline */}
       <span
-        className={`block absolute bottom-0 left-0 right-0 h-[1px] w-full bg-[#111] origin-center transition-transform duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] ${focused ? "scale-x-100" : "scale-x-0"
-          }`}
+        className={`block absolute bottom-0 left-0 right-0 h-[2px] w-full bg-[#56C7D9] origin-center transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          focused ? "scale-x-100" : "scale-x-0"
+        }`}
       />
     </div>
   );
@@ -81,33 +90,68 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative w-full">
-      <div className="font-sans bg-white min-h-screen flex items-center justify-center py-12 px-6">
-        <div className="w-full max-w-[520px] flex flex-col items-center text-center">
+    <section id="contact" className="relative w-full bg-white py-20 md:py-28 overflow-hidden">
+      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
+        <ScrollFade
+          amount={0.2}
+          duration={0.6}
+          yOffset={24}
+          className="w-full max-w-[540px] flex flex-col items-center text-center font-sans"
+          style={{ fontFamily: "'Inter', sans-serif" }}
+        >
           {status === "sent" ? (
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="flex flex-col items-center text-center w-full"
-            >
-              <div className="w-11 h-11 border border-[#111] rounded-full flex items-center justify-center mb-6">
-                <svg width="18" height="13" viewBox="0 0 18 13" fill="none">
-                  <path d="M1 6.5L6.5 12L17 1" stroke="#111" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <div className="flex flex-col items-center text-center w-full py-12">
+              <div className="w-14 h-14 rounded-full bg-[#56C7D9]/10 text-[#56C7D9] border border-[#56C7D9]/20 flex items-center justify-center mb-6 shadow-sm">
+                <svg width="20" height="15" viewBox="0 0 18 13" fill="none">
+                  <path d="M1 6.5L6.5 12L17 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <p className="font-serif text-[36px] text-[#111] mb-2">Message sent.</p>
-              <p className="text-[14px] text-[#888] font-light">We'll be in touch shortly.</p>
-            </motion.div>
+              <h3
+                className="text-3xl md:text-4xl text-[#070D0E] font-normal tracking-tight mb-3"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                Message sent.
+              </h3>
+              <p className="text-sm md:text-base text-[#6B7C80] font-light leading-relaxed max-w-sm" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Thank you for reaching out. We will review your message and get in touch shortly.
+              </p>
+            </div>
           ) : (
             <div className="flex flex-col items-center text-center w-full">
-              <p className="text-[11px] font-medium tracking-[0.16em] uppercase text-[#999] mb-3 text-center">Contact</p>
-              <h1 className="font-serif text-[clamp(36px,6vw,52px)] font-normal text-[#111] leading-[1.1] mb-2 text-center">
-                Get in <em className="italic text-[#555]">touch.</em>
-              </h1>
-              <p className="text-[15px] text-[#666] font-light mb-11 leading-[1.5] text-center">We'd love to hear from you.</p>
-              <div className="w-8 h-[1px] bg-[#ddd] mx-auto mb-6" />
+              {/* Eyebrow */}
+              <div
+                className="inline-flex items-center gap-4 text-[0.65rem] tracking-[0.35em] uppercase text-[#6B7C80] font-semibold mb-3"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                <span className="w-8 h-px bg-[#6B7C80]/30" />
+                Contact
+                <span className="w-8 h-px bg-[#6B7C80]/30" />
+              </div>
 
+              {/* Headline */}
+              <h2
+                className="text-[clamp(2.4rem,5.5vw,3.6rem)] font-light text-[#070D0E] tracking-tight leading-[1.08] mb-3 text-center"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                Get in <span className="text-[#56C7D9] font-medium">touch.</span>
+              </h2>
+
+              {/* Subheading */}
+              <p
+                className="text-sm md:text-base text-[#6B7C80] font-light max-w-md mx-auto leading-relaxed mb-6 text-center"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                We would love to hear from you. Inquire about distribution, orders, or water analysis.
+              </p>
+
+              {/* Subtle designed divider */}
+              <div className="flex items-center justify-center gap-2.5 w-full max-w-[180px] mx-auto mb-10">
+                <span className="flex-1 h-px bg-gradient-to-r from-transparent to-[#070D0E]/15" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#56C7D9]" />
+                <span className="flex-1 h-px bg-gradient-to-l from-transparent to-[#070D0E]/15" />
+              </div>
+
+              {/* Form */}
               <form onSubmit={handleSubmit} className="w-full flex flex-col">
                 <div className="flex flex-col w-full">
                   <Field label="Full name" name="name" value={form.name} onChange={handleChange} required />
@@ -116,28 +160,30 @@ export default function ContactSection() {
                 <Field label="Subject" name="subject" value={form.subject} onChange={handleChange} />
                 <Textarea label="Message" name="message" value={form.message} onChange={handleChange} />
 
-                <div className="mt-3 flex justify-center w-full">
+                {/* Submit Button */}
+                <div className="mt-6 flex justify-center w-full">
                   <button
                     type="submit"
                     disabled={status === "sending"}
-                    className="relative overflow-hidden bg-[#111] border-none text-white py-[14px] px-12 font-sans text-[13px] font-medium tracking-[0.08em] uppercase cursor-pointer transition-opacity duration-200 rounded-full hover:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    className="group relative inline-flex items-center justify-center gap-2 px-10 py-3.5 bg-[#070D0E] hover:bg-[#111] text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {status === "sending" ? (
-                      <span className="inline-block">
+                      <span className="inline-flex items-center gap-1">
                         Sending
                         <motion.span animate={{ opacity: [0.25, 1, 0.25] }} transition={{ repeat: Infinity, duration: 1.2, delay: 0 }} className="inline-block">.</motion.span>
                         <motion.span animate={{ opacity: [0.25, 1, 0.25] }} transition={{ repeat: Infinity, duration: 1.2, delay: 0.2 }} className="inline-block">.</motion.span>
                         <motion.span animate={{ opacity: [0.25, 1, 0.25] }} transition={{ repeat: Infinity, duration: 1.2, delay: 0.4 }} className="inline-block">.</motion.span>
                       </span>
                     ) : (
-                      "Send message"
+                      <span>Send message</span>
                     )}
                   </button>
                 </div>
               </form>
             </div>
           )}
-        </div>
+        </ScrollFade>
       </div>
     </section>
   );

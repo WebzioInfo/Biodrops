@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import ScrollFade from "@/components/effects/ScrollFade";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -31,43 +31,48 @@ export default function BQMSSection() {
           </div>
 
           {/* Eyebrow Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          <ScrollFade
+            amount={0.25}
+            duration={0.55}
+            yOffset={16}
             className="relative z-10 flex items-center gap-6 text-[0.6rem] tracking-[0.4em] uppercase text-[#070D0E]/50 font-semibold mb-10 w-full"
           >
             <span className="w-12 h-px bg-[#070D0E]/20" />
             Biofix Quality Management System
-          </motion.div>
+          </ScrollFade>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 text-[clamp(3rem,6vw,5.5rem)] leading-[0.95] tracking-tight mb-12 font-light"
-            style={{ fontFamily: "'Satoshi', sans-serif" }}
+          <ScrollFade
+            amount={0.25}
+            delay={0.1}
+            duration={0.55}
+            yOffset={24}
+            className="relative z-10 mb-12"
           >
-            The <span className="italic text-[#56C7D9] font-medium">Golden Standard.</span>
-          </motion.h2>
+            <h2
+              className="text-[clamp(3rem,6vw,5.5rem)] leading-[0.95] tracking-tight font-light"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              The <span className=" text-[#56C7D9] font-medium">Golden Standard.</span>
+            </h2>
+          </ScrollFade>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          <ScrollFade
+            amount={0.25}
+            delay={0.15}
+            duration={0.55}
+            yOffset={20}
             className="relative z-10 text-lg md:text-xl text-[#070D0E]/60 leading-[1.8] font-light max-w-xl mb-10"
           >
-            Biofix Quality Management System is our unique quality standard designed by Biofix Research Institute to maintain a golden standard of water quality. BQMS manages many firms in Kerala including packaged drinking water projects, restaurants, Laboratories and many other industrial institutions. Biodrops also keeps the golden standard by the strict quality guidelines of BQMS.
-          </motion.p>
+            <p>
+              Biofix Quality Management System is our unique quality standard designed by Biofix Research Institute to maintain a golden standard of water quality. BQMS manages many firms in Kerala including packaged drinking water projects, restaurants, Laboratories and many other industrial institutions. Biodrops also keeps the golden standard by the strict quality guidelines of BQMS.
+            </p>
+          </ScrollFade>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          <ScrollFade
+            amount={0.25}
+            delay={0.2}
+            duration={0.55}
+            yOffset={16}
             className="relative z-10 w-full flex justify-center md:hidden"
           >
             <Link
@@ -86,16 +91,16 @@ export default function BQMSSection() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </Link>
-          </motion.div>
+          </ScrollFade>
         </div>
 
         {/* Right Side: Image & Explore BQMS Button (visible on tablet and laptop/desktop) */}
         <div className="hidden md:flex flex-col items-center justify-center w-full z-20 relative">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 30 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          <ScrollFade
+            amount={0.25}
+            delay={0.15}
+            duration={0.6}
+            yOffset={24}
             className="relative w-full aspect-[1/2] md:aspect-[3/4] lg:aspect-[2/3] max-w-[400px] mx-auto flex items-center justify-center -translate-y-12 md:-translate-y-30 lg:-translate-y-54"
           >
             <Image
@@ -105,12 +110,12 @@ export default function BQMSSection() {
               sizes="400px"
               className="object-contain"
             />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          </ScrollFade>
+          <ScrollFade
+            amount={0.25}
+            delay={0.22}
+            duration={0.55}
+            yOffset={16}
             className="mt-4 md:-mt-20 lg:-mt-32 z-30"
           >
             <Link
@@ -129,7 +134,7 @@ export default function BQMSSection() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </Link>
-          </motion.div>
+          </ScrollFade>
         </div>
 
       </div>

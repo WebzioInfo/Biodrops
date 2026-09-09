@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Archivo } from "next/font/google";
+import { Inter, Archivo, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import ScrollProgress from "@/components/effects/ScrollProgress";
 import Navbar from "@/components/layout/Navbar";
+import FloatingActions from "@/components/layout/FloatingActions";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,6 +15,12 @@ const inter = Inter({
 const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-archivo",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
@@ -78,7 +85,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${archivo.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${archivo.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
         <link rel="author" href="/humans.txt" />
         <link rel="manifest" href="/manifest.webmanifest" />
@@ -149,6 +156,7 @@ export default function RootLayout({
           <ScrollProgress />
           <Navbar />
           <main>{children}</main>
+          <FloatingActions />
         </SmoothScrollProvider>
       </body>
     </html>

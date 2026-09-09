@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Footer from "@/components/sections/Footer";
 import KnowYourWaterForm from "@/components/sections/KnowYourWaterForm";
-import FadeIn from "@/components/effects/FadeIn";
+import ScrollFade from "@/components/effects/ScrollFade";
 
 export const metadata: Metadata = {
   title: "Know Your Water - Verify Batch | BIODROPS",
@@ -24,7 +24,7 @@ export default function KnowYourWaterPage() {
         <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-[#e0f2f1] to-transparent -z-10" />
 
         <div className="max-w-3xl mx-auto text-center mb-12">
-          <FadeIn>
+          <ScrollFade amount={0.25} duration={0.6}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#070D0E] mb-6 leading-tight">
               Know Your <span className="italic text-[#15b5a3]">Water.</span>
             </h1>
@@ -32,10 +32,12 @@ export default function KnowYourWaterPage() {
             <p className="text-lg text-[#070D0E]/60 max-w-xl mx-auto">
               Enter the batch number found on your Biodrops 20L jar sleeve to instantly access complete manufacturing, quality, and certification details.
             </p>
-          </FadeIn>
+          </ScrollFade>
         </div>
 
-        <KnowYourWaterForm />
+        <ScrollFade amount={0.2} delay={0.1} duration={0.6} yOffset={24}>
+          <KnowYourWaterForm />
+        </ScrollFade>
       </div>
       <Footer />
     </main>

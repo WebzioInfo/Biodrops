@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MessageCircle, MapPin } from "lucide-react";
+import ScrollFade from "@/components/effects/ScrollFade";
 
 export default function Footer() {
   return (
@@ -8,7 +11,12 @@ export default function Footer() {
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Main Columns Container */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 pb-16 border-b border-white/10">
+        <ScrollFade
+          amount={0.15}
+          duration={0.6}
+          yOffset={24}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 pb-16 border-b border-white/10"
+        >
 
           {/* Column 1: Brand & Parent Company Info */}
           <div className="flex flex-col space-y-6 sm:col-span-2 lg:col-span-1">
@@ -253,10 +261,16 @@ export default function Footer() {
             </ul>
           </div>
 
-        </div>
+        </ScrollFade>
 
         {/* Bottom Footer Credits & Legals */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-[0.65rem] tracking-[0.15em] text-white/40">
+        <ScrollFade
+          amount={0.2}
+          delay={0.1}
+          duration={0.55}
+          yOffset={16}
+          className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-[0.65rem] tracking-[0.15em] text-white/40"
+        >
           <div>
             © 2026 BIODROPS. ALL RIGHTS RESERVED.
           </div>
@@ -272,7 +286,7 @@ export default function Footer() {
               Webzio
             </a>
           </div>
-        </div>
+        </ScrollFade>
 
       </div>
     </footer>
