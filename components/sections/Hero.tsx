@@ -19,7 +19,7 @@ function Headline() {
   return (
     <h1
       className="text-[clamp(2.8rem,5.5vw,5.4rem)] leading-[1.05] tracking-[-0.03em] text-[#070D0E] font-bold mb-5 text-left"
-      style={{ fontFamily: "'Clash Display', var(--font-space-grotesk), 'General Sans', sans-serif" }}
+      style={{ fontFamily: "var(--font-inter), 'Inter', sans-serif" }}
     >
       Quality Can Be<br />
       <span className="text-[#00A8CC]">Canned.</span>
@@ -94,7 +94,7 @@ function PartnerLinks() {
 
 function ExploreCta() {
   return (
-    <div className="mt-8 sm:mt-0 flex justify-start">
+    <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex justify-center">
       <a
         href="#product"
         className="group flex flex-col items-center gap-2 text-[#070D0E]"
@@ -111,7 +111,7 @@ function ExploreCta() {
 /* ─── Hero Section with Studio Background Image ─── */
 export default function Hero() {
   return (
-    <section className="relative w-full min-h-[100svh] flex items-center justify-center bg-[#F4F6F8] pt-28 pb-16 lg:py-24 px-6 sm:px-10 lg:px-12 overflow-hidden">
+    <section className="relative w-full min-h-[100svh] flex items-center justify-center bg-[#F4F6F8] pt-28 pb-20 lg:py-24 px-6 sm:px-10 lg:px-12 overflow-hidden">
       {/* Full-section background studio image */}
       <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
         <Image
@@ -147,12 +147,14 @@ export default function Hero() {
             Biodrops - Premium Packaged Drinking Water and Mineral Water in Kerala. An initiative from Biofix Technology LLP.
           </h2>
           <Subcopy />
-          <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-8 mt-2">
+          <div className="mt-2">
             <PartnerLinks />
-            <ExploreCta />
           </div>
         </div>
       </ScrollFade>
+
+      {/* Centered bottom scroll indicator */}
+      <ExploreCta />
     </section>
   );
 }
