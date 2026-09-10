@@ -57,47 +57,52 @@ export function ProcessHero() {
 
 export function ProcessStepsGrid({ steps }: ProcessStepsGridProps) {
   return (
-    <div className="flex flex-col gap-12 md:gap-24">
-      {steps.map((step, index) => {
-        const isEven = index % 2 === 0;
-        return (
-          <ScrollFade
-            key={step.num}
-            amount={0.2}
-            duration={0.6}
-            yOffset={32}
-            className={`flex flex-col md:flex-row gap-8 md:gap-16 items-center ${!isEven ? "md:flex-row-reverse" : ""
-              }`}
-          >
-            {/* Visual Number Container */}
-            <div className="w-full md:w-1/2 flex justify-center relative">
-              <div className="text-[clamp(8rem,15vw,15rem)] font-bold text-[#070D0E]/5 leading-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                {step.num}
-              </div>
-              <div className="relative z-10 w-full max-w-[400px] aspect-square rounded-3xl bg-white shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-black/5 flex flex-col items-center justify-center p-8 text-center group hover:-translate-y-2 transition-transform duration-500">
-                <div className="w-16 h-16 rounded-full bg-[#cfef00]/20 text-[#070D0E] flex items-center justify-center text-xl font-bold mb-6 group-hover:bg-[#cfef00] group-hover:scale-110 transition-all duration-300">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+      {steps.map((step, index) => (
+        <ScrollFade
+          key={step.num}
+          amount={0.15}
+          delay={(index % 2) * 0.08}
+          duration={0.5}
+          yOffset={20}
+          className="h-full"
+        >
+          <div className="group bg-white border border-[#E5E7EB] rounded-2xl p-6 sm:p-8 flex flex-col justify-between h-full shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:border-[#56C7D9]/40 hover:-translate-y-0.5 transition-all duration-300">
+            {/* Top: Stage Number, Title & Spec Description */}
+            <div>
+              <div className="flex items-start gap-4 mb-3">
+                <div className="w-10 h-10 rounded-full bg-[#cfef00]/20 text-[#070D0E] flex-shrink-0 flex items-center justify-center text-sm font-bold font-mono group-hover:bg-[#cfef00] transition-colors duration-300">
                   {step.num}
                 </div>
-                <h3 className="text-2xl font-serif text-[#070D0E] mb-4">{step.title}</h3>
-                <p className="text-sm text-[#070D0E]/60">{step.desc}</p>
+                <div className="flex-1 min-w-0 pt-1">
+                  <h3 className="text-xl sm:text-2xl font-serif text-[#070D0E] leading-snug">
+                    {step.title}
+                  </h3>
+                </div>
               </div>
+              <p className="text-sm text-[#070D0E]/65 leading-relaxed pl-14 mb-4">
+                {step.desc}
+              </p>
             </div>
 
-            {/* Text Content */}
-            <div className="w-full md:w-1/2 flex flex-col justify-center">
-              <div className="bg-white p-8 md:p-12 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-black/5">
-                <div className="text-[11px] font-bold tracking-[0.2em] text-[#56C7D9] uppercase mb-4">The Advantage</div>
-                <h4 className="text-2xl md:text-3xl font-light text-[#070D0E] leading-snug mb-6">
-                  Why this step <span className="font-medium italic">matters</span>.
-                </h4>
-                <p className="text-[#070D0E]/70 leading-relaxed text-lg font-light">
-                  {step.merit}
-                </p>
+            {/* Bottom: The Advantage / Why this step matters */}
+            <div className="pt-5 border-t border-[#E5E7EB] mt-auto">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-[10px] font-bold tracking-[0.2em] text-[#00A8CC] uppercase">
+                  The Advantage
+                </span>
+                <span className="text-[10px] text-[#070D0E]/25">·</span>
+                <span className="text-[11px] text-[#070D0E]/50 font-medium italic">
+                  Why this step matters
+                </span>
               </div>
+              <p className="text-xs sm:text-sm text-[#070D0E]/75 leading-relaxed font-light">
+                {step.merit}
+              </p>
             </div>
-          </ScrollFade>
-        );
-      })}
+          </div>
+        </ScrollFade>
+      ))}
     </div>
   );
 }

@@ -104,7 +104,7 @@ const processSteps = [
 
 export default function ProcessPage() {
   return (
-    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#cfef00] selection:text-black pt-10">
+    <div className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#cfef00] selection:text-black">
 
       {/* Hero Section */}
       <section className="relative w-full pt-40 pb-24 px-6 overflow-hidden bg-[#070D0E] text-white">
@@ -120,6 +120,6 @@ export default function ProcessPage() {
       </section>
 
       <Footer />
-    </main>
+    </div>
   );
 }
