@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
 import Image from "next/image";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Award } from "lucide-react";
 import Footer from "@/components/sections/Footer";
 import ScrollFade from "@/components/effects/ScrollFade";
 
@@ -16,15 +16,15 @@ export const metadata: Metadata = {
   },
 };
 
-const bqmsFeatures = [
+const imageFeatures = [
   {
     title: "Lab & Water Quality",
     titleColor: "#15b5a3",
     image: "/bqms_images/testing.jpeg",
     items: [
-      { text: "Chemistry & Microbiology Lab Setting" },
-      { text: "QC Training and Guidance" },
-      { text: "Quality Issues Analysing and Solving" },
+      "Chemistry & Microbiology Lab Setup",
+      "QC Training and Guidance",
+      "Quality Issue Analysis and Solving",
     ],
   },
   {
@@ -32,31 +32,42 @@ const bqmsFeatures = [
     titleColor: "#15b5a3",
     image: "/bqms_images/licensing.jpeg",
     items: [
-      { text: "FSSAI & BIS Licensing" },
-      { text: "Daily & Monthly Filings" },
-      { text: "Equipment Calibrations" },
+      "FSSAI & BIS Licensing",
+      "Daily & Monthly Filings",
+      "Equipment Calibrations",
     ],
   },
+];
+
+const operationFeatures = [
   {
     title: "Machinery & Operations",
     titleColor: "#15b5a3",
-    image: "/bqms_images/machinery.jpeg",
     items: [
-      { text: "Plant Machineries Checkups" },
-      { text: "Monthly Evaluation Visits" },
-      { text: "Technical breakdown support" },
+      "Plant Checkups",
+      "Monthly Evaluation Visits",
+      "Technical Breakdown Support",
     ],
   },
   {
-    title: "Staff Performances",
+    title: "Staff Performance",
     titleColor: "#15b5a3",
-    image: "/bqms_images/staffs.jpeg",
     items: [
-      { text: "Staff performance & hygiene training" },
-      { text: "Monthly Meetings & Reviews" },
-      { text: "Promoting responsible practices" },
+      "Hygiene Training",
+      "Monthly Reviews",
+      "Responsible Operating Practices",
     ],
   },
+];
+
+const certifications = [
+  "ISO 9001:2015",
+  "Bureau of Indian Standards / ISI (IS:14543)",
+  "FSSAI — Food Safety and Standards Authority of India",
+  "MSME Registered",
+  "Kerala Pollution Control Board",
+  "LIFE Certification",
+  "BQMS Certified Facility",
 ];
 
 export default function BQMSPage() {
@@ -65,10 +76,10 @@ export default function BQMSPage() {
       className="min-h-screen bg-white"
       style={{ fontFamily: "var(--font-inter), 'Inter', sans-serif" }}
     >
-      {/* Hero Section (Match PDF Design) */}
+      {/* Hero Section */}
       <section className="relative min-h-screen pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-gradient-to-br from-[#15b5a3] to-[#0e413a]">
 
-        {/* Faded BQMS Text in Background like PDF */}
+        {/* Faded BQMS Text in Background */}
         <div className="absolute -left-30 md:left-0 top-0 h-full w-full md:w-32 lg:w-48 overflow-hidden pointer-events-none select-none z-0 opacity-[0.15] flex items-center justify-center font-black text-[#051c14] mix-blend-overlay">
           <div className="text-[25vh] md:text-[35vh] lg:text-[45vh] leading-none shrink-0 tracking-[-0.08em] -rotate-90" style={{ WebkitTextStroke: "max(2px, 0.4vh) #051c14" }}>
             BQMS
@@ -94,7 +105,6 @@ export default function BQMSPage() {
           </div>
 
           <div className="flex-1 relative w-full flex justify-center items-center lg:justify-center md:pt-0 pt-40 mb-8 lg:mb-0">
-            {/* The newly generated premium BQMS coin image */}
             <div className="relative w-72 h-72 md:w-md md:h-112 animate-pulse-slow">
               <Image
                 src="/bqms_images/bqms_coin.png"
@@ -113,15 +123,16 @@ export default function BQMSPage() {
       {/* About Section */}
       <section id="features" className="py-24 bg-white relative">
         <div className="container mx-auto px-6 relative z-10">
-          <ScrollFade amount={0.25} duration={0.6} className="max-w-3xl mx-auto text-center mb-26">
+          <ScrollFade amount={0.25} duration={0.6} className="max-w-3xl mx-auto text-center mb-20">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">What is BQMS?</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              BQMS (Biofix Quality Management System) is an integrated quality management solution designed for mineral water plants to simplify and manage laboratory operations, FSSAI compliance, documentation, testing schedules, reporting, and quality monitoring under one system. BQMS helps plant owners maintain standards efficiently while reducing operational stress, delays, and compliance risks.
+              Quality across the BIODROPS network is governed by BQMS (Biofix Quality Management System) — an integrated single-window solution for laboratory operations, FSSAI compliance, documentation, testing schedules and quality monitoring. Every shift batch is tested at state-certified labs in compliance with the Indian Standards Institution protocol (ISI IS:14543) for packaged drinking water.
             </p>
           </ScrollFade>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-26">
-            {bqmsFeatures.map((feature, index) => (
+          {/* Row 1: Lab & Water Quality + Licenses & Compliances (with Images) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+            {imageFeatures.map((feature, index) => (
               <ScrollFade
                 key={index}
                 amount={0.2}
@@ -130,24 +141,62 @@ export default function BQMSPage() {
                 yOffset={24}
                 className="group flex flex-col"
               >
-                <h3 className="text-3xl mb-4" style={{ color: feature.titleColor, fontWeight: 700 }}>{feature.title}</h3>
-                <div className="w-full h-48 md:h-80 relative mb-6 overflow-hidden shadow-sm">
-                  <Image src={feature.image} alt={feature.title} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                <h3 className="text-2xl md:text-3xl mb-4" style={{ color: feature.titleColor, fontWeight: 700 }}>
+                  {feature.title}
+                </h3>
+                <div className="w-full h-48 md:h-80 relative mb-6 overflow-hidden shadow-sm rounded-lg">
+                  <Image
+                    src={feature.image}
+                    alt={feature.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
                 </div>
                 <ul className="space-y-3 text-gray-600">
                   {feature.items.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <CheckCircle2
-                        className={"text-[#15b5a3] shrink-0 mt-0.5"}
+                        className="text-[#15b5a3] shrink-0 mt-0.5"
                         size={20}
                       />
-                      {item.text}
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </ScrollFade>
             ))}
           </div>
+
+          {/* Row 2: Machinery & Operations + Staff Performance (Headings + Checklist Bullets) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 mt-14 md:mt-20 pt-10 border-t border-gray-100">
+            {operationFeatures.map((feature, index) => (
+              <ScrollFade
+                key={index}
+                amount={0.2}
+                delay={index * 0.1}
+                duration={0.55}
+                yOffset={24}
+                className="group flex flex-col"
+              >
+                <h3 className="text-2xl md:text-3xl mb-4" style={{ color: feature.titleColor, fontWeight: 700 }}>
+                  {feature.title}
+                </h3>
+                <ul className="space-y-3 text-gray-600">
+                  {feature.items.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <CheckCircle2
+                        className="text-[#15b5a3] shrink-0 mt-0.5"
+                        size={20}
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </ScrollFade>
+            ))}
+          </div>
+
         </div>
       </section>
 
@@ -194,7 +243,49 @@ export default function BQMSPage() {
         </ScrollFade>
       </section>
 
-      {/* Footer / Contact Section (Matches Screenshot Exactly) */}
+      {/* 05 Certifications Section */}
+      <section id="certifications" className="py-20 md:py-28 bg-[#F4F6F8] relative border-t border-[#E5E7EB]">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <ScrollFade amount={0.25} duration={0.6} className="text-center mb-12 md:mb-16">
+            <div className="inline-flex items-center gap-3 text-[0.65rem] tracking-[0.35em] uppercase text-[#070D0E]/50 font-semibold mb-3">
+              <span className="w-8 h-px bg-[#070D0E]/20" />
+              05 STANDARDS & ACCREDITATIONS
+              <span className="w-8 h-px bg-[#070D0E]/20" />
+            </div>
+
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#070D0E] tracking-tight mb-4">
+              05 Certifications
+            </h2>
+
+            <p className="text-sm md:text-base text-[#070D0E]/60 max-w-xl mx-auto leading-relaxed">
+              Accreditations, registrations, and regulatory frameworks governing BIODROPS manufacturing facilities and operations.
+            </p>
+          </ScrollFade>
+
+          {/* Clean Badge / Chip Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+            {certifications.map((cert, index) => (
+              <ScrollFade
+                key={index}
+                amount={0.2}
+                delay={index * 0.05}
+                duration={0.5}
+                yOffset={16}
+                className="flex items-center gap-3.5 p-4 md:p-5 rounded-2xl bg-white border border-[#E5E7EB] shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all duration-300 group"
+              >
+                <div className="w-8 h-8 rounded-full bg-[#15b5a3]/10 flex items-center justify-center text-[#15b5a3] flex-shrink-0 group-hover:bg-[#15b5a3] group-hover:text-white transition-colors duration-300">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <span className="text-sm md:text-[0.95rem] font-medium text-[#070D0E]/85">
+                  {cert}
+                </span>
+              </ScrollFade>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer / Contact Section */}
       <section id="contact" className="py-16 bg-white">
         <ScrollFade
           amount={0.2}
@@ -206,7 +297,6 @@ export default function BQMSPage() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-10">
             {/* Biofix Logo */}
             <div className="relative w-64 h-24 md:w-96 md:h-32 shrink-0">
-              {/* Mobile center aligned */}
               <div
                 className="w-full h-full bg-[#15b5a3] md:hidden"
                 style={{
@@ -214,7 +304,6 @@ export default function BQMSPage() {
                   mask: 'url(/biofix_logo.png) center / contain no-repeat'
                 }}
               />
-              {/* Desktop left aligned */}
               <div
                 className="hidden md:block w-full h-full bg-[#15b5a3]"
                 style={{

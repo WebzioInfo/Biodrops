@@ -2,21 +2,21 @@
 
 import ScrollFade from "@/components/effects/ScrollFade";
 import Image from "next/image";
-import { Filter, Truck, Droplets, ShieldCheck, Lock, ArrowRight } from "lucide-react";
+import { Filter, QrCode, Droplets, ShieldCheck, Lock, ArrowRight } from "lucide-react";
 
 export default function ProductShowcase() {
   const leftCards = [
     {
       num: "01",
       icon: Filter,
-      title: "14-Stage Process",
-      desc: "Rigorous filtration and sterilization stages to guarantee clinical-grade purity.",
+      title: "14-Stage Pure Lock",
+      desc: "A rigorous purification process — from pre-filtration through triple sterilization — engineered for clinical-grade purity.",
     },
     {
       num: "02",
-      icon: Truck,
-      title: "edrops Delivery",
-      desc: "Fresh batches dispatched and tracked exclusively through our custom edrops network.",
+      icon: QrCode,
+      title: "Batch Verification",
+      desc: "Scan the neck sleeve on every jar to view real lab results for that specific batch — full consumer-facing transparency.",
     },
   ];
 
@@ -25,13 +25,13 @@ export default function ProductShowcase() {
       num: "03",
       icon: Droplets,
       title: "Mineral Infused",
-      desc: "Perfect balance of essential minerals (pH 7.4) tailored for healthy daily hydration.",
+      desc: "Held at a stable pH of 7.4, with calcium, magnesium and potassium — mineral-balanced hydration by design.",
     },
     {
       num: "04",
       icon: ShieldCheck,
       title: "Sterile Lock",
-      desc: "Hygienically sealed under zero-contact environments with a solid threaded safety cap.",
+      desc: "Packaged with zero human contact inside automated, sterile filling enclosures, in compliance with BIS and FSSAI standards.",
     },
   ];
 
@@ -41,7 +41,7 @@ export default function ProductShowcase() {
   return (
     <section
       id="product"
-      className="relative w-full py-24 md:py-32 bg-[#F4F6F8] overflow-hidden"
+      className="relative w-full py-24 md:py-28 bg-[#F4F6F8] overflow-hidden"
     >
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 flex flex-col items-center">
 
@@ -52,10 +52,7 @@ export default function ProductShowcase() {
           className="flex flex-col items-center text-center mb-14 md:mb-20"
         >
           {/* Eyebrow */}
-          <div className="flex items-center gap-2 text-[0.7rem] font-semibold tracking-[0.25em] uppercase text-[#0F766E] mb-4">
-            <span className="w-[6px] h-[6px] rounded-full bg-[#0F766E]" />
-            ENGINEERED SPECS
-          </div>
+
 
           {/* Headline */}
           <h2
@@ -66,9 +63,8 @@ export default function ProductShowcase() {
           </h2>
 
           {/* Subheading */}
-          <p className="text-sm md:text-base text-[#6B7C80] max-w-lg leading-relaxed">
-            Crafted without compromise. A clinically tested hydration ecosystem
-            built for longevity and vitality.
+          <p className="text-sm md:text-base text-[#6B7C80] max-w-2xl leading-relaxed">
+            BIODROPS is a premium packaged drinking water brand and a consumer-facing initiative from Biofix Technology LLP, an engineering group specializing in water purification plant design, quality-management frameworks, and industrial water treatment.
           </p>
         </ScrollFade>
 
@@ -126,7 +122,7 @@ export default function ProductShowcase() {
             {/* Top pill badge */}
             <div className="bg-white border border-[#E5E7EB] rounded-full px-5 py-2 shadow-sm flex items-center gap-2 text-xs md:text-sm font-medium text-[#070D0E]">
               <span className="w-2 h-2 rounded-full bg-[#0F766E]" />
-              100% Food Grade PET
+              20L Reusable Bubble-Top Jar
             </div>
 
             {/* Product bottle image */}
@@ -144,7 +140,7 @@ export default function ProductShowcase() {
             {/* Bottom pill badge */}
             <div className="bg-white border border-[#E5E7EB] rounded-full px-5 py-2 shadow-sm flex items-center gap-2 text-xs md:text-sm font-medium text-[#070D0E]">
               <Lock className="w-3.5 h-3.5 text-[#0F766E]" strokeWidth={2} />
-              Tamper Evident Seal
+              Batch-Coded Safety Sleeve
             </div>
 
             {/* CTA Button */}

@@ -3,6 +3,7 @@ import Hero from "@/components/sections/Hero";
 import ProductShowcase from "@/components/sections/ProductShowcase";
 import PurificationProcess from "@/components/sections/PurificationProcess";
 import WhyBiodrops from "@/components/sections/WhyBiodrops";
+import WhoWeServe from "@/components/sections/WhoWeServe";
 import ContactSection from "@/components/sections/ContactSection";
 import BQMSSection from "@/components/sections/BQMSSection";
 import Footer from "@/components/sections/Footer";
@@ -30,6 +31,7 @@ export default function HomePage() {
       <ProductShowcase />
       <PurificationProcess />
       <WhyBiodrops />
+      <WhoWeServe />
       <BQMSSection />
       <ContactSection />
       <Footer />
