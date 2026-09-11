@@ -33,7 +33,7 @@ export function ProcessHero() {
         delay={0.1}
         duration={0.6}
         yOffset={24}
-        className="text-[clamp(2.5rem,6vw,5rem)] font-light leading-[1.1] mb-6 font-serif"
+        className="text-[clamp(2.5rem,6vw,5rem)] font-light leading-[1.1] mb-6"
       >
         <h1>
           Fourteen Stages of <span className=" text-[#cfef00] font-medium">Perfection.</span>
@@ -71,11 +71,11 @@ export function ProcessStepsGrid({ steps }: ProcessStepsGridProps) {
             {/* Top: Stage Number, Title & Spec Description */}
             <div>
               <div className="flex items-start gap-4 mb-3">
-                <div className="w-10 h-10 rounded-full bg-[#cfef00]/20 text-[#070D0E] flex-shrink-0 flex items-center justify-center text-sm font-bold font-mono group-hover:bg-[#cfef00] transition-colors duration-300">
+                <div className="w-10 h-10 rounded-full bg-[#cfef00]/20 text-[#070D0E] flex-shrink-0 flex items-center justify-center text-sm font-bold group-hover:bg-[#cfef00] transition-colors duration-300">
                   {step.num}
                 </div>
                 <div className="flex-1 min-w-0 pt-1">
-                  <h3 className="text-xl sm:text-2xl font-serif text-[#070D0E] leading-snug">
+                  <h3 className="text-xl sm:text-2xl text-[#070D0E] leading-snug">
                     {step.title}
                   </h3>
                 </div>

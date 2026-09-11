@@ -104,7 +104,10 @@ const processSteps = [
 
 export default function ProcessPage() {
   return (
-    <div className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#cfef00] selection:text-black">
+    <div
+      className="min-h-screen bg-[#F4F6F8] selection:bg-[#cfef00] selection:text-black"
+      style={{ fontFamily: "var(--font-inter), 'Inter', sans-serif" }}
+    >
 
       {/* Hero Section */}
       <section className="relative w-full pt-40 pb-24 px-6 overflow-hidden bg-[#070D0E] text-white">

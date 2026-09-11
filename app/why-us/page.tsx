@@ -58,7 +58,10 @@ const values = [
 
 export default function WhyUsPage() {
   return (
-    <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-10">
+    <main
+      className="min-h-screen bg-[#F4F6F8] selection:bg-[#56C7D9] selection:text-white pt-10"
+      style={{ fontFamily: "var(--font-inter), 'Inter', sans-serif" }}
+    >
 
       {/* Hero Section */}
       <section className="relative w-full pt-40 pb-24 px-6 overflow-hidden bg-[#FFFFFF] text-[#070D0E]">
@@ -80,8 +83,8 @@ export default function WhyUsPage() {
             <span className="w-12 h-px bg-[#070D0E]/20" />
           </div>
 
-          <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-light leading-[1.1] mb-6 font-serif">
-            Why Choose <span className="italic text-[#56C7D9] font-medium">Biodrops?</span>
+          <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-light leading-[1.1] mb-6">
+            Why Choose <span className="text-[#56C7D9] font-medium">Biodrops?</span>
           </h1>
 
           <p className="text-lg md:text-xl text-[#070D0E]/60 max-w-2xl font-light leading-relaxed">
@@ -100,7 +103,7 @@ export default function WhyUsPage() {
       {/* CTA Section */}
       <section className="py-32 px-6 bg-[#cfef00] text-[#070D0E] text-center flex flex-col items-center justify-center">
         <ScrollFade amount={0.2} duration={0.6} yOffset={24} className="flex flex-col items-center justify-center">
-          <h2 className="text-4xl md:text-6xl font-serif mb-8">Taste the Difference.</h2>
+          <h2 className="text-4xl md:text-6xl mb-8">Taste the Difference.</h2>
           <a
             href="/#contact"
             className="group relative inline-flex items-center justify-center px-10 py-4 bg-[#070D0E] hover:bg-[#111] rounded-full text-[0.8rem] font-bold tracking-[0.2em] uppercase text-white transition-all duration-300 hover:scale-105 shadow-[0_10px_30px_rgba(7,13,14,0.3)]"

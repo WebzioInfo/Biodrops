@@ -61,12 +61,15 @@ const bqmsFeatures = [
 
 export default function BQMSPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div
+      className="min-h-screen bg-white"
+      style={{ fontFamily: "var(--font-inter), 'Inter', sans-serif" }}
+    >
       {/* Hero Section (Match PDF Design) */}
       <section className="relative min-h-screen pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-gradient-to-br from-[#15b5a3] to-[#0e413a]">
 
         {/* Faded BQMS Text in Background like PDF */}
-        <div className="absolute -left-30 md:left-0 top-0 h-full w-full md:w-32 lg:w-48 overflow-hidden pointer-events-none select-none z-0 opacity-[0.15] flex items-center justify-center font-black text-[#051c14] font-archivo mix-blend-overlay">
+        <div className="absolute -left-30 md:left-0 top-0 h-full w-full md:w-32 lg:w-48 overflow-hidden pointer-events-none select-none z-0 opacity-[0.15] flex items-center justify-center font-black text-[#051c14] mix-blend-overlay">
           <div className="text-[25vh] md:text-[35vh] lg:text-[45vh] leading-none shrink-0 tracking-[-0.08em] -rotate-90" style={{ WebkitTextStroke: "max(2px, 0.4vh) #051c14" }}>
             BQMS
           </div>
@@ -107,8 +110,8 @@ export default function BQMSPage() {
 
       </section>
 
-      {/* About Section (Archivo Font) */}
-      <section id="features" className="py-24 font-archivo bg-white relative">
+      {/* About Section */}
+      <section id="features" className="py-24 bg-white relative">
         <div className="container mx-auto px-6 relative z-10">
           <ScrollFade amount={0.25} duration={0.6} className="max-w-3xl mx-auto text-center mb-26">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">What is BQMS?</h2>
@@ -149,7 +152,7 @@ export default function BQMSPage() {
       </section>
 
       {/* Manage Less / Achieve More Section */}
-      <section className="py-8 md:py-16 bg-[#15b5a3] relative overflow-hidden font-archivo">
+      <section className="py-8 md:py-16 bg-[#15b5a3] relative overflow-hidden">
         <ScrollFade
           amount={0.2}
           duration={0.6}
@@ -192,7 +195,7 @@ export default function BQMSPage() {
       </section>
 
       {/* Footer / Contact Section (Matches Screenshot Exactly) */}
-      <section id="contact" className="py-16 bg-white font-archivo">
+      <section id="contact" className="py-16 bg-white">
         <ScrollFade
           amount={0.2}
           duration={0.6}
