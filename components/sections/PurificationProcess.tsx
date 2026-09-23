@@ -231,7 +231,6 @@ const STAGES: ProcessStage[] = [
 
 export default function PurificationProcess() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
   const [modalStage, setModalStage] = useState<ProcessStage | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -299,7 +298,7 @@ export default function PurificationProcess() {
 
           <p className="text-sm md:text-base text-gray-500 max-w-xl mx-auto mt-4 font-light leading-relaxed">
             Click or drag through our 14-stage certified BQMS purification pipeline.
-            Hover over any step or click to inspect full details.
+            Click any stage to view full details and laboratory specifications.
           </p>
         </ScrollFade>
 
@@ -327,8 +326,6 @@ export default function PurificationProcess() {
             const rotateY = offset * -14;
             const opacity = 1 - absOffset * 0.25;
             const brightness = 1 - absOffset * 0.15;
-
-            const isCardHovered = hoveredCardIndex === i;
 
             return (
               <motion.div
@@ -360,10 +357,8 @@ export default function PurificationProcess() {
                     setActiveIndex(i);
                   }
                 }}
-                onMouseEnter={() => setHoveredCardIndex(i)}
-                onMouseLeave={() => setHoveredCardIndex(null)}
               >
-                {/* ──── Single Card Layout (Minimal Default UI + Hover Reveal / Click Modal) ──── */}
+                {/* ──── Single Card Layout (Minimal Default UI + Click for Full Details) ──── */}
                 <div
                   className={`w-[290px] sm:w-[330px] md:w-[350px] h-[450px] sm:h-[480px] md:h-[500px] bg-white text-zinc-900 rounded-[30px] sm:rounded-[34px] overflow-hidden flex flex-col justify-between transition-all duration-300 ${
                     isCenter
@@ -379,7 +374,7 @@ export default function PurificationProcess() {
                       fill
                       sizes="(max-width: 768px) 300px, 350px"
                       priority={isCenter}
-                      className="object-cover transition-transform duration-700 hover:scale-105"
+                      className="object-cover"
                       unoptimized={stage.image.startsWith("http")}
                     />
 
@@ -414,58 +409,34 @@ export default function PurificationProcess() {
                       </h3>
 
                       {/* Location subtitle */}
-                      <div className="flex items-center gap-1.5 mt-1.5 text-xs text-gray-400 font-medium">
+                      <div className="flex items-center gap-1.5 mt-2 text-xs text-gray-400 font-medium">
                         <MapPin className="w-3.5 h-3.5 text-[#0F766E] flex-shrink-0" />
                         <span className="truncate">{stage.location}</span>
                       </div>
 
-                      {/* Hover-Revealed Description (Smooth Fade-in on Hover) */}
-                      <div className="relative min-h-[42px] mt-3">
-                        <AnimatePresence>
-                          {isCardHovered ? (
-                            <motion.p
-                              key="desc"
-                              initial={{ opacity: 0, y: 6 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: 6 }}
-                              transition={{ duration: 0.2 }}
-                              className="text-xs text-gray-600 leading-relaxed font-normal line-clamp-2"
-                            >
-                              {stage.desc}
-                            </motion.p>
-                          ) : (
-                            <motion.span
-                              key="hint"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="text-[11px] text-gray-400 font-medium italic"
-                            >
-                              Hover to preview • Click to view full specs
-                            </motion.span>
-                          )}
-                        </AnimatePresence>
-                      </div>
+                      {/* Stage Summary / Description Text */}
+                      <p className="text-xs sm:text-[13px] text-gray-500 leading-relaxed font-normal line-clamp-2 mt-3.5">
+                        {stage.desc}
+                      </p>
                     </div>
 
                     {/* Clean Action Strip */}
-                    <div className="pt-3 border-t border-gray-100 flex items-center justify-between mt-2">
+                    <div className="pt-3 border-t border-gray-100 flex items-center justify-between mt-4">
                       <span className="text-[11px] font-bold uppercase tracking-wider text-[#0F766E]">
                         BQMS Verified
                       </span>
 
-                      {/* Button to open Modal */}
+                      {/* Button to open Modal with hover effect */}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           setModalStage(stage);
                         }}
-                        className="px-4 py-2 rounded-full bg-[#0F766E] hover:bg-[#0c5c63] text-white text-xs font-semibold shadow-sm transition-all duration-200 flex items-center gap-1.5 hover:scale-105 active:scale-95 cursor-pointer"
-                        aria-label={`View details for ${stage.title}`}
+                        className="group/btn px-4 py-2 rounded-full bg-[#0F766E] text-white text-xs font-semibold shadow-sm hover:bg-[#115E59] hover:shadow-md hover:shadow-[#0F766E]/25 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 flex items-center gap-1.5 cursor-pointer"
+                        aria-label={`View full details for ${stage.title}`}
                       >
-                        <span>Details</span>
-                        <ArrowRight className="w-3 h-3" />
+                        <span>Full Details</span>
+                        <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
                       </button>
                     </div>
                   </div>
@@ -617,9 +588,9 @@ export default function PurificationProcess() {
                 </div>
                 <button
                   onClick={() => setModalStage(null)}
-                  className="px-5 py-2.5 rounded-full bg-[#0F766E] hover:bg-[#0c5c63] text-white text-xs font-semibold transition-colors cursor-pointer"
+                  className="px-5 py-2.5 rounded-full bg-[#0F766E] hover:bg-[#115E59] text-white text-xs font-semibold shadow-sm hover:shadow-md hover:shadow-[#0F766E]/25 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 cursor-pointer"
                 >
-                  Close Specification
+                  Close Details
                 </button>
               </div>
             </motion.div>
