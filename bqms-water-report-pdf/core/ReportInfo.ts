@@ -5,15 +5,15 @@ export function getReportInfo(metadata: Record<string, string> = {}) {
   const reportNo = metadata['Report Number'] || '—';
   const batchNo = metadata['Batch Number'] || '—';
   const sampleCode = metadata['Sample Code'] || batchNo;
-  const company = metadata['Customer / Client'] || metadata['Company'] || 'N/A';
+  const company = (metadata['Customer / Client'] && metadata['Customer / Client'] !== 'N/A') ? metadata['Customer / Client'] : (metadata['Company'] && metadata['Company'] !== 'N/A' ? metadata['Company'] : '—');
   const mfgDate = metadata['Production Date'] || metadata['Manufacturing Date'] || '—';
   const sampleTime = metadata['Sample Time'] || metadata['Collected On'] || '—';
   const reportType = metadata['Report Type'] || '—';
-  const status = metadata['Overall Status'] || metadata['Report Status'] || 'APPROVED';
+  const status = metadata['Overall Status'] || metadata['Report Status'] || '—';
   
-  const collectedBy = metadata['Collected By'] || 'QC Team';
-  const testedBy = metadata['Tested By'] || 'QC Specialist';
-  const verifiedBy = metadata['Verified By'] || 'Lab In-Charge';
+  const collectedBy = metadata['Collected By'] || '—';
+  const testedBy = metadata['Tested By'] || metadata['Analyst'] || '—';
+  const verifiedBy = metadata['Verified By'] || '—';
   
   const generatedDate = metadata['Report Generated'] || new Date().toLocaleDateString('en-GB', {
     day: '2-digit',
@@ -21,9 +21,9 @@ export function getReportInfo(metadata: Record<string, string> = {}) {
     year: 'numeric'
   });
 
-  const bestBefore = metadata['Best Before'] || (mfgDate !== '—' ? `${mfgDate} (30 Days)` : '—');
-  const sampleSource = metadata['Sample Source'] || 'Production Line';
-  const location = metadata['Location'] || 'Plant Facility';
+  const bestBefore = metadata['Best Before'] || '—';
+  const sampleSource = metadata['Sample Source'] || '—';
+  const location = metadata['Location'] || '—';
   const customerAddress = metadata['Customer Address'] || metadata['Address'] || '';
 
   // Use dynamic verification URL if provided, otherwise default to standard verification portal
@@ -76,8 +76,10 @@ export function getReportInfo(metadata: Record<string, string> = {}) {
       { 
         text: status, 
         fontSize: 7.5,
-        bold: true,
-        color: (status === 'APPROVED' || status === 'PUBLISHED' || status === 'PASS') ? PDF_COLORS.pass : PDF_COLORS.fail,
+        bold: (status !== '—' && !!status),
+        color: (status === 'APPROVED' || status === 'PUBLISHED' || status === 'PASS') 
+          ? PDF_COLORS.pass 
+          : (status === '—' || !status ? PDF_COLORS.neutral : PDF_COLORS.fail),
         fillColor: PDF_COLORS.bgCard
       }
     ]

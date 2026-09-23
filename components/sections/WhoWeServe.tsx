@@ -13,7 +13,7 @@ const segments: Segment[] = [
   {
     title: "Corporate Offices",
     desc: "Bulk drinking-water subscriptions for enterprise buildings",
-    image: "/images/serve/corporate.jpg",
+    image: "/images/serve/corporate-indian.jpg",
   },
   {
     title: "Hospitality",

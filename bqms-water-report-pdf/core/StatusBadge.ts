@@ -1,10 +1,10 @@
 import { PDF_COLORS } from './PDFTheme';
 
 export function getStatusBadge(status: string) {
-  const cleanStatus = status.trim().toUpperCase();
+  const cleanStatus = (status || '').trim().toUpperCase();
   
   let color = PDF_COLORS.neutral;
-  let text = status;
+  let text = status || '—';
   let isItalic = false;
   let isBold = true;
 
@@ -17,10 +17,19 @@ export function getStatusBadge(status: string) {
   } else if (cleanStatus === 'BELOW LIMIT' || cleanStatus === 'BELOW LIMITS' || cleanStatus === 'BELOW MINIMUM' || cleanStatus === 'WARNING') {
     color = PDF_COLORS.warning;
     text = status;
-  } else if (cleanStatus === 'NOT TESTED' || cleanStatus === 'NOT ENTERED' || cleanStatus === '—' || cleanStatus === '') {
+  } else if (cleanStatus === 'NOT TESTED' || cleanStatus === 'NOT ENTERED') {
     color = PDF_COLORS.neutral;
-    text = status || 'Not Tested';
+    text = status || 'NOT TESTED';
     isItalic = true;
+    isBold = false;
+  } else if (cleanStatus === '—' || cleanStatus === '' || cleanStatus === 'NULL' || cleanStatus === 'UNDEFINED') {
+    color = PDF_COLORS.neutral;
+    text = '—';
+    isItalic = false;
+    isBold = false;
+  } else {
+    color = PDF_COLORS.neutral;
+    text = status;
     isBold = false;
   }
 

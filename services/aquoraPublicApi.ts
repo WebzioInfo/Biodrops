@@ -76,6 +76,7 @@ export interface AquoraBatchWaterQuality {
   turbidity: string | number | null;
   microbiology: string | null;
   sterilization: string | null;
+  [key: string]: any;
 }
 
 export interface AquoraBatchReport {
@@ -92,6 +93,16 @@ export interface AquoraBatchVerificationData {
   licenses: AquoraBatchLicenses;
   waterQuality: AquoraBatchWaterQuality;
   report: AquoraBatchReport;
+  parameters?: Array<{
+    name: string;
+    category?: string;
+    result?: string | number | null;
+    unit?: string;
+    standard?: string;
+    status?: string;
+    [key: string]: any;
+  }>;
+  [key: string]: any;
 }
 
 export interface AquoraBatchVerificationResponse {

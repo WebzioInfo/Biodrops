@@ -47,86 +47,100 @@ export function getParameterTable(rows: any[][], category: string) {
 
   filteredRows.forEach((row, index) => {
     const paramName = String(row[0] || '');
-    const rawResult = String(row[2] || '');
+    const rawResult = String(row[2] !== null && row[2] !== undefined ? row[2] : '').trim();
     const unit = String(row[3] || '');
-    const limit = String(row[4] || '');
-    const rawStatus = String(row[5] || '');
+    let limit = String(row[4] || '');
+    let rawStatus = String(row[5] !== null && row[5] !== undefined ? row[5] : '').trim();
 
     // 1. Resolve Method reference
     const lookupKey = paramName.toLowerCase().trim();
-    const method = METHOD_MAP[lookupKey] || 'IS 3025';
 
-    // 2. Intelligent cell rendering
+    // Check if result is missing / unentered
+    const isMissing = rawResult === '—' || rawResult === '' || rawResult.toLowerCase() === 'null' || rawResult.toLowerCase() === 'undefined';
+    const isExplicitNotTested = rawResult.toLowerCase() === 'not tested' || rawResult.toLowerCase() === 'not entered';
+
+    let method = '—';
     let displayResult: any = rawResult;
-    let remarks = 'Within limits';
-
-    const isFail = rawStatus.toUpperCase().includes('FAIL') || 
-                   rawStatus.toUpperCase().includes('BELOW') || 
-                   rawStatus.toUpperCase().includes('ABOVE') ||
-                   (category.toUpperCase() === 'MICROBIOLOGY' && rawResult.toLowerCase().includes('present'));
-                   
-    const isNotTested = rawResult === 'Not Entered' || rawResult === 'Not Tested' || rawResult === '—' || !rawResult;
-
-    // Unit formatting
-    const unitSuffix = (unit && unit !== '—' && unit !== 'Descriptor' && !rawResult.includes(unit)) ? ` ${unit}` : '';
+    let remarks = '—';
 
     let resultCellBg = (index % 2 === 1) ? PDF_COLORS.bgZebra : PDF_COLORS.white;
     let statusCellBg = resultCellBg;
 
-    if (isNotTested) {
+    if (isMissing) {
+      method = '—';
+      limit = '—';
+      rawStatus = '—';
+      displayResult = { text: '—', color: PDF_COLORS.neutral, alignment: 'center', fontSize: 7.5 };
+      remarks = '—';
+    } else if (isExplicitNotTested) {
+      method = '—';
+      limit = '—';
       displayResult = { text: 'Not Tested', italic: true, color: PDF_COLORS.neutral, alignment: 'center', fontSize: 7.5 };
       remarks = 'Not analyzed';
-    } else if (rawResult === '0' && unit === 'mg/L' && (lookupKey.includes('chlorine') || lookupKey.includes('sulphate') || lookupKey.includes('chloride'))) {
-      displayResult = {
-        stack: [
-          { text: 'BDL', bold: true, fontSize: 7.5, color: PDF_COLORS.textDark },
-          { text: '✓ Below Limit', fontSize: 6, color: PDF_COLORS.pass, margin: [0, 1, 0, 0] }
-        ],
-        alignment: 'center'
-      };
-      remarks = 'Below Detection Limit';
-    } else if (isFail) {
-      // Failed Result styling: soft red cell fill, crimson text, explicit badge
-      resultCellBg = PDF_COLORS.failBg;
-      statusCellBg = PDF_COLORS.failBg;
-
-      let label = 'Non-compliant';
-      if (rawStatus.toUpperCase().includes('ABOVE') || (lookupKey === 'ph' && parseFloat(rawResult) > 8.5)) {
-        label = 'Above Limit';
-      } else if (rawStatus.toUpperCase().includes('BELOW')) {
-        label = 'Below Limit';
-      } else if (category.toUpperCase() === 'MICROBIOLOGY' && rawResult.toLowerCase().includes('present')) {
-        label = 'Pathogen Present';
-      }
-
-      displayResult = {
-        stack: [
-          { text: `${rawResult}${unitSuffix}`, bold: true, fontSize: 8, color: PDF_COLORS.fail },
-          { text: `✘ ${label}`, fontSize: 6, bold: true, color: PDF_COLORS.fail, margin: [0, 1, 0, 0] }
-        ],
-        alignment: 'center'
-      };
-      remarks = category.toUpperCase() === 'MICROBIOLOGY' ? 'Non-conforming (Pathogen Present)' : `Out of range (${label})`;
     } else {
-      // Passing Result styling: clean result with subtle green indicator
-      let subLabel = '✓ Within limits';
-      if (category.toUpperCase() === 'MICROBIOLOGY') {
-        if (rawResult.toLowerCase().includes('absent')) {
-          subLabel = '✓ Complies';
-          remarks = 'Complies with standard';
-        }
-      } else if (rawResult.toLowerCase() === 'agreeable') {
-        subLabel = '✓ Satisfactory';
-        remarks = 'Satisfactory';
-      }
+      method = METHOD_MAP[lookupKey] || 'IS 3025';
 
-      displayResult = {
-        stack: [
-          { text: `${rawResult}${unitSuffix}`, bold: true, fontSize: 7.5, color: PDF_COLORS.textDark },
-          { text: subLabel, fontSize: 6, color: PDF_COLORS.pass, margin: [0, 1, 0, 0] }
-        ],
-        alignment: 'center'
-      };
+      const isFail = rawStatus.toUpperCase().includes('FAIL') || 
+                     rawStatus.toUpperCase().includes('BELOW') || 
+                     rawStatus.toUpperCase().includes('ABOVE') ||
+                     (category.toUpperCase() === 'MICROBIOLOGY' && rawResult.toLowerCase().includes('present'));
+
+      // Unit formatting
+      const unitSuffix = (unit && unit !== '—' && unit !== 'Descriptor' && !rawResult.includes(unit)) ? ` ${unit}` : '';
+
+      if (rawResult === '0' && unit === 'mg/L' && (lookupKey.includes('chlorine') || lookupKey.includes('sulphate') || lookupKey.includes('chloride'))) {
+        displayResult = {
+          stack: [
+            { text: 'BDL', bold: true, fontSize: 7.5, color: PDF_COLORS.textDark },
+            { text: '✓ Below Limit', fontSize: 6, color: PDF_COLORS.pass, margin: [0, 1, 0, 0] }
+          ],
+          alignment: 'center'
+        };
+        remarks = 'Below Detection Limit';
+      } else if (isFail) {
+        // Failed Result styling: soft red cell fill, crimson text, explicit badge
+        resultCellBg = PDF_COLORS.failBg;
+        statusCellBg = PDF_COLORS.failBg;
+
+        let label = 'Non-compliant';
+        if (rawStatus.toUpperCase().includes('ABOVE') || (lookupKey === 'ph' && parseFloat(rawResult) > 8.5)) {
+          label = 'Above Limit';
+        } else if (rawStatus.toUpperCase().includes('BELOW')) {
+          label = 'Below Limit';
+        } else if (category.toUpperCase() === 'MICROBIOLOGY' && rawResult.toLowerCase().includes('present')) {
+          label = 'Pathogen Present';
+        }
+
+        displayResult = {
+          stack: [
+            { text: `${rawResult}${unitSuffix}`, bold: true, fontSize: 8, color: PDF_COLORS.fail },
+            { text: `✘ ${label}`, fontSize: 6, bold: true, color: PDF_COLORS.fail, margin: [0, 1, 0, 0] }
+          ],
+          alignment: 'center'
+        };
+        remarks = category.toUpperCase() === 'MICROBIOLOGY' ? 'Non-conforming (Pathogen Present)' : `Out of range (${label})`;
+      } else {
+        // Passing Result styling: clean result with subtle green indicator
+        let subLabel = '✓ Within limits';
+        remarks = 'Within limits';
+        if (category.toUpperCase() === 'MICROBIOLOGY') {
+          if (rawResult.toLowerCase().includes('absent')) {
+            subLabel = '✓ Complies';
+            remarks = 'Complies with standard';
+          }
+        } else if (rawResult.toLowerCase() === 'agreeable') {
+          subLabel = '✓ Satisfactory';
+          remarks = 'Satisfactory';
+        }
+
+        displayResult = {
+          stack: [
+            { text: `${rawResult}${unitSuffix}`, bold: true, fontSize: 7.5, color: PDF_COLORS.textDark },
+            { text: subLabel, fontSize: 6, color: PDF_COLORS.pass, margin: [0, 1, 0, 0] }
+          ],
+          alignment: 'center'
+        };
+      }
     }
 
     const rowBg = (index % 2 === 1) ? PDF_COLORS.bgZebra : PDF_COLORS.white;
@@ -139,7 +153,7 @@ export function getParameterTable(rows: any[][], category: string) {
       { ...((typeof displayResult === 'string') ? { text: displayResult, style: 'tableBodyCenter' } : displayResult), fillColor: resultCellBg } as any,
       { text: limit, style: 'tableBodyCenter', fillColor: rowBg } as any,
       { ...getStatusBadge(rawStatus), fillColor: statusCellBg } as any,
-      { text: remarks, style: 'tableBody', fillColor: rowBg } as any
+      { text: remarks, style: remarks === '—' ? 'tableBodyCenter' : 'tableBody', fillColor: rowBg } as any
     ]);
   });
 
