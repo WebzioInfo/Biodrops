@@ -87,11 +87,22 @@ export function generateOrganizationSchema() {
     "@type": "Organization",
     "@id": `${SITE_CONFIG.siteUrl}/#organization`,
     name: SITE_CONFIG.brandName,
-    alternateName: ["BIODROPS India", "BIODROPS Mineral Water", "Biodrops Water"],
+    legalName: SITE_CONFIG.parentCompany,
+    alternateName: ["biodrops", "Bio Drops", "BIODROPS India", "BIODROPS Mineral Water", "Biodrops Water", "BIODROPS Official"],
     url: SITE_CONFIG.siteUrl,
     logo: SITE_CONFIG.images.logo,
     image: SITE_CONFIG.images.ogImage,
     description: SITE_CONFIG.description,
+    disambiguatingDescription:
+      "Official manufacturer and distributor of BIODROPS 14-stage purified packaged drinking mineral water in 20L jars across Kerala, distinct from wastewater treatment or domestic purifiers.",
+    slogan: SITE_CONFIG.tagline,
+    knowsAbout: [
+      "Packaged Drinking Water",
+      "14-Stage Water Purification",
+      "Bureau of Indian Standards IS 14543",
+      "FSSAI Water Quality Regulations",
+      "20L Mineral Water Delivery Kerala",
+    ],
     parentOrganization: {
       "@type": "Organization",
       "@id": `${SITE_CONFIG.parentCompanyUrl}/#organization`,
@@ -167,7 +178,7 @@ export function generateWebSiteSchema() {
     "@id": `${SITE_CONFIG.siteUrl}/#website`,
     url: SITE_CONFIG.siteUrl,
     name: SITE_CONFIG.brandName,
-    alternateName: "BIODROPS Water",
+    alternateName: ["biodrops", "Bio Drops", "BIODROPS Water", "BIODROPS Official Website"],
     description: SITE_CONFIG.description,
     publisher: {
       "@id": `${SITE_CONFIG.siteUrl}/#organization`,

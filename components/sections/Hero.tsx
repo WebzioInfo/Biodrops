@@ -7,10 +7,10 @@ import ScrollFade from "@/components/effects/ScrollFade";
 
 function Eyebrow() {
   return (
-    <div className="flex items-center gap-3 text-[0.65rem] tracking-[0.4em] uppercase text-[#6B7C80] font-medium mb-4 justify-start">
-      <span className="w-8 h-px bg-[#6B7C80]/30" />
-      PREMIUM MINERAL WATER • KERALA
-      <span className="w-8 h-px bg-[#6B7C80]/30" />
+    <div className="flex items-center gap-3 text-[0.65rem] tracking-[0.4em] uppercase text-[#0F766E] font-bold mb-4 justify-start">
+      <span className="w-8 h-px bg-[#0F766E]/40" />
+      BIODROPS • OFFICIAL WEBSITE
+      <span className="w-8 h-px bg-[#0F766E]/40" />
     </div>
   );
 }
@@ -18,11 +18,13 @@ function Eyebrow() {
 function Headline() {
   return (
     <h1
-      className="text-[clamp(2.8rem,5.5vw,5.4rem)] leading-[1.05] tracking-[-0.03em] text-[#070D0E] font-bold mb-5 text-left"
+      className="text-[clamp(2.6rem,5.2vw,5rem)] leading-[1.05] tracking-[-0.03em] text-[#070D0E] font-bold mb-5 text-left"
       style={{ fontFamily: "var(--font-inter), 'Inter', sans-serif" }}
     >
-      Quality Can Be<br />
-      <span className="text-[#00A8CC]">Canned.</span>
+      BIODROPS<span className="text-[#00A8CC]">.</span><br />
+      <span className="text-[clamp(1.8rem,3.8vw,3.6rem)] font-medium text-[#070D0E]">
+        Quality Can Be <span className="text-[#00A8CC] font-bold">Canned.</span>
+      </span>
     </h1>
   );
 }
@@ -33,8 +35,8 @@ function Subcopy() {
       className="text-[clamp(1rem,2vw,1.25rem)] leading-[1.7] text-[#6B7C80] font-light mb-8 max-w-lg text-left"
       style={{ fontFamily: "'Satoshi', sans-serif" }}
     >
-      Engineered for modern living. Kerala&apos;s premier 14-stage purified,
-      mineral-balanced packaged drinking water with certified BQMS Pure Lock.
+      Engineered for modern living. <strong>BIODROPS</strong> is Kerala&apos;s premier 14-stage purified,
+      mineral-balanced packaged drinking water with certified BQMS Pure Lock and instant batch verification.
     </p>
   );
 }

@@ -9,9 +9,9 @@ import BQMSSection from "@/components/sections/BQMSSection";
 import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
-  title: "BIODROPS | Premium Mineral Water in Kerala | Pure Packaged Drinking Water",
+  title: "BIODROPS™ Official Website | Premium Packaged Mineral Water Kerala",
   description:
-    "Kerala's premier 14-stage purified packaged mineral water brand by Biofix Technology LLP. Sourced and bottled under Biofix Quality Management System (BQMS). 20L jars with instant online batch verification. BIS IS 14543 & FSSAI certified.",
+    "Official website of BIODROPS, Kerala's premier 14-stage purified packaged drinking water by Biofix Technology LLP. 20L jars with BQMS Pure Lock and online batch verification. BIS IS 14543 & FSSAI certified.",
   keywords: [
     "Packaged Drinking Water Kerala",
     "Mineral Water Supplier Kerala",
