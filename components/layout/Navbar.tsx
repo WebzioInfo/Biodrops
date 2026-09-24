@@ -63,6 +63,10 @@ export default function Navbar() {
         </Link>
  
         <nav className="hidden md:flex items-center gap-4 md:gap-6">
+          <Link href="/KNOWYOURWATER" prefetch={false} className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
+            Know Your Water
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#56C7D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
+          </Link>
           <Link href="/process" prefetch={false} className="group relative text-[0.75rem] font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors py-2">
             Process
             <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#56C7D9] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
@@ -103,6 +107,9 @@ export default function Navbar() {
               transition={{ duration: 0.2 }}
               className="absolute top-full left-4 right-4 mt-4 bg-[#070D0E]/95 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 shadow-2xl flex flex-col items-center gap-6 md:hidden"
             >
+              <Link href="/KNOWYOURWATER" prefetch={false} onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-bold tracking-[0.2em] uppercase text-white hover:text-[#56C7D9] transition-colors w-full text-center py-2 border-b border-white/5">
+                Know Your Water
+              </Link>
               <Link href="/process" prefetch={false} onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-bold tracking-[0.2em] uppercase text-white hover:text-[#56C7D9] transition-colors w-full text-center py-2 border-b border-white/5">
                 Process
               </Link>

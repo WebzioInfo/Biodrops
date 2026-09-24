@@ -221,6 +221,55 @@ export default function RootLayout({
                       "@id": "https://biodropsindia.com/#organization"
                     }
                   }
+                },
+                {
+                  "@type": "ItemList",
+                  "@id": "https://biodropsindia.com/#sitenavigation",
+                  "name": "BIODROPS Primary Sitelinks",
+                  "itemListElement": [
+                    {
+                      "@type": "SiteNavigationElement",
+                      "position": 1,
+                      "name": "Know Your Water",
+                      "description": "Enter your 20L jar sleeve batch number to inspect certified water quality testing reports",
+                      "url": "https://biodropsindia.com/KNOWYOURWATER"
+                    },
+                    {
+                      "@type": "SiteNavigationElement",
+                      "position": 2,
+                      "name": "Purification Process",
+                      "description": "Explore the clinical 14-stage water purification pipeline from sand filtration to UV and ozone sterilization",
+                      "url": "https://biodropsindia.com/process"
+                    },
+                    {
+                      "@type": "SiteNavigationElement",
+                      "position": 3,
+                      "name": "BQMS System",
+                      "description": "Biofix Quality Management System ensuring BIS IS 14543 and FSSAI standards",
+                      "url": "https://biodropsindia.com/bqms"
+                    },
+                    {
+                      "@type": "SiteNavigationElement",
+                      "position": 4,
+                      "name": "Why BIODROPS",
+                      "description": "Zero contaminants, balanced pH 7.4, and touch-free automated bottling in Kerala",
+                      "url": "https://biodropsindia.com/why-us"
+                    },
+                    {
+                      "@type": "SiteNavigationElement",
+                      "position": 5,
+                      "name": "Certifications",
+                      "description": "BIS IS 14543, FSSAI, and ISO 9001:2015 national compliance and accreditations",
+                      "url": "https://biodropsindia.com/certifications"
+                    },
+                    {
+                      "@type": "SiteNavigationElement",
+                      "position": 6,
+                      "name": "Frequently Asked Questions",
+                      "description": "Common questions about BIODROPS water purity, corporate delivery, and testing reports",
+                      "url": "https://biodropsindia.com/faq"
+                    }
+                  ]
                 }
               ]
             })
