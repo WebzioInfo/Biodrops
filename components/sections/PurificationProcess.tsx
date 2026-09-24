@@ -8,7 +8,6 @@ import {
   ChevronRight,
   ShieldCheck,
   X,
-  MapPin,
   ArrowRight,
   Activity,
 } from "lucide-react";
@@ -23,7 +22,6 @@ interface ProcessStage {
   num: string;
   title: string;
   phase: string;
-  location: string;
   desc: string;
   specs: [StageSpec, StageSpec, StageSpec];
   qualityNote: string;
@@ -35,7 +33,6 @@ const STAGES: ProcessStage[] = [
     num: "01",
     title: "Sand Media Filter",
     phase: "Pre-Treatment",
-    location: "Primary Filtration Skid",
     desc: "Multi-graded quartz sand beds trap coarse physical impurities, silt, and suspended particles.",
     specs: [
       { label: "Intake Flow", value: "6,000 L/HR" },
@@ -49,7 +46,6 @@ const STAGES: ProcessStage[] = [
     num: "02",
     title: "Activated Carbon Filter",
     phase: "Pre-Treatment",
-    location: "Primary Adsorption Tower",
     desc: "High-grade virgin coconut shell carbon absorbs free chlorine, odors, and dissolved organic compounds.",
     specs: [
       { label: "Iodine Value", value: "950+ mg/g" },
@@ -63,7 +59,6 @@ const STAGES: ProcessStage[] = [
     num: "03",
     title: "Iron Remover",
     phase: "Pre-Treatment",
-    location: "Catalytic Oxidation Skid",
     desc: "Specialized catalytic media oxidizes and strips out dissolved iron and manganese common in deep aquifers.",
     specs: [
       { label: "Iron Retention", value: "> 99.5%" },
@@ -77,7 +72,6 @@ const STAGES: ProcessStage[] = [
     num: "04",
     title: "Secondary Sand Filter",
     phase: "Pre-RO Filtration",
-    location: "Secondary Media Skid",
     desc: "Secondary fine sand and anthracite polishing bed intercepts residual micro-flocs after iron removal.",
     specs: [
       { label: "Flow Rate", value: "6,000 L/HR" },
@@ -91,10 +85,9 @@ const STAGES: ProcessStage[] = [
     num: "05",
     title: "Secondary Carbon Filter",
     phase: "Pre-RO Filtration",
-    location: "Polishing Carbon Vessel",
     desc: "Secondary activated carbon column traps any remaining trace organics, ensuring pristine water clarity.",
     specs: [
-      { label: "Adsorption", value: "Deep Organic Trap" },
+      { label: "Filtration", value: "Deep Organic Trap" },
       { label: "Surface Area", value: "1,050 m²/g" },
       { label: "VOC Level", value: "Zero Detectable" }
     ],
@@ -105,7 +98,6 @@ const STAGES: ProcessStage[] = [
     num: "06",
     title: "Reverse Osmosis (RO)",
     phase: "Core Purification",
-    location: "Multi-Tube Membrane Array",
     desc: "Semi-permeable Thin-Film Composite membranes filter out dissolved salts, heavy metals, and chemicals.",
     specs: [
       { label: "TDS Rejection", value: "99.2% Nominal" },
@@ -119,7 +111,6 @@ const STAGES: ProcessStage[] = [
     num: "07",
     title: "Intermediate Tank",
     phase: "Buffering",
-    location: "Mid-Stage Holding Station",
     desc: "Food-grade stainless steel holding reservoir balances purified RO water flow before remineralization.",
     specs: [
       { label: "Tank Capacity", value: "5,000 Liters" },
@@ -133,7 +124,6 @@ const STAGES: ProcessStage[] = [
     num: "08",
     title: "0.2-Micron Precision Filter",
     phase: "Fine Polishing",
-    location: "Clinical Filtration Cluster",
     desc: "Clinical-grade 0.2-micron pleated micro-cartridge intercepts microscopic particulates and cellular fragments.",
     specs: [
       { label: "Pore Rating", value: "0.20 Micron" },
@@ -147,7 +137,6 @@ const STAGES: ProcessStage[] = [
     num: "09",
     title: "0.5-Micron Polishing Filter",
     phase: "Fine Polishing",
-    location: "Polishing Filter Housing",
     desc: "Fine 0.5-micron polishing filter ensures ultra-clear, diamond-like optical clarity before mineral infusion.",
     specs: [
       { label: "Pore Rating", value: "0.50 Micron" },
@@ -161,7 +150,6 @@ const STAGES: ProcessStage[] = [
     num: "10",
     title: "pH Boosting",
     phase: "Mineral Balance",
-    location: "Alkaline Balancing Station",
     desc: "Bio-active alkalizing media restores ideal mineral balance, elevating water pH to a healthy 7.2 – 7.5.",
     specs: [
       { label: "Target pH", value: "7.2 – 7.5 Alkaline" },
@@ -175,7 +163,6 @@ const STAGES: ProcessStage[] = [
     num: "11",
     title: "Essential Minerals",
     phase: "Mineral Balance",
-    location: "Precision Mineral Dosing",
     desc: "Carefully re-infuses vital healthy minerals (Calcium, Magnesium, Potassium) as per IS 14543 standards.",
     specs: [
       { label: "Calcium (Ca)", value: "Balanced for Health" },
@@ -189,7 +176,6 @@ const STAGES: ProcessStage[] = [
     num: "12",
     title: "UV Filtration",
     phase: "Sterilization",
-    location: "Germicidal UV-C Chamber",
     desc: "Continuous 254nm ultraviolet radiation destroys 99.99% of bacteria and viruses without heat or chemicals.",
     specs: [
       { label: "Wavelength", value: "253.7 nm UV-C" },
@@ -203,7 +189,6 @@ const STAGES: ProcessStage[] = [
     num: "13",
     title: "Ozonation",
     phase: "Sterilization",
-    location: "Ozone Contact Reactor",
     desc: "Micro-bubble ozone (O₃) infusion neutralizes any residual microorganisms and naturally preserves freshness.",
     specs: [
       { label: "Residual Ozone", value: "0.05 – 0.2 ppm" },
@@ -217,7 +202,6 @@ const STAGES: ProcessStage[] = [
     num: "14",
     title: "Sterile Cleanroom Storage",
     phase: "Packaging",
-    location: "Zero-Touch Cleanroom Line",
     desc: "Positive-pressure sterile stainless steel holding reservoir feeds directly into robotic zero-touch filling lines.",
     specs: [
       { label: "Holding Volume", value: "9,000 Liters" },
@@ -408,14 +392,8 @@ export default function PurificationProcess() {
                         {stage.title}
                       </h3>
 
-                      {/* Location subtitle */}
-                      <div className="flex items-center gap-1.5 mt-2 text-xs text-gray-400 font-medium">
-                        <MapPin className="w-3.5 h-3.5 text-[#0F766E] flex-shrink-0" />
-                        <span className="truncate">{stage.location}</span>
-                      </div>
-
                       {/* Stage Summary / Description Text */}
-                      <p className="text-xs sm:text-[13px] text-gray-500 leading-relaxed font-normal line-clamp-2 mt-3.5">
+                      <p className="text-xs sm:text-[13px] text-gray-500 leading-relaxed font-normal line-clamp-3 mt-3">
                         {stage.desc}
                       </p>
                     </div>
@@ -542,13 +520,9 @@ export default function PurificationProcess() {
                 </span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1.5">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
                 {modalStage.title}
               </h3>
-              <p className="text-xs sm:text-sm text-gray-500 mb-6 font-medium flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#0F766E]" />
-                <span>{modalStage.location}</span>
-              </p>
 
               {/* Technical Specifications Grid */}
               <div className="grid grid-cols-3 gap-3 mb-6 bg-[#F8FAFC] border border-gray-100 p-4 rounded-2xl">
