@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "Terms and Conditions | BIODROPS Packaged Drinking Water",
   description: "Read the official Terms and Conditions for BIODROPS. Learn about orders, payments, website usage policies, warranties, and liability limitations.",
   alternates: {
-    canonical: "https://biodropsindia.com/terms",
+    canonical: "https://www.biodropsindia.com/terms",
   },
   openGraph: {
     title: "Terms and Conditions | BIODROPS Packaged Drinking Water",
     description: "Read the official Terms and Conditions for BIODROPS. Learn about orders, payments, website usage policies, warranties, and liability limitations.",
-    url: "https://biodropsindia.com/terms",
+    url: "https://www.biodropsindia.com/terms",
     type: "website",
   },
   twitter: {
@@ -33,12 +33,12 @@ export default function TermsPage() {
             "@graph": [
               {
                 "@type": "WebPage",
-                "@id": "https://biodropsindia.com/terms/#webpage",
-                "url": "https://biodropsindia.com/terms",
+                "@id": "https://www.biodropsindia.com/terms/#webpage",
+                "url": "https://www.biodropsindia.com/terms",
                 "name": "Terms and Conditions | BIODROPS Packaged Drinking Water",
                 "description": "Read the official Terms and Conditions for BIODROPS. Learn about orders, payments, website usage policies, warranties, and liability limitations.",
                 "isPartOf": {
-                  "@id": "https://biodropsindia.com/#website"
+                  "@id": "https://www.biodropsindia.com/#website"
                 },
                 "breadcrumb": {
                   "@type": "BreadcrumbList",
@@ -47,13 +47,13 @@ export default function TermsPage() {
                       "@type": "ListItem",
                       "position": 1,
                       "name": "Home",
-                      "item": "https://biodropsindia.com"
+                      "item": "https://www.biodropsindia.com"
                     },
                     {
                       "@type": "ListItem",
                       "position": 2,
                       "name": "Terms and Conditions",
-                      "item": "https://biodropsindia.com/terms"
+                      "item": "https://www.biodropsindia.com/terms"
                     }
                   ]
                 }
@@ -89,7 +89,7 @@ export default function TermsPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold font-serif text-[#070D0E]">1. Acceptance of Terms</h2>
             <p>
-              By accessing, browsing, or using the <strong>BIODROPS</strong> website (https://biodropsindia.com) or purchasing products from us, you agree to comply with and be bound by these Terms and Conditions. If you do not agree to these terms, you must immediately terminate use of our website and services.
+              By accessing, browsing, or using the <strong>BIODROPS</strong> website (https://www.biodropsindia.com) or purchasing products from us, you agree to comply with and be bound by these Terms and Conditions. If you do not agree to these terms, you must immediately terminate use of our website and services.
             </p>
             <p>
               These Terms constitute a legally binding agreement between you and the brand's operating entity, <strong>Biofix Technology LLP</strong>.

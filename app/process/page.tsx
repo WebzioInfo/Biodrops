@@ -17,17 +17,17 @@ export const metadata: Metadata = {
     "IS 14543 Water Purification",
   ],
   alternates: {
-    canonical: "https://biodropsindia.com/process",
+    canonical: "https://www.biodropsindia.com/process",
   },
   openGraph: {
     title: "14-Stage Water Purification Process | BIODROPS",
     description:
       "Explore the clinical 14-stage purification process of BIODROPS: Dual-pass filtration, RO purification, sub-micron polishing, and UV/Ozone sterilization.",
-    url: "https://biodropsindia.com/process",
+    url: "https://www.biodropsindia.com/process",
     type: "website",
     images: [
       {
-        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        url: "https://www.biodropsindia.com/images/premium-jar-studio.jpg",
         width: 1200,
         height: 630,
         alt: "BIODROPS 14-Stage Water Purification Process",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "14-Stage Water Purification Process | BIODROPS",
     description: "Dual-pass filtration, Reverse Osmosis, and UV/Ozone sterilization for pristine mineral water.",
-    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
+    images: ["https://www.biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 
@@ -135,33 +135,33 @@ export default function ProcessPage() {
     "@graph": [
       {
         "@type": "HowTo",
-        "@id": "https://biodropsindia.com/process/#howto",
+        "@id": "https://www.biodropsindia.com/process/#howto",
         "name": "14-Stage Mineral Water Purification Process",
         "description": "The complete 14-stage scientific purification process engineered by Biofix Technology LLP for BIODROPS premium packaged drinking water.",
-        "image": "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        "image": "https://www.biodropsindia.com/images/premium-jar-studio.jpg",
         "step": processSteps.map((step, idx) => ({
           "@type": "HowToStep",
           "position": idx + 1,
           "name": `Stage ${step.num}: ${step.title}`,
           "text": `${step.desc} ${step.merit}`,
-          "url": `https://biodropsindia.com/process#stage-${step.num}`,
+          "url": `https://www.biodropsindia.com/process#stage-${step.num}`,
         })),
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://biodropsindia.com/process/#breadcrumb",
+        "@id": "https://www.biodropsindia.com/process/#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://biodropsindia.com",
+            "item": "https://www.biodropsindia.com",
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Purification Process",
-            "item": "https://biodropsindia.com/process",
+            "item": "https://www.biodropsindia.com/process",
           },
         ],
       },

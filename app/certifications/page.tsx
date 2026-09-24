@@ -16,17 +16,17 @@ export const metadata: Metadata = {
     "Biodrops Certifications",
   ],
   alternates: {
-    canonical: "https://biodropsindia.com/certifications",
+    canonical: "https://www.biodropsindia.com/certifications",
   },
   openGraph: {
     title: "BIS IS 14543 & FSSAI Certifications | BIODROPS",
     description:
       "Adhering to strict BIS IS 14543 standards and valid FSSAI food safety licenses under BQMS management.",
-    url: "https://biodropsindia.com/certifications",
+    url: "https://www.biodropsindia.com/certifications",
     type: "website",
     images: [
       {
-        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        url: "https://www.biodropsindia.com/images/premium-jar-studio.jpg",
         width: 1200,
         height: 630,
         alt: "BIODROPS BIS & FSSAI Certifications",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BIS IS 14543 & FSSAI Certifications | BIODROPS",
     description: "Certified under BIS IS 14543, FSSAI, and ISO 9001:2015 standards.",
-    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
+    images: ["https://www.biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 
@@ -47,29 +47,29 @@ export default function CertificationsPage() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://biodropsindia.com/certifications/#webpage",
-        "url": "https://biodropsindia.com/certifications",
+        "@id": "https://www.biodropsindia.com/certifications/#webpage",
+        "url": "https://www.biodropsindia.com/certifications",
         "name": "BIS IS 14543 & FSSAI Certifications | BIODROPS Mineral Water",
         "description": "National standards, BIS IS 14543 certifications, FSSAI licenses, and laboratory accreditations governing BIODROPS mineral water.",
         "isPartOf": {
-          "@id": "https://biodropsindia.com/#website",
+          "@id": "https://www.biodropsindia.com/#website",
         },
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://biodropsindia.com/certifications/#breadcrumb",
+        "@id": "https://www.biodropsindia.com/certifications/#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://biodropsindia.com",
+            "item": "https://www.biodropsindia.com",
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Certifications",
-            "item": "https://biodropsindia.com/certifications",
+            "item": "https://www.biodropsindia.com/certifications",
           },
         ],
       },

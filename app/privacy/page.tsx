@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "Privacy Policy | BIODROPS Packaged Drinking Water",
   description: "Official privacy policy for BIODROPS. Read about our data collection, analytics, cookie policies, data security, and user rights.",
   alternates: {
-    canonical: "https://biodropsindia.com/privacy",
+    canonical: "https://www.biodropsindia.com/privacy",
   },
   openGraph: {
     title: "Privacy Policy | BIODROPS Packaged Drinking Water",
     description: "Official privacy policy for BIODROPS. Read about our data collection, analytics, cookie policies, data security, and user rights.",
-    url: "https://biodropsindia.com/privacy",
+    url: "https://www.biodropsindia.com/privacy",
     type: "website",
   },
   twitter: {
@@ -33,12 +33,12 @@ export default function PrivacyPage() {
             "@graph": [
               {
                 "@type": "WebPage",
-                "@id": "https://biodropsindia.com/privacy/#webpage",
-                "url": "https://biodropsindia.com/privacy",
+                "@id": "https://www.biodropsindia.com/privacy/#webpage",
+                "url": "https://www.biodropsindia.com/privacy",
                 "name": "Privacy Policy | BIODROPS Packaged Drinking Water",
                 "description": "Official privacy policy for BIODROPS. Read about our data collection, analytics, cookie policies, data security, and user rights.",
                 "isPartOf": {
-                  "@id": "https://biodropsindia.com/#website"
+                  "@id": "https://www.biodropsindia.com/#website"
                 },
                 "breadcrumb": {
                   "@type": "BreadcrumbList",
@@ -47,13 +47,13 @@ export default function PrivacyPage() {
                       "@type": "ListItem",
                       "position": 1,
                       "name": "Home",
-                      "item": "https://biodropsindia.com"
+                      "item": "https://www.biodropsindia.com"
                     },
                     {
                       "@type": "ListItem",
                       "position": 2,
                       "name": "Privacy Policy",
-                      "item": "https://biodropsindia.com/privacy"
+                      "item": "https://www.biodropsindia.com/privacy"
                     }
                   ]
                 }
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold font-serif text-[#070D0E]">1. Introduction</h2>
             <p>
-              Welcome to <strong>BIODROPS</strong> (https://biodropsindia.com). We are committed to protecting your privacy and ensuring the security of your personal data. This Privacy Policy details how we collect, process, utilize, and protect your information when you visit our website, interact with our services, or place orders for our premium packaged drinking water.
+              Welcome to <strong>BIODROPS</strong> (https://www.biodropsindia.com). We are committed to protecting your privacy and ensuring the security of your personal data. This Privacy Policy details how we collect, process, utilize, and protect your information when you visit our website, interact with our services, or place orders for our premium packaged drinking water.
             </p>
             <p>
               BIODROPS is a packaged drinking water initiative launched and managed by <strong>Biofix Technology LLP</strong>. By accessing our website or using our services, you consent to the data collection and processing methods outlined in this policy.

@@ -15,17 +15,17 @@ export const metadata: Metadata = {
     "Water Purity Testing Report",
   ],
   alternates: {
-    canonical: "https://biodropsindia.com/faq",
+    canonical: "https://www.biodropsindia.com/faq",
   },
   openGraph: {
     title: "Frequently Asked Questions (FAQ) | BIODROPS Mineral Water",
     description:
       "Get answers to frequently asked questions about BIODROPS water purity, 14-stage purification, BQMS systems, and bulk water supply in Kerala.",
-    url: "https://biodropsindia.com/faq",
+    url: "https://www.biodropsindia.com/faq",
     type: "website",
     images: [
       {
-        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        url: "https://www.biodropsindia.com/images/premium-jar-studio.jpg",
         width: 1200,
         height: 630,
         alt: "BIODROPS Mineral Water FAQ",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Frequently Asked Questions (FAQ) | BIODROPS",
     description: "Common questions about BIODROPS water purity, BQMS testing, and 20L delivery in Kerala.",
-    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
+    images: ["https://www.biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 
@@ -69,8 +69,8 @@ export default function FAQPage() {
     "@graph": [
       {
         "@type": "FAQPage",
-        "@id": "https://biodropsindia.com/faq/#faqpage",
-        "url": "https://biodropsindia.com/faq",
+        "@id": "https://www.biodropsindia.com/faq/#faqpage",
+        "url": "https://www.biodropsindia.com/faq",
         "name": "Frequently Asked Questions (FAQ) | BIODROPS Mineral Water",
         "description": "Answers to common questions about BIODROPS 14-stage purified packaged drinking water in Kerala.",
         "mainEntity": faqs.map((faq) => ({
@@ -84,19 +84,19 @@ export default function FAQPage() {
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://biodropsindia.com/faq/#breadcrumb",
+        "@id": "https://www.biodropsindia.com/faq/#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://biodropsindia.com",
+            "item": "https://www.biodropsindia.com",
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "FAQ",
-            "item": "https://biodropsindia.com/faq",
+            "item": "https://www.biodropsindia.com/faq",
           },
         ],
       },

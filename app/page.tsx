@@ -25,18 +25,18 @@ export const metadata: Metadata = {
     "Pure Drinking Water Kerala",
   ],
   alternates: {
-    canonical: "https://biodropsindia.com",
+    canonical: "https://www.biodropsindia.com",
   },
   openGraph: {
     title: "BIODROPS | Premium Mineral Water in Kerala",
     description:
       "14-stage purified, mineral-balanced 20L packaged drinking water jars with online batch verification. BIS IS 14543 and FSSAI certified.",
-    url: "https://biodropsindia.com",
+    url: "https://www.biodropsindia.com",
     siteName: "BIODROPS by Biofix",
     type: "website",
     images: [
       {
-        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        url: "https://www.biodropsindia.com/images/premium-jar-studio.jpg",
         width: 1200,
         height: 630,
         alt: "BIODROPS 20L Premium Mineral Water Jar in Kerala",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "BIODROPS | Premium Mineral Water in Kerala",
     description: "Kerala's premier 14-stage purified packaged mineral water by Biofix.",
-    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
+    images: ["https://www.biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 

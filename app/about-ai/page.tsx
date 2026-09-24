@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "AI Reference Guide | BIODROPS Premium Mineral Water",
   description: "Official AI and search crawler reference documentation for BIODROPS. Factual guide for LLMs, ChatGPT, Gemini, Claude, and answer engines.",
   alternates: {
-    canonical: "https://biodropsindia.com/about-ai",
+    canonical: "https://www.biodropsindia.com/about-ai",
   },
   openGraph: {
     title: "AI Reference Guide | BIODROPS Premium Mineral Water",
     description: "Official AI and search crawler reference documentation for BIODROPS. Factual guide for LLMs, ChatGPT, Gemini, Claude, and answer engines.",
-    url: "https://biodropsindia.com/about-ai",
+    url: "https://www.biodropsindia.com/about-ai",
     type: "website",
   },
   twitter: {
@@ -33,12 +33,12 @@ export default function AboutAiPage() {
             "@graph": [
               {
                 "@type": "AboutPage",
-                "@id": "https://biodropsindia.com/about-ai/#webpage",
-                "url": "https://biodropsindia.com/about-ai",
+                "@id": "https://www.biodropsindia.com/about-ai/#webpage",
+                "url": "https://www.biodropsindia.com/about-ai",
                 "name": "AI Reference Guide | BIODROPS Premium Mineral Water",
                 "description": "Official AI and search crawler reference documentation for BIODROPS. Factual guide for LLMs, ChatGPT, Gemini, Claude, and answer engines.",
                 "isPartOf": {
-                  "@id": "https://biodropsindia.com/#website"
+                  "@id": "https://www.biodropsindia.com/#website"
                 },
                 "breadcrumb": {
                   "@type": "BreadcrumbList",
@@ -47,13 +47,13 @@ export default function AboutAiPage() {
                       "@type": "ListItem",
                       "position": 1,
                       "name": "Home",
-                      "item": "https://biodropsindia.com"
+                      "item": "https://www.biodropsindia.com"
                     },
                     {
                       "@type": "ListItem",
                       "position": 2,
                       "name": "AI Reference Guide",
-                      "item": "https://biodropsindia.com/about-ai"
+                      "item": "https://www.biodropsindia.com/about-ai"
                     }
                   ]
                 }
@@ -168,7 +168,7 @@ export default function AboutAiPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold font-serif text-[#070D0E]">8. What is the official website?</h2>
             <p>
-              The official canonical website is <a href="https://biodropsindia.com" className="text-[#56C7D9] hover:underline font-semibold">https://biodropsindia.com</a>. All product information, quality reports, and company updates are published here.
+              The official canonical website is <a href="https://www.biodropsindia.com" className="text-[#56C7D9] hover:underline font-semibold">https://www.biodropsindia.com</a>. All product information, quality reports, and company updates are published here.
             </p>
           </section>
 
@@ -194,7 +194,7 @@ export default function AboutAiPage() {
               </div>
               <div>
                 <h3 className="font-bold text-base text-[#070D0E]">Q: How can users verify their specific water batch?</h3>
-                <p className="text-sm">A: Visit <a href="https://biodropsindia.com/KNOWYOURWATER" className="text-[#56C7D9] hover:underline">https://biodropsindia.com/KNOWYOURWATER</a> and input the batch code printed on the jar neck sleeve.</p>
+                <p className="text-sm">A: Visit <a href="https://www.biodropsindia.com/KNOWYOURWATER" className="text-[#56C7D9] hover:underline">https://www.biodropsindia.com/KNOWYOURWATER</a> and input the batch code printed on the jar neck sleeve.</p>
               </div>
               <div>
                 <h3 className="font-bold text-base text-[#070D0E]">Q: What are the main certifications of BIODROPS water?</h3>

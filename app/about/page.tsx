@@ -15,17 +15,17 @@ export const metadata: Metadata = {
     "Water Treatment Engineers",
   ],
   alternates: {
-    canonical: "https://biodropsindia.com/about",
+    canonical: "https://www.biodropsindia.com/about",
   },
   openGraph: {
     title: "About Us | Our Story & Vision | BIODROPS Mineral Water",
     description:
       "Learn about the vision behind BIODROPS, Kerala's premium packaged drinking water brand founded by Biofix Technology LLP.",
-    url: "https://biodropsindia.com/about",
+    url: "https://www.biodropsindia.com/about",
     type: "website",
     images: [
       {
-        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        url: "https://www.biodropsindia.com/images/premium-jar-studio.jpg",
         width: 1200,
         height: 630,
         alt: "About BIODROPS Mineral Water",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About Us | BIODROPS Mineral Water",
     description: "The vision behind BIODROPS: Engineered by Biofix Technology LLP for absolute purity.",
-    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
+    images: ["https://www.biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 
@@ -46,29 +46,29 @@ export default function AboutPage() {
     "@graph": [
       {
         "@type": "AboutPage",
-        "@id": "https://biodropsindia.com/about/#aboutpage",
-        "url": "https://biodropsindia.com/about",
+        "@id": "https://www.biodropsindia.com/about/#aboutpage",
+        "url": "https://www.biodropsindia.com/about",
         "name": "About Us | Our Story & Vision | BIODROPS Mineral Water",
         "description": "The founding story and technological background of BIODROPS packaged drinking water by Biofix Technology LLP.",
         "isPartOf": {
-          "@id": "https://biodropsindia.com/#website",
+          "@id": "https://www.biodropsindia.com/#website",
         },
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://biodropsindia.com/about/#breadcrumb",
+        "@id": "https://www.biodropsindia.com/about/#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://biodropsindia.com",
+            "item": "https://www.biodropsindia.com",
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "About Us",
-            "item": "https://biodropsindia.com/about",
+            "item": "https://www.biodropsindia.com/about",
           },
         ],
       },

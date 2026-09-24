@@ -17,17 +17,17 @@ export const metadata: Metadata = {
     "Packaged Drinking Water Lab Report",
   ],
   alternates: {
-    canonical: "https://biodropsindia.com/KNOWYOURWATER",
+    canonical: "https://www.biodropsindia.com/KNOWYOURWATER",
   },
   openGraph: {
     title: "Know Your Water | Online Batch Verification | BIODROPS",
     description:
       "Enter your BIODROPS 20L jar sleeve batch number to inspect certified chemical and microbiological laboratory testing results.",
-    url: "https://biodropsindia.com/KNOWYOURWATER",
+    url: "https://www.biodropsindia.com/KNOWYOURWATER",
     type: "website",
     images: [
       {
-        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        url: "https://www.biodropsindia.com/images/premium-jar-studio.jpg",
         width: 1200,
         height: 630,
         alt: "BIODROPS Know Your Water Batch Verification",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Know Your Water | Online Batch Verification | BIODROPS",
     description: "Verify real chemical and microbiological testing reports for your BIODROPS jar.",
-    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
+    images: ["https://www.biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 
@@ -48,9 +48,9 @@ export default function KnowYourWaterPage() {
     "@graph": [
       {
         "@type": "WebApplication",
-        "@id": "https://biodropsindia.com/KNOWYOURWATER/#app",
+        "@id": "https://www.biodropsindia.com/KNOWYOURWATER/#app",
         "name": "BIODROPS Know Your Water Batch Verification",
-        "url": "https://biodropsindia.com/KNOWYOURWATER",
+        "url": "https://www.biodropsindia.com/KNOWYOURWATER",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "All",
         "description": "Public verification system to inspect chemical, physical, and microbiological water quality reports for any BIODROPS 20L jar.",
@@ -62,19 +62,19 @@ export default function KnowYourWaterPage() {
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://biodropsindia.com/KNOWYOURWATER/#breadcrumb",
+        "@id": "https://www.biodropsindia.com/KNOWYOURWATER/#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://biodropsindia.com",
+            "item": "https://www.biodropsindia.com",
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Know Your Water",
-            "item": "https://biodropsindia.com/KNOWYOURWATER",
+            "item": "https://www.biodropsindia.com/KNOWYOURWATER",
           },
         ],
       },

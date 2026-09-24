@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { SITE_CONFIG } from '@/lib/seoConfig';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -19,7 +20,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/'],
       },
     ],
-    sitemap: 'https://biodropsindia.com/sitemap.xml',
-    host: 'https://biodropsindia.com',
+    sitemap: `${SITE_CONFIG.siteUrl}/sitemap.xml`,
+    host: SITE_CONFIG.siteUrl,
   };
 }

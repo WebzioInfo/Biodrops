@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "Cookie Policy | BIODROPS Packaged Drinking Water",
   description: "Read the official Cookie Policy for BIODROPS. Learn how we use cookies, analytics, performance tags, and how to manage browser settings.",
   alternates: {
-    canonical: "https://biodropsindia.com/cookies",
+    canonical: "https://www.biodropsindia.com/cookies",
   },
   openGraph: {
     title: "Cookie Policy | BIODROPS Packaged Drinking Water",
     description: "Read the official Cookie Policy for BIODROPS. Learn how we use cookies, analytics, performance tags, and how to manage browser settings.",
-    url: "https://biodropsindia.com/cookies",
+    url: "https://www.biodropsindia.com/cookies",
     type: "website",
   },
   twitter: {
@@ -33,12 +33,12 @@ export default function CookiesPage() {
             "@graph": [
               {
                 "@type": "WebPage",
-                "@id": "https://biodropsindia.com/cookies/#webpage",
-                "url": "https://biodropsindia.com/cookies",
+                "@id": "https://www.biodropsindia.com/cookies/#webpage",
+                "url": "https://www.biodropsindia.com/cookies",
                 "name": "Cookie Policy | BIODROPS Packaged Drinking Water",
                 "description": "Read the official Cookie Policy for BIODROPS. Learn how we use cookies, analytics, performance tags, and how to manage browser settings.",
                 "isPartOf": {
-                  "@id": "https://biodropsindia.com/#website"
+                  "@id": "https://www.biodropsindia.com/#website"
                 },
                 "breadcrumb": {
                   "@type": "BreadcrumbList",
@@ -47,13 +47,13 @@ export default function CookiesPage() {
                       "@type": "ListItem",
                       "position": 1,
                       "name": "Home",
-                      "item": "https://biodropsindia.com"
+                      "item": "https://www.biodropsindia.com"
                     },
                     {
                       "@type": "ListItem",
                       "position": 2,
                       "name": "Cookie Policy",
-                      "item": "https://biodropsindia.com/cookies"
+                      "item": "https://www.biodropsindia.com/cookies"
                     }
                   ]
                 }
@@ -100,7 +100,7 @@ export default function CookiesPage() {
           <section className="space-y-4">
             <h2 className="text-2xl font-bold font-serif text-[#070D0E]">2. How We Use Cookies</h2>
             <p>
-              We classify the cookies used on our website (https://biodropsindia.com) into three primary categories:
+              We classify the cookies used on our website (https://www.biodropsindia.com) into three primary categories:
             </p>
 
             <div className="space-y-6 mt-4">

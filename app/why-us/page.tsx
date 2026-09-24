@@ -17,17 +17,17 @@ export const metadata: Metadata = {
     "Pure Drinking Water Delivery",
   ],
   alternates: {
-    canonical: "https://biodropsindia.com/why-us",
+    canonical: "https://www.biodropsindia.com/why-us",
   },
   openGraph: {
     title: "Why Choose BIODROPS | Premium Packaged Mineral Water in Kerala",
     description:
       "Pristine hydration, perfectly balanced pH, untouched by human hands, and 14-stage purified by Biofix Technology LLP.",
-    url: "https://biodropsindia.com/why-us",
+    url: "https://www.biodropsindia.com/why-us",
     type: "website",
     images: [
       {
-        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        url: "https://www.biodropsindia.com/images/premium-jar-studio.jpg",
         width: 1200,
         height: 630,
         alt: "Why Choose BIODROPS Mineral Water",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Why Choose BIODROPS | Mineral Water in Kerala",
     description: "Zero contaminants, balanced pH, automated touch-free bottling.",
-    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
+    images: ["https://www.biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 
@@ -87,29 +87,29 @@ export default function WhyUsPage() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://biodropsindia.com/why-us/#webpage",
-        "url": "https://biodropsindia.com/why-us",
+        "@id": "https://www.biodropsindia.com/why-us/#webpage",
+        "url": "https://www.biodropsindia.com/why-us",
         "name": "Why Choose BIODROPS | Premium Packaged Mineral Water in Kerala",
         "description": "Why BIODROPS is Kerala's trusted packaged mineral water: Zero contaminants, balanced pH 7.4, untouched by human hands, and 14-stage scientific purification by Biofix.",
         "isPartOf": {
-          "@id": "https://biodropsindia.com/#website",
+          "@id": "https://www.biodropsindia.com/#website",
         },
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://biodropsindia.com/why-us/#breadcrumb",
+        "@id": "https://www.biodropsindia.com/why-us/#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://biodropsindia.com",
+            "item": "https://www.biodropsindia.com",
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "Why Us",
-            "item": "https://biodropsindia.com/why-us",
+            "item": "https://www.biodropsindia.com/why-us",
           },
         ],
       },

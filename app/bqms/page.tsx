@@ -19,21 +19,21 @@ export const metadata: Metadata = {
     "Packaged Drinking Water Certification",
   ],
   alternates: {
-    canonical: "https://biodropsindia.com/bqms",
+    canonical: "https://www.biodropsindia.com/bqms",
   },
   openGraph: {
     title: "BQMS - Biofix Quality Management System | Quality Standards",
     description:
       "A complete professional single window support system specially designed for mineral water plant quality and compliance management.",
-    url: "https://biodropsindia.com/bqms",
+    url: "https://www.biodropsindia.com/bqms",
     type: "website",
-    images: [{ url: "https://biodropsindia.com/bqms_images/bqms_coin.png" }],
+    images: [{ url: "https://www.biodropsindia.com/bqms_images/bqms_coin.png" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "BQMS - Biofix Quality Management System",
     description: "Single window mineral water quality, laboratory, and compliance management system.",
-    images: ["https://biodropsindia.com/bqms_images/bqms_coin.png"],
+    images: ["https://www.biodropsindia.com/bqms_images/bqms_coin.png"],
   },
 };
 
@@ -97,7 +97,7 @@ export default function BQMSPage() {
     "@graph": [
       {
         "@type": "Service",
-        "@id": "https://biodropsindia.com/bqms/#service",
+        "@id": "https://www.biodropsindia.com/bqms/#service",
         "name": "Biofix Quality Management System (BQMS)",
         "serviceType": "Mineral Water Plant Quality Assurance & Compliance",
         "provider": {
@@ -110,19 +110,19 @@ export default function BQMSPage() {
       },
       {
         "@type": "BreadcrumbList",
-        "@id": "https://biodropsindia.com/bqms/#breadcrumb",
+        "@id": "https://www.biodropsindia.com/bqms/#breadcrumb",
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://biodropsindia.com",
+            "item": "https://www.biodropsindia.com",
           },
           {
             "@type": "ListItem",
             "position": 2,
             "name": "BQMS System",
-            "item": "https://biodropsindia.com/bqms",
+            "item": "https://www.biodropsindia.com/bqms",
           },
         ],
       },

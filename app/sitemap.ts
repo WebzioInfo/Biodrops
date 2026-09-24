@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
+import { SITE_CONFIG } from '@/lib/seoConfig';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://biodropsindia.com';
+  const baseUrl = SITE_CONFIG.siteUrl;
   const currentDate = new Date();
 
   return [
