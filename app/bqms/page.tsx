@@ -6,13 +6,34 @@ import Footer from "@/components/sections/Footer";
 import ScrollFade from "@/components/effects/ScrollFade";
 
 export const metadata: Metadata = {
-  title: "BQMS - Biofix Quality Management System | Biodrops",
-  description: "A complete professional single window support system specially designed for mineral water plant management. Manage lab, quality, licenses, and machinery effortlessly.",
-  keywords: ["BQMS", "Biofix Quality Management System", "Mineral Water Plant Management", "FSSAI Licensing", "BIS Licensing", "Water Quality Lab Setting", "Water Plant Operations", "Quality Control Training", "Packaged Drinking Water Management", "Biofix"],
+  title: "BQMS - Biofix Quality Management System | Mineral Water Quality Assurance",
+  description:
+    "Discover BQMS (Biofix Quality Management System). Single-window operational, laboratory, and regulatory framework ensuring BIS IS 14543 and FSSAI compliance for mineral water plants.",
+  keywords: [
+    "BQMS",
+    "Biofix Quality Management System",
+    "Mineral Water Plant Quality Control",
+    "FSSAI Licensing Water Plant",
+    "BIS IS 14543 Compliance",
+    "Water Testing Laboratory Setup",
+    "Packaged Drinking Water Certification",
+  ],
+  alternates: {
+    canonical: "https://biodropsindia.com/bqms",
+  },
   openGraph: {
+    title: "BQMS - Biofix Quality Management System | Quality Standards",
+    description:
+      "A complete professional single window support system specially designed for mineral water plant quality and compliance management.",
+    url: "https://biodropsindia.com/bqms",
+    type: "website",
+    images: [{ url: "https://biodropsindia.com/bqms_images/bqms_coin.png" }],
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "BQMS - Biofix Quality Management System",
-    description: "A complete professional single window support system specially designed for mineral water plant management.",
-    images: [{ url: "/bqms_images/bqms_coin.png" }],
+    description: "Single window mineral water quality, laboratory, and compliance management system.",
+    images: ["https://biodropsindia.com/bqms_images/bqms_coin.png"],
   },
 };
 
@@ -71,11 +92,52 @@ const certifications = [
 ];
 
 export default function BQMSPage() {
+  const bqmsSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://biodropsindia.com/bqms/#service",
+        "name": "Biofix Quality Management System (BQMS)",
+        "serviceType": "Mineral Water Plant Quality Assurance & Compliance",
+        "provider": {
+          "@type": "Organization",
+          "name": "Biofix Technology LLP",
+          "url": "https://biofixtechnology.com",
+        },
+        "description": "Comprehensive single-window quality assurance, laboratory compliance, and regulatory management for packaged mineral water manufacturing.",
+        "areaServed": "India",
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://biodropsindia.com/bqms/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://biodropsindia.com",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "BQMS System",
+            "item": "https://biodropsindia.com/bqms",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div
       className="min-h-screen bg-white"
       style={{ fontFamily: "var(--font-inter), 'Inter', sans-serif" }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(bqmsSchema) }}
+      />
       {/* Hero Section */}
       <section className="relative min-h-screen pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-gradient-to-br from-[#15b5a3] to-[#0e413a]">
 

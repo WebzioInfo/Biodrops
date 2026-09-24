@@ -9,7 +9,7 @@ function Eyebrow() {
   return (
     <div className="flex items-center gap-3 text-[0.65rem] tracking-[0.4em] uppercase text-[#6B7C80] font-medium mb-4 justify-start">
       <span className="w-8 h-px bg-[#6B7C80]/30" />
-      MINERAL WATER
+      PREMIUM MINERAL WATER • KERALA
       <span className="w-8 h-px bg-[#6B7C80]/30" />
     </div>
   );
@@ -33,8 +33,8 @@ function Subcopy() {
       className="text-[clamp(1rem,2vw,1.25rem)] leading-[1.7] text-[#6B7C80] font-light mb-8 max-w-lg text-left"
       style={{ fontFamily: "'Satoshi', sans-serif" }}
     >
-      Engineered for modern living. A masterpiece of hydration,
-      multi-stage purified and perfectly balanced.
+      Engineered for modern living. Kerala&apos;s premier 14-stage purified,
+      mineral-balanced packaged drinking water with certified BQMS Pure Lock.
     </p>
   );
 }

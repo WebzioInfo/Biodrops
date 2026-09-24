@@ -3,21 +3,84 @@ import ScrollFade from "@/components/effects/ScrollFade";
 import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
-  title: "Our Story - BIODROPS",
-  description: "Learn about the vision behind BIODROPS, a premium packaged drinking water brand launched by Biofix Technology LLP. Engineered for absolute purity.",
+  title: "About Us | Our Story & Vision | BIODROPS Mineral Water",
+  description:
+    "Learn about the vision behind BIODROPS, Kerala's premium packaged drinking water brand founded by Biofix Technology LLP. Engineered for absolute purity and scientific hydration.",
+  keywords: [
+    "About Biodrops",
+    "Biofix Technology LLP",
+    "Mineral Water Manufacturer Kerala",
+    "Packaged Drinking Water Company",
+    "Drinking Water Brand Calicut",
+    "Water Treatment Engineers",
+  ],
   alternates: {
     canonical: "https://biodropsindia.com/about",
   },
   openGraph: {
-    title: "Our Story - BIODROPS",
-    description: "Learn about the vision behind BIODROPS, a premium packaged drinking water brand launched by Biofix Technology LLP.",
+    title: "About Us | Our Story & Vision | BIODROPS Mineral Water",
+    description:
+      "Learn about the vision behind BIODROPS, Kerala's premium packaged drinking water brand founded by Biofix Technology LLP.",
     url: "https://biodropsindia.com/about",
+    type: "website",
+    images: [
+      {
+        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        width: 1200,
+        height: 630,
+        alt: "About BIODROPS Mineral Water",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us | BIODROPS Mineral Water",
+    description: "The vision behind BIODROPS: Engineered by Biofix Technology LLP for absolute purity.",
+    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 
 export default function AboutPage() {
+  const aboutSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": "https://biodropsindia.com/about/#aboutpage",
+        "url": "https://biodropsindia.com/about",
+        "name": "About Us | Our Story & Vision | BIODROPS Mineral Water",
+        "description": "The founding story and technological background of BIODROPS packaged drinking water by Biofix Technology LLP.",
+        "isPartOf": {
+          "@id": "https://biodropsindia.com/#website",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://biodropsindia.com/about/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://biodropsindia.com",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "About Us",
+            "item": "https://biodropsindia.com/about",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
+      />
       <div className="max-w-4xl mx-auto px-6 py-24">
         <ScrollFade amount={0.25} duration={0.6}>
           <div className="inline-flex items-center gap-4 text-[0.7rem] tracking-[0.3em] uppercase text-[#6B7C80] font-medium mb-6">

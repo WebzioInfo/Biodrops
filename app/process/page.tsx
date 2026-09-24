@@ -3,15 +3,42 @@ import Footer from "@/components/sections/Footer";
 import { ProcessHero, ProcessStepsGrid } from "@/components/sections/ProcessClient";
 
 export const metadata: Metadata = {
-  title: "14-Stage Purification Process - BIODROPS",
-  description: "Explore the meticulous 14-stage purification process of BIODROPS. Sourced from ground water, sand-filtered, RO purified, micro-filtered, and UV sterilized.",
+  title: "14-Stage Water Purification Process | BIODROPS Mineral Water",
+  description:
+    "Explore the rigorous 14-stage water purification pipeline of BIODROPS in Kerala. Dual sand & carbon filtration, industrial Reverse Osmosis, 0.2µm polishing, and dual UV/Ozone sterilization.",
+  keywords: [
+    "14-Stage Water Purification Process",
+    "Packaged Drinking Water Treatment",
+    "Reverse Osmosis Plant Kerala",
+    "Industrial Water Filtration",
+    "UV Sterilization Drinking Water",
+    "Ozonation Water Purification",
+    "Biofix Water Technology",
+    "IS 14543 Water Purification",
+  ],
   alternates: {
     canonical: "https://biodropsindia.com/process",
   },
   openGraph: {
-    title: "14-Stage Purification Process - BIODROPS",
-    description: "Explore the meticulous 14-stage purification process of BIODROPS.",
+    title: "14-Stage Water Purification Process | BIODROPS",
+    description:
+      "Explore the clinical 14-stage purification process of BIODROPS: Dual-pass filtration, RO purification, sub-micron polishing, and UV/Ozone sterilization.",
     url: "https://biodropsindia.com/process",
+    type: "website",
+    images: [
+      {
+        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        width: 1200,
+        height: 630,
+        alt: "BIODROPS 14-Stage Water Purification Process",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "14-Stage Water Purification Process | BIODROPS",
+    description: "Dual-pass filtration, Reverse Osmosis, and UV/Ozone sterilization for pristine mineral water.",
+    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 
@@ -103,11 +130,53 @@ const processSteps = [
 ];
 
 export default function ProcessPage() {
+  const processSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "HowTo",
+        "@id": "https://biodropsindia.com/process/#howto",
+        "name": "14-Stage Mineral Water Purification Process",
+        "description": "The complete 14-stage scientific purification process engineered by Biofix Technology LLP for BIODROPS premium packaged drinking water.",
+        "image": "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        "step": processSteps.map((step, idx) => ({
+          "@type": "HowToStep",
+          "position": idx + 1,
+          "name": `Stage ${step.num}: ${step.title}`,
+          "text": `${step.desc} ${step.merit}`,
+          "url": `https://biodropsindia.com/process#stage-${step.num}`,
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://biodropsindia.com/process/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://biodropsindia.com",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Purification Process",
+            "item": "https://biodropsindia.com/process",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div
       className="min-h-screen bg-[#F4F6F8] selection:bg-[#cfef00] selection:text-black"
       style={{ fontFamily: "var(--font-inter), 'Inter', sans-serif" }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(processSchema) }}
+      />
 
       {/* Hero Section */}
       <section className="relative w-full pt-40 pb-24 px-6 overflow-hidden bg-[#070D0E] text-white">

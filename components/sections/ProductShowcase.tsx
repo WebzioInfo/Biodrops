@@ -129,7 +129,7 @@ export default function ProductShowcase() {
             <div className="relative w-full max-w-[260px] aspect-[3/4] flex items-center justify-center">
               <Image
                 src="/images/biodrops-jar.png"
-                alt="Biodrops Premium 20L Water Jar"
+                alt="BIODROPS 20L Premium Mineral Water Jar with BQMS Pure Lock Seal in Kerala"
                 fill
                 sizes="(max-width: 768px) 220px, 260px"
                 className="object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.10)]"

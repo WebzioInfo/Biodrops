@@ -9,18 +9,45 @@ import BQMSSection from "@/components/sections/BQMSSection";
 import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
-  title: "BIODROPS | Pure, Mineral-Balanced Packaged Drinking Water",
-  description: "BIODROPS is Kerala's premium packaged drinking water brand. Sourced and processed under the strict guidelines of Biofix Quality Management System (BQMS). Quality can be canned.",
-  keywords: ["BIODROPS", "Packaged Drinking Water", "Mineral Water", "Biofix", "BQMS", "Kerala Water Supply"],
+  title: "BIODROPS | Premium Mineral Water in Kerala | Pure Packaged Drinking Water",
+  description:
+    "Kerala's premier 14-stage purified packaged mineral water brand by Biofix Technology LLP. Sourced and bottled under Biofix Quality Management System (BQMS). 20L jars with instant online batch verification. BIS IS 14543 & FSSAI certified.",
+  keywords: [
+    "Packaged Drinking Water Kerala",
+    "Mineral Water Supplier Kerala",
+    "20L Mineral Water Jar Delivery",
+    "Drinking Water Delivery Calicut",
+    "BIS Certified Mineral Water",
+    "ISI 14543 Water Kerala",
+    "Biofix Drinking Water",
+    "BQMS Certified Water",
+    "Commercial Water Supply Kerala",
+    "Pure Drinking Water Kerala",
+  ],
   alternates: {
     canonical: "https://biodropsindia.com",
   },
   openGraph: {
-    title: "BIODROPS | Pure, Mineral-Balanced Packaged Drinking Water",
-    description: "BIODROPS is Kerala's premium packaged drinking water brand. Sourced and processed under the strict guidelines of BQMS.",
+    title: "BIODROPS | Premium Mineral Water in Kerala",
+    description:
+      "14-stage purified, mineral-balanced 20L packaged drinking water jars with online batch verification. BIS IS 14543 and FSSAI certified.",
     url: "https://biodropsindia.com",
-    siteName: "BIODROPS",
+    siteName: "BIODROPS by Biofix",
     type: "website",
+    images: [
+      {
+        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        width: 1200,
+        height: 630,
+        alt: "BIODROPS 20L Premium Mineral Water Jar in Kerala",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BIODROPS | Premium Mineral Water in Kerala",
+    description: "Kerala's premier 14-stage purified packaged mineral water by Biofix.",
+    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 

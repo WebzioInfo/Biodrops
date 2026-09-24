@@ -354,7 +354,7 @@ export default function PurificationProcess() {
                   <div className="relative h-[250px] sm:h-[270px] md:h-[285px] w-full overflow-hidden bg-gray-100 flex-shrink-0">
                     <Image
                       src={stage.image}
-                      alt={stage.title}
+                      alt={`Stage ${stage.num}: ${stage.title} - BIODROPS 14-Stage Water Purification`}
                       fill
                       sizes="(max-width: 768px) 300px, 350px"
                       priority={isCenter}

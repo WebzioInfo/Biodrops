@@ -4,21 +4,84 @@ import { ShieldCheck, Award, CheckCircle } from "lucide-react";
 import ScrollFade from "@/components/effects/ScrollFade";
 
 export const metadata: Metadata = {
-  title: "Certifications & Compliance - BIODROPS",
-  description: "BIODROPS is fully certified under government guidelines, adhering to BIS IS 14543 standards and valid FSSAI food safety licenses under BQMS management.",
+  title: "BIS IS 14543 & FSSAI Certifications | BIODROPS Mineral Water",
+  description:
+    "BIODROPS is fully certified under Bureau of Indian Standards (BIS IS 14543), FSSAI food safety regulations, and ISO 9001:2015 quality standards under BQMS management.",
+  keywords: [
+    "BIS IS 14543 Certification",
+    "FSSAI Water License Kerala",
+    "ISI Mark Packaged Drinking Water",
+    "Water Quality Compliance India",
+    "ISO 9001 Mineral Water Plant",
+    "Biodrops Certifications",
+  ],
   alternates: {
     canonical: "https://biodropsindia.com/certifications",
   },
   openGraph: {
-    title: "Certifications & Compliance - BIODROPS",
-    description: "BIODROPS is fully certified under government guidelines, adhering to BIS and FSSAI standards.",
+    title: "BIS IS 14543 & FSSAI Certifications | BIODROPS",
+    description:
+      "Adhering to strict BIS IS 14543 standards and valid FSSAI food safety licenses under BQMS management.",
     url: "https://biodropsindia.com/certifications",
+    type: "website",
+    images: [
+      {
+        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        width: 1200,
+        height: 630,
+        alt: "BIODROPS BIS & FSSAI Certifications",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BIS IS 14543 & FSSAI Certifications | BIODROPS",
+    description: "Certified under BIS IS 14543, FSSAI, and ISO 9001:2015 standards.",
+    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 
 export default function CertificationsPage() {
+  const certSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://biodropsindia.com/certifications/#webpage",
+        "url": "https://biodropsindia.com/certifications",
+        "name": "BIS IS 14543 & FSSAI Certifications | BIODROPS Mineral Water",
+        "description": "National standards, BIS IS 14543 certifications, FSSAI licenses, and laboratory accreditations governing BIODROPS mineral water.",
+        "isPartOf": {
+          "@id": "https://biodropsindia.com/#website",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://biodropsindia.com/certifications/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://biodropsindia.com",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Certifications",
+            "item": "https://biodropsindia.com/certifications",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-[#F4F6F8] font-sans selection:bg-[#56C7D9] selection:text-white pt-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(certSchema) }}
+      />
       <div className="max-w-5xl mx-auto px-6 py-24">
         <ScrollFade amount={0.25} duration={0.6} className="text-center mb-20">
           <div className="inline-flex items-center gap-4 text-[0.7rem] tracking-[0.3em] uppercase text-[#6B7C80] font-medium mb-6">

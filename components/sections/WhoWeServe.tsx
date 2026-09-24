@@ -78,7 +78,7 @@ export default function WhoWeServe() {
               {/* Background Image */}
               <Image
                 src={segment.image}
-                alt={segment.title}
+                alt={`BIODROPS Premium Drinking Water for ${segment.title} in Kerala`}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"

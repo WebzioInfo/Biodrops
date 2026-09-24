@@ -5,15 +5,40 @@ import { WhyUsHero, WhyUsGrid } from "@/components/sections/WhyUsClient";
 import ScrollFade from "@/components/effects/ScrollFade";
 
 export const metadata: Metadata = {
-  title: "Why Us - BIODROPS",
-  description: "Learn why BIODROPS is the leading packaged mineral water brand in Kerala. Pristine hydration, perfectly balanced pH, untouched by human hands, and 14-stage purified.",
+  title: "Why Choose BIODROPS | Premium Packaged Mineral Water in Kerala",
+  description:
+    "Discover why BIODROPS is Kerala's trusted packaged mineral water. Zero contaminants, balanced pH 7.4, 100% untouched by human hands, and 14-stage scientific purification by Biofix.",
+  keywords: [
+    "Why Biodrops",
+    "Best Mineral Water Brand Kerala",
+    "Safe Drinking Water Supply",
+    "Balanced pH Mineral Water",
+    "Automated Water Bottling Kerala",
+    "Pure Drinking Water Delivery",
+  ],
   alternates: {
     canonical: "https://biodropsindia.com/why-us",
   },
   openGraph: {
-    title: "Why Us - BIODROPS",
-    description: "Learn why BIODROPS is the leading packaged mineral water brand in Kerala.",
+    title: "Why Choose BIODROPS | Premium Packaged Mineral Water in Kerala",
+    description:
+      "Pristine hydration, perfectly balanced pH, untouched by human hands, and 14-stage purified by Biofix Technology LLP.",
     url: "https://biodropsindia.com/why-us",
+    type: "website",
+    images: [
+      {
+        url: "https://biodropsindia.com/images/premium-jar-studio.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Why Choose BIODROPS Mineral Water",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Why Choose BIODROPS | Mineral Water in Kerala",
+    description: "Zero contaminants, balanced pH, automated touch-free bottling.",
+    images: ["https://biodropsindia.com/images/premium-jar-studio.jpg"],
   },
 };
 
@@ -57,11 +82,49 @@ const values = [
 ];
 
 export default function WhyUsPage() {
+  const whyUsSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://biodropsindia.com/why-us/#webpage",
+        "url": "https://biodropsindia.com/why-us",
+        "name": "Why Choose BIODROPS | Premium Packaged Mineral Water in Kerala",
+        "description": "Why BIODROPS is Kerala's trusted packaged mineral water: Zero contaminants, balanced pH 7.4, untouched by human hands, and 14-stage scientific purification by Biofix.",
+        "isPartOf": {
+          "@id": "https://biodropsindia.com/#website",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://biodropsindia.com/why-us/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://biodropsindia.com",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Why Us",
+            "item": "https://biodropsindia.com/why-us",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <main
       className="min-h-screen bg-[#F4F6F8] selection:bg-[#56C7D9] selection:text-white pt-10"
       style={{ fontFamily: "var(--font-inter), 'Inter', sans-serif" }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(whyUsSchema) }}
+      />
 
       {/* Hero Section */}
       <section className="relative w-full pt-40 pb-24 px-6 overflow-hidden bg-[#FFFFFF] text-[#070D0E]">
