@@ -22,7 +22,7 @@ export function formatReportDataFromContract(contract: WaterReportInputContract)
     "Collected By": contract.collectedBy || "—",
     "Tested By": contract.testedBy || "—",
     "Verified By": contract.verifiedBy || "—",
-    "Report Generated": contract.reportGeneratedDate || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+    "Report Generated": contract.reportGeneratedDate || `${new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}, ${new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}`,
     "Report Type": contract.reportType || "—",
     "Overall Status": contract.overallStatus || "—",
     "Report Status": contract.overallStatus || "—",

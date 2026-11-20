@@ -133,7 +133,7 @@ export function getRemarksSection(remarksText?: string) {
                       { text: 'CONSULTING OFFICER', fontSize: 7.5, bold: true, color: PDF_COLORS.textMuted, alignment: 'center', characterSpacing: 0.5 },
                       { text: 'Muhammed Anas M', fontSize: 9, bold: true, alignment: 'center', margin: [0, 16, 0, 2], color: PDF_COLORS.secondary },
                       { text: 'Chief of Solutions - Water Quality', fontSize: 7, color: PDF_COLORS.textMuted, alignment: 'center' },
-                      { text: '● VERIFIED COMPLIANCE', fontSize: 6, bold: true, color: PDF_COLORS.pass, alignment: 'center', margin: [0, 4, 0, 0] }
+                      { text: 'VERIFIED COMPLIANCE', fontSize: 6, bold: true, color: PDF_COLORS.pass, alignment: 'center', margin: [0, 4, 0, 0] }
                     ],
                     fillColor: PDF_COLORS.bgCard,
                     margin: [8, 8, 8, 8]

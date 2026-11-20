@@ -15,11 +15,15 @@ export function getReportInfo(metadata: Record<string, string> = {}) {
   const testedBy = metadata['Tested By'] || metadata['Analyst'] || '—';
   const verifiedBy = metadata['Verified By'] || '—';
   
-  const generatedDate = metadata['Report Generated'] || new Date().toLocaleDateString('en-GB', {
+  const generatedDate = metadata['Report Generated'] || `${new Date().toLocaleDateString('en-GB', {
     day: '2-digit',
     month: 'short',
     year: 'numeric'
-  });
+  })}, ${new Date().toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  })}`;
 
   const bestBefore = metadata['Best Before'] || '—';
   const sampleSource = metadata['Sample Source'] || '—';
@@ -111,8 +115,8 @@ export function getReportInfo(metadata: Record<string, string> = {}) {
           vLineColor: () => PDF_COLORS.border,
           paddingLeft: () => 7,
           paddingRight: () => 7,
-          paddingTop: () => 4,
-          paddingBottom: () => 4
+          paddingTop: () => 2.5,
+          paddingBottom: () => 2.5
         }
       },
       // Right: Enterprise QR Code Card
@@ -161,6 +165,6 @@ export function getReportInfo(metadata: Record<string, string> = {}) {
         margin: [10, 0, 0, 0]
       }
     ],
-    margin: [0, 0, 0, 14]
+    margin: [0, 0, 0, 8]
   };
 }

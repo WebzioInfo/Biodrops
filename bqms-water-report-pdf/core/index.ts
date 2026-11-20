@@ -20,71 +20,36 @@ export function generateReportDefinition(data: WaterReportData): any {
 
   const content: any[] = [];
 
-  // Top margin is set to 170pt to clear the ~156pt header image with 14pt breathing room.
-  // Printable height = A4 height (841.89) - top margin (170) - bottom margin (60) = 611.89pt (~612pt).
-  const PRINTABLE_HEIGHT = 612;
-  let currentY = 160; // Est. height of Report Info block (~160pt including padding/margins)
-
-  // 2. Report Information Block (placed at the top of the content stream, page 1)
+  // 1. Report Information Block (placed at the top of Page 1)
   content.push(getReportInfo(metadata));
 
-  // Helper to process a section block with height check
-  const processSection = (category: string, title: string, tableComponent: any) => {
-    if (!tableComponent) return;
-
-    const rowsCount = data.rows.filter(
-      row => String(row[1] || '').trim().toUpperCase() === category.toUpperCase()
-    ).length;
-
-    const sectionHeaderHeight = 35;
-    const tableHeaderHeight = 30;
-    const avgRowHeight = 24;
-    const spacingHeight = 20;
-
-    const totalSectionHeight = sectionHeaderHeight + tableHeaderHeight + (rowsCount * avgRowHeight) + spacingHeight;
-
-    let pageBreak: 'before' | undefined = undefined;
-
-    // If remaining space on the current page is less than total section height, push section to top of next page
-    if (currentY + totalSectionHeight > PRINTABLE_HEIGHT) {
-      pageBreak = 'before';
-      currentY = 0;
-    }
-
-    const header = getSectionHeader(title);
-    if (pageBreak) {
-      (header as any).pageBreak = pageBreak;
-    }
-    content.push(header);
-    content.push(tableComponent);
-
-    // Track Y-position after rendering the section
-    if (pageBreak) {
-      currentY = totalSectionHeight;
-    } else {
-      currentY += totalSectionHeight;
-    }
-  };
-
-  // 3. Parameter Sections
-  processSection('PHYSICAL', 'Physical Parameters', physicalTable);
-  processSection('CHEMICAL', 'Chemical Parameters', chemicalTable);
-  processSection('MICROBIOLOGY', 'Microbiological Parameters', microbiologyTable);
-
-  // 4. Authorized Signatories Section
-  let sigPageBreak: 'before' | undefined = undefined;
-  const sigHeight = 95;
-  if (currentY + sigHeight > PRINTABLE_HEIGHT) {
-    sigPageBreak = 'before';
-    currentY = 0;
+  // 2. Physical & Chemical Parameters (Page 1)
+  if (physicalTable) {
+    content.push(getSectionHeader('Physical Parameters'));
+    content.push(physicalTable);
   }
+
+  if (chemicalTable) {
+    content.push(getSectionHeader('Chemical Parameters'));
+    content.push(chemicalTable);
+  }
+
+  // 3. Microbiological Parameters (Cleanly starts Page 2)
+  if (microbiologyTable) {
+    const microHeader = getSectionHeader('Microbiological Parameters') as any;
+    microHeader.pageBreak = 'before';
+    content.push(microHeader);
+    content.push(microbiologyTable);
+  }
+
+  // 4. Authorized Signatories Section (Attached to Page 2 directly below Microbiological Parameters)
   const sigSection = getSignatureSection() as any;
-  if (sigPageBreak) {
-    sigSection.pageBreak = sigPageBreak;
+  if (!microbiologyTable) {
+    sigSection.pageBreak = 'before';
   }
   content.push(sigSection);
 
-  // 5. Remarks Page (starts on a separate page if remarks exist)
+  // 5. Remarks Page (Page 3 - starts on a separate page if remarks exist)
   const remarksSection = getRemarksSection(metadata['Remarks']);
   if (remarksSection) {
     content.push(remarksSection);

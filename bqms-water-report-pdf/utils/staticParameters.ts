@@ -12,6 +12,12 @@ export const STATIC_PARAMETERS: ParameterDef[] = [
   { id: "Residual Free Chlorine", name: "Residual Free Chlorine", category: "CHEMICAL", unit: "mg/L", minAcceptable: null, maxAcceptable: 0.2 },
   { id: "Alkalinity", name: "Alkalinity", category: "CHEMICAL", unit: "mg/L", minAcceptable: 0, maxAcceptable: 200 },
   { id: "Chloride", name: "Chloride", category: "CHEMICAL", unit: "mg/L", minAcceptable: 0, maxAcceptable: 250 },
+  { id: "Calcium", name: "Calcium", category: "CHEMICAL", unit: "mg/L", minAcceptable: 0, maxAcceptable: 75 },
+  { id: "Magnesium", name: "Magnesium", category: "CHEMICAL", unit: "mg/L", minAcceptable: 0, maxAcceptable: 30 },
+  { id: "Aluminium", name: "Aluminium", category: "CHEMICAL", unit: "mg/L", minAcceptable: 0, maxAcceptable: 0.03 },
+  { id: "Sulphide", name: "Sulphide", category: "CHEMICAL", unit: "mg/L", minAcceptable: 0, maxAcceptable: 0.05 },
+  { id: "Nitrate", name: "Nitrate", category: "CHEMICAL", unit: "mg/L", minAcceptable: 0, maxAcceptable: 45 },
+  { id: "Nitrite", name: "Nitrite", category: "CHEMICAL", unit: "mg/L", minAcceptable: 0, maxAcceptable: 0.02 },
 
   // Microbiology
   { id: "E.coli", name: "E.coli", category: "MICROBIOLOGY", unit: "CFU/100ml", minAcceptable: 0, maxAcceptable: 0 },

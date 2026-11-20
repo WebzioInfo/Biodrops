@@ -10,10 +10,10 @@ export function getStatusBadge(status: string) {
 
   if (cleanStatus === 'PASS' || cleanStatus === 'APPROVED' || cleanStatus === 'WITHIN LIMIT' || cleanStatus === 'WITHIN LIMITS') {
     color = PDF_COLORS.pass;
-    text = cleanStatus === 'PASS' ? '✔ PASS' : (cleanStatus === 'WITHIN LIMITS' || cleanStatus === 'WITHIN LIMIT' ? '✓ PASS' : status);
+    text = (cleanStatus === 'WITHIN LIMITS' || cleanStatus === 'WITHIN LIMIT') ? 'PASS' : (cleanStatus === 'APPROVED' ? 'APPROVED' : 'PASS');
   } else if (cleanStatus === 'FAIL' || cleanStatus === 'REJECTED' || cleanStatus === 'ABOVE LIMIT' || cleanStatus === 'ABOVE LIMITS' || cleanStatus === 'ABOVE MAXIMUM') {
     color = PDF_COLORS.fail;
-    text = cleanStatus === 'FAIL' ? '✘ FAIL' : status;
+    text = cleanStatus === 'FAIL' ? 'FAIL' : (cleanStatus === 'REJECTED' ? 'REJECTED' : status);
   } else if (cleanStatus === 'BELOW LIMIT' || cleanStatus === 'BELOW LIMITS' || cleanStatus === 'BELOW MINIMUM' || cleanStatus === 'WARNING') {
     color = PDF_COLORS.warning;
     text = status;

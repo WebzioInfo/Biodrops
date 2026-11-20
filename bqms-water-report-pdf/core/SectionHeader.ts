@@ -26,7 +26,7 @@ export function getSectionHeader(title: string) {
         margin: [6, -1, 0, 0]
       }
     ],
-    margin: [0, 10, 0, 6],
+    margin: [0, 6, 0, 4],
     keepWithNext: true
   };
 }

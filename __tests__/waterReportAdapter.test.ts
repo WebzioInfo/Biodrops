@@ -310,5 +310,61 @@ describe("Water Report PDF Adapter with Aquora Data", () => {
     expect(docDef).toBeDefined();
     expect(docDef.content).toBeDefined();
     expect(docDef.content.length).toBeGreaterThan(0);
+
+    // Verify page break structure guarantees 3-page layout without blank pages
+    // Page 1: Report Info + Physical Table + Chemical Table
+    // Page 2: Microbiology Header (pageBreak: before) + Table + Signatures
+    // Page 3: Remarks (pageBreak: before)
+    const microHeader = docDef.content.find((item: any) => 
+      item.columns && item.columns.some((col: any) => col.text === "MICROBIOLOGICAL PARAMETERS")
+    );
+    expect(microHeader).toBeDefined();
+    expect(microHeader.pageBreak).toBe("before");
+
+    const chemHeader = docDef.content.find((item: any) => 
+      item.columns && item.columns.some((col: any) => col.text === "CHEMICAL PARAMETERS")
+    );
+    expect(chemHeader).toBeDefined();
+    expect(chemHeader.pageBreak).toBeUndefined();
+  });
+
+  it("includes generated time and date in reportGeneratedDate and metadata", () => {
+    const contract = adaptVerifyBatchToWaterReport(sampleAquoraResponse);
+    expect(contract.reportGeneratedDate).toBeDefined();
+    // e.g. "19 Nov 2026, 03:45 PM"
+    expect(contract.reportGeneratedDate).toMatch(/\d{2} [A-Za-z]{3} \d{4}, \d{1,2}:\d{2}\s?(?:AM|PM)/i);
+
+    const reportData = formatReportDataFromContract(contract);
+    expect(reportData.metadata?.["Report Generated"]).toBe(contract.reportGeneratedDate);
+  });
+
+  it("handles licenses cleanly: never displays null and includes custom licenses", () => {
+    const batchWithLicenses: AquoraBatchVerificationResponse = {
+      success: true,
+      verified: true,
+      data: {
+        batchNumber: "B-LIC-1",
+        manufacturer: { name: "Test Plant" },
+        manufacturing: { manufacturedDate: "2026-11-12" },
+        expiry: { bestBefore: "2027-05-12" },
+        licenses: {
+          fssai: "11322000000000",
+          bis: null, // No BIS
+          others: [
+            { name: "ISO 22000:2018", number: "FSMS-1002" },
+            { name: "PCB Consent", number: "PCB/W/2026/88" }
+          ]
+        },
+        waterQuality: { ph: "7.0", tds: "50", turbidity: "0.1" },
+        report: { available: true }
+      }
+    };
+
+    const contract = adaptVerifyBatchToWaterReport(batchWithLicenses);
+    expect(contract.remarks).toContain("FSSAI Lic No: 11322000000000");
+    expect(contract.remarks).not.toContain("BIS CM/L No");
+    expect(contract.remarks).not.toContain("null");
+    expect(contract.remarks).toContain("ISO 22000:2018: FSMS-1002");
+    expect(contract.remarks).toContain("PCB Consent: PCB/W/2026/88");
   });
 });

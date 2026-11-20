@@ -65,9 +65,15 @@ export interface AquoraBatchExpiry {
   shelfLifeMonths: number | null;
 }
 
+export interface AquoraCustomLicense {
+  name: string;
+  number: string;
+}
+
 export interface AquoraBatchLicenses {
-  fssai: string | null;
-  bis: string | null;
+  fssai?: string | null;
+  bis?: string | null;
+  others?: AquoraCustomLicense[] | null;
 }
 
 export interface AquoraBatchWaterQuality {
@@ -87,6 +93,14 @@ export interface AquoraBatchReport {
 
 export interface AquoraBatchVerificationData {
   batchNumber: string;
+  reportNumber?: string | null;
+  sampleCode?: string | null;
+  sampleNumber?: string | null;
+  testedBy?: string | null;
+  verifiedBy?: string | null;
+  collectedBy?: string | null;
+  reportType?: string | null;
+  remarks?: string | null;
   manufacturer: AquoraBatchManufacturer;
   manufacturing: AquoraBatchManufacturing;
   expiry: AquoraBatchExpiry;
@@ -182,11 +196,16 @@ export async function fetchAquoraManufacturers(
 /**
  * Verifies a water production batch with Aquora Public API.
  * Normalizes input and fetches authoritative batch, manufacturer, QC parameters, and report status.
+ * Supports lightweight summary by default, or full QC parameter results via options.full = true.
  */
 export async function verifyAquoraBatch(
   batchNumber: string,
-  signal?: AbortSignal
+  optionsOrSignal?: { full?: boolean; signal?: AbortSignal } | AbortSignal
 ): Promise<AquoraBatchVerificationResponse> {
+  const isSignal = typeof AbortSignal !== "undefined" && optionsOrSignal instanceof AbortSignal;
+  const signal = isSignal ? optionsOrSignal : (optionsOrSignal as { signal?: AbortSignal })?.signal;
+  const full = !isSignal && (optionsOrSignal as { full?: boolean })?.full;
+
   const sanitized = (batchNumber || "").trim();
   if (!sanitized) {
     return {
@@ -198,7 +217,8 @@ export async function verifyAquoraBatch(
   }
 
   const baseUrl = getAquoraBaseUrl();
-  const endpoint = `${baseUrl}/api/public/water-verification/${encodeURIComponent(sanitized)}`;
+  const query = full ? "?full=true" : "";
+  const endpoint = `${baseUrl}/api/public/water-verification/${encodeURIComponent(sanitized)}${query}`;
 
   const response = await fetch(endpoint, {
     method: "GET",

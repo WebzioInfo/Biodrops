@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BatchResults, { BatchResultsSkeleton } from "@/components/sections/BatchResults";
-import { Search, Loader2, MapPin, ShieldCheck, Mail, Phone, FileText } from "lucide-react";
+import { Search, Loader2, MapPin, ShieldCheck, Mail, Phone, FileText, Clock } from "lucide-react";
 import { verifyAquoraBatch, fetchAquoraManufacturers, AquoraManufacturerDto, AquoraBatchVerificationResponse } from "@/services/aquoraPublicApi";
 import Image from "next/image";
 
@@ -17,12 +17,30 @@ export default function KnowYourWaterForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<{ title: string; message: string } | null>(null);
   const [result, setResult] = useState<AquoraBatchVerificationResponse | null>(null);
+  const [cooldownSeconds, setCooldownSeconds] = useState(0);
 
   const [manufacturers, setManufacturers] = useState<AquoraManufacturerDto[]>([]);
   const [loadingManufacturers, setLoadingManufacturers] = useState(true);
   const [manufacturersError, setManufacturersError] = useState(false);
 
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  // 30-second cooldown timer on error
+  useEffect(() => {
+    if (cooldownSeconds <= 0) return;
+
+    const interval = setInterval(() => {
+      setCooldownSeconds((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [cooldownSeconds]);
 
   // Load verified BioDrops production manufacturers on mount
   useEffect(() => {
@@ -76,6 +94,7 @@ export default function KnowYourWaterForm() {
                 title: "Batch Not Found",
                 message: data.message || "The entered batch number could not be verified. Please check the code and try again."
               });
+              setCooldownSeconds(30);
             }
           })
           .catch((err: any) => {
@@ -92,6 +111,7 @@ export default function KnowYourWaterForm() {
                 message: "Unable to connect to the Aquora verification server. Please try again later."
               });
             }
+            setCooldownSeconds(30);
           })
           .finally(() => {
             if (abortControllerRef.current === abortController) {
@@ -105,6 +125,8 @@ export default function KnowYourWaterForm() {
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (cooldownSeconds > 0) return;
 
     const sanitizedBatch = batchNumber.trim().replace(/\s+/g, ' ');
     if (!sanitizedBatch) return;
@@ -131,6 +153,7 @@ export default function KnowYourWaterForm() {
           title: "Batch Not Found",
           message: data.message || "The entered batch number could not be verified. Please check the code and try again."
         });
+        setCooldownSeconds(30);
       }
     } catch (err: any) {
       if (err.name === 'AbortError') {
@@ -148,6 +171,7 @@ export default function KnowYourWaterForm() {
           message: "Unable to connect to the Aquora verification server. Please try again later."
         });
       }
+      setCooldownSeconds(30);
     } finally {
       if (abortControllerRef.current === abortController) {
         setLoading(false);
@@ -174,15 +198,24 @@ export default function KnowYourWaterForm() {
               placeholder="Enter Batch Number (e.g., 1234 or B-1234)"
               value={batchNumber}
               onChange={(e) => setBatchNumber(e.target.value)}
-              disabled={loading}
+              disabled={loading || cooldownSeconds > 0}
               className="w-full py-5 px-4 text-lg bg-transparent border-none focus:outline-none text-gray-900 placeholder:text-gray-400 disabled:opacity-60"
             />
             <button
               type="submit"
-              disabled={loading || !batchNumber.trim()}
+              disabled={loading || !batchNumber.trim() || cooldownSeconds > 0}
               className="mx-2 px-8 py-3 bg-[#15b5a3] hover:bg-[#129c8d] disabled:bg-gray-200 disabled:text-gray-500 text-white font-bold rounded-xl transition-colors duration-200 flex items-center justify-center min-w-[120px]"
             >
-              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Verify"}
+              {loading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : cooldownSeconds > 0 ? (
+                <span className="flex items-center gap-1.5 text-sm font-semibold">
+                  <Clock className="w-4 h-4 animate-pulse" />
+                  {cooldownSeconds}s
+                </span>
+              ) : (
+                "Verify"
+              )}
             </button>
           </div>
         </form>
@@ -198,6 +231,12 @@ export default function KnowYourWaterForm() {
             >
               <p className="text-red-600 font-bold text-lg">{error.title}</p>
               <p className="text-gray-500 text-sm">{error.message}</p>
+              {cooldownSeconds > 0 && (
+                <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 border border-amber-200 rounded-full text-xs font-semibold text-amber-700">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>Next attempt allowed in {cooldownSeconds}s</span>
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

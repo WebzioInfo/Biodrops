@@ -23,8 +23,10 @@ export async function GET(
     );
   }
 
+  const full = request.nextUrl.searchParams.get("full");
+  const queryString = full ? `?full=${encodeURIComponent(full)}` : "";
   const upstreamBase = getUpstreamBaseUrl();
-  const upstreamUrl = `${upstreamBase}/api/public/water/batches/${encodeURIComponent(batchNumber)}`;
+  const upstreamUrl = `${upstreamBase}/api/public/water/batches/${encodeURIComponent(batchNumber)}${queryString}`;
 
   try {
     const controller = new AbortController();

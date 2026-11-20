@@ -136,7 +136,7 @@ export function adaptVerifyBatchToWaterReport(
   const data = batch.data;
   const batchNo = (data?.batchNumber || "").trim() || "—";
   const reportNumber = options?.reportNumber || (data?.reportNumber ? String(data.reportNumber) : (batchNo !== "—" ? `RPT-${batchNo}` : "—"));
-  const sampleCode = (data?.sampleCode || batchNo || "").trim() || "—";
+  const sampleCode = (data?.sampleCode || (data as any)?.sampleNumber || batchNo || "").trim() || "—";
 
   // Manufacturer Details - NO fake hardcoded defaults
   const clientName = (data?.manufacturer?.name || "").trim() || "—";
@@ -180,9 +180,10 @@ export function adaptVerifyBatchToWaterReport(
     // 1. Check paramsArray if available
     if (paramsArray) {
       const target = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+      const keyTargets = keys.map((k) => k.toLowerCase().replace(/[^a-z0-9]/g, ""));
       const found = paramsArray.find((item: any) => {
         const n = String(item.name || item.parameter || item.id || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-        return n === target;
+        return n === target || keyTargets.includes(n);
       });
       if (found) {
         const val = found.result !== undefined ? found.result : found.value;
@@ -273,6 +274,12 @@ export function adaptVerifyBatchToWaterReport(
   const sulphateData = findParam("Sulphate", "sulphate", "sulfate", "Sulphate", "Sulfate");
   const alkalinityData = findParam("Alkalinity", "alkalinity", "Alkalinity");
   const chlorideData = findParam("Chloride", "chloride", "Chloride");
+  const calciumData = findParam("Calcium", "calcium", "Calcium", "ca");
+  const magnesiumData = findParam("Magnesium", "magnesium", "Magnesium", "magnessium", "mg");
+  const aluminiumData = findParam("Aluminium", "aluminium", "Aluminium", "aluminum", "al");
+  const sulphideData = findParam("Sulphide", "sulphide", "Sulphide", "sulfide", "h2s");
+  const nitrateData = findParam("Nitrate", "nitrate", "Nitrate", "no3");
+  const nitriteData = findParam("Nitrite", "nitrite", "Nitrite", "no2");
 
   // Real Parameter Rows mapped to Water Report Structure
   const parameters = [
@@ -289,6 +296,12 @@ export function adaptVerifyBatchToWaterReport(
     buildParamRow("Sulphate", "CHEMICAL", "mg/L", "≤ 200", sulphateData, (v) => resolveNumericLimitStatus(v, 200)),
     buildParamRow("Alkalinity", "CHEMICAL", "mg/L", "≤ 200", alkalinityData, (v) => resolveNumericLimitStatus(v, 200)),
     buildParamRow("Chloride", "CHEMICAL", "mg/L", "≤ 250", chlorideData, (v) => resolveNumericLimitStatus(v, 250)),
+    buildParamRow("Calcium", "CHEMICAL", "mg/L", "≤ 75", calciumData, (v) => resolveNumericLimitStatus(v, 75)),
+    buildParamRow("Magnesium", "CHEMICAL", "mg/L", "≤ 30", magnesiumData, (v) => resolveNumericLimitStatus(v, 30)),
+    buildParamRow("Aluminium", "CHEMICAL", "mg/L", "≤ 0.03", aluminiumData, (v) => resolveNumericLimitStatus(v, 0.03)),
+    buildParamRow("Sulphide", "CHEMICAL", "mg/L", "≤ 0.05", sulphideData, (v) => resolveNumericLimitStatus(v, 0.05)),
+    buildParamRow("Nitrate", "CHEMICAL", "mg/L", "≤ 45", nitrateData, (v) => resolveNumericLimitStatus(v, 45)),
+    buildParamRow("Nitrite", "CHEMICAL", "mg/L", "≤ 0.02", nitriteData, (v) => resolveNumericLimitStatus(v, 0.02)),
 
     // Microbiology Parameters
     buildParamRow("E.coli", "MICROBIOLOGY", "CFU/100ml", "Absent", effectiveEcoli, resolvePathogenStatus),
@@ -340,14 +353,29 @@ export function adaptVerifyBatchToWaterReport(
 
   const fssai = (data?.licenses?.fssai || "").trim();
   const bis = (data?.licenses?.bis || "").trim();
-  if (fssai || bis) {
-    const licInfo = [
-      fssai ? `FSSAI Lic No: ${fssai}` : null,
-      bis ? `BIS CM/L No: ${bis}` : null,
-    ]
-      .filter(Boolean)
-      .join(" | ");
-    remarksList.push(`2. Plant Licenses: ${licInfo}`);
+  const others = Array.isArray(data?.licenses?.others) ? data.licenses.others : [];
+
+  const licItems: string[] = [];
+  if (fssai && fssai !== "—" && fssai.toLowerCase() !== "null") {
+    licItems.push(`FSSAI Lic No: ${fssai}`);
+  }
+  if (
+    bis &&
+    bis !== "—" &&
+    bis.toLowerCase() !== "null" &&
+    bis.toLowerCase() !== "fssai_compliant" &&
+    !bis.toLowerCase().includes("is 14543")
+  ) {
+    licItems.push(`BIS CM/L No: ${bis}`);
+  }
+  for (const extra of others) {
+    if (extra && extra.name && extra.number) {
+      licItems.push(`${extra.name}: ${extra.number}`);
+    }
+  }
+
+  if (licItems.length > 0) {
+    remarksList.push(`2. Plant Licenses: ${licItems.join(" | ")}`);
   }
 
   const sterilization = (data?.waterQuality?.sterilization || "").trim();
@@ -358,11 +386,17 @@ export function adaptVerifyBatchToWaterReport(
   const remarks = remarksList.length > 0 ? remarksList.join("\n") : "—";
 
   const now = new Date();
-  const reportGeneratedDate = now.toLocaleDateString("en-GB", {
+  const datePart = now.toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",
     year: "numeric",
   });
+  const timePart = now.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+  const reportGeneratedDate = `${datePart}, ${timePart}`;
 
   return {
     reportNumber,

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, Variants } from "framer-motion";
-import { AquoraBatchVerificationResponse } from "@/services/aquoraPublicApi";
+import { AquoraBatchVerificationResponse, verifyAquoraBatch } from "@/services/aquoraPublicApi";
 import { CheckCircle2, Factory, CalendarDays, ShieldCheck, Droplets, Download, Loader2 } from "lucide-react";
 import { downloadWaterReportPdf } from "@/bqms-water-report-pdf";
 import { adaptVerifyBatchToWaterReport, getWaterReportFilename } from "@/lib/biodropsWaterReportAdapter";
@@ -97,7 +97,16 @@ export default function BatchResults({ batch }: BatchResultsProps) {
     if (downloading || !data) return;
     try {
       setDownloading(true);
-      const reportContract = adaptVerifyBatchToWaterReport(batch);
+      let batchToAdapt = batch;
+      try {
+        const fullBatchResponse = await verifyAquoraBatch(batchNo, { full: true });
+        if (fullBatchResponse?.success && fullBatchResponse.data) {
+          batchToAdapt = fullBatchResponse;
+        }
+      } catch (err) {
+        console.warn("Could not fetch full batch report details, falling back to summary batch data:", err);
+      }
+      const reportContract = adaptVerifyBatchToWaterReport(batchToAdapt);
       const filename = getWaterReportFilename(batchNo);
       await downloadWaterReportPdf(reportContract, filename);
     } catch (error) {
@@ -157,8 +166,38 @@ export default function BatchResults({ batch }: BatchResultsProps) {
             <h3 className="text-lg font-bold text-gray-900">Licenses & Approvals</h3>
           </div>
           <div className="space-y-3">
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">FSSAI:</span> {displayVal(data?.licenses?.fssai)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">BIS:</span> {displayVal(data?.licenses?.bis)}</p>
+            {data?.licenses?.fssai && data.licenses.fssai !== "—" && data.licenses.fssai.toLowerCase() !== "null" ? (
+              <p className="text-sm text-gray-600">
+                <span className="font-medium text-gray-900">FSSAI:</span> {data.licenses.fssai}
+              </p>
+            ) : (
+              <p className="text-sm text-gray-600">
+                <span className="font-medium text-gray-900">FSSAI:</span>{" "}
+                <span className="text-amber-600 font-medium text-xs bg-amber-50 px-2 py-0.5 rounded-md">Pending Registration</span>
+              </p>
+            )}
+
+            {data?.licenses?.bis && 
+             data.licenses.bis !== "—" && 
+             data.licenses.bis.toLowerCase() !== "null" && 
+             data.licenses.bis.toLowerCase() !== "fssai_compliant" && (
+              <p className="text-sm text-gray-600">
+                <span className="font-medium text-gray-900">BIS (ISI Mark):</span> {data.licenses.bis}
+              </p>
+            )}
+
+            {data?.licenses?.others && data.licenses.others.length > 0 && (
+              data.licenses.others.map((lic, idx) => (
+                <p key={idx} className="text-sm text-gray-600">
+                  <span className="font-medium text-gray-900">{lic.name}:</span> {lic.number}
+                </p>
+              ))
+            )}
+
+            <div className="pt-2 text-[11px] text-[#15b5a3] font-medium flex items-center gap-1.5 border-t border-gray-100">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Regulatory Verified Facility</span>
+            </div>
           </div>
         </motion.div>
 

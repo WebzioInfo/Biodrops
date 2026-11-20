@@ -13,6 +13,13 @@ export const METHOD_MAP: Record<string, string> = {
   'residual free chlorine': 'IS 3025 (Part-26)',
   'alkalinity': 'IS 3025 (Part-23)',
   'chloride': 'IS 3025 (Part-32)',
+  'calcium': 'IS 3025 (Part-40)',
+  'magnesium': 'IS 3025 (Part-46)',
+  'magnessium': 'IS 3025 (Part-46)',
+  'aluminium': 'IS 3025 (Part-55)',
+  'sulphide': 'IS 3025 (Part-53)',
+  'nitrate': 'IS 3025 (Part-34)',
+  'nitrite': 'IS 3025 (Part-34)',
   'e.coli': 'IS 15185',
   'coliform': 'IS 15185',
   'pseudomonas': 'IS 13428',
@@ -92,7 +99,7 @@ export function getParameterTable(rows: any[][], category: string) {
         displayResult = {
           stack: [
             { text: 'BDL', bold: true, fontSize: 7.5, color: PDF_COLORS.textDark },
-            { text: '✓ Below Limit', fontSize: 6, color: PDF_COLORS.pass, margin: [0, 1, 0, 0] }
+            { text: 'Below Limit', fontSize: 6, color: PDF_COLORS.pass, margin: [0, 1, 0, 0] }
           ],
           alignment: 'center'
         };
@@ -114,22 +121,22 @@ export function getParameterTable(rows: any[][], category: string) {
         displayResult = {
           stack: [
             { text: `${rawResult}${unitSuffix}`, bold: true, fontSize: 8, color: PDF_COLORS.fail },
-            { text: `✘ ${label}`, fontSize: 6, bold: true, color: PDF_COLORS.fail, margin: [0, 1, 0, 0] }
+            { text: label, fontSize: 6, bold: true, color: PDF_COLORS.fail, margin: [0, 1, 0, 0] }
           ],
           alignment: 'center'
         };
         remarks = category.toUpperCase() === 'MICROBIOLOGY' ? 'Non-conforming (Pathogen Present)' : `Out of range (${label})`;
       } else {
         // Passing Result styling: clean result with subtle green indicator
-        let subLabel = '✓ Within limits';
+        let subLabel = 'Within limits';
         remarks = 'Within limits';
         if (category.toUpperCase() === 'MICROBIOLOGY') {
           if (rawResult.toLowerCase().includes('absent')) {
-            subLabel = '✓ Complies';
+            subLabel = 'Complies';
             remarks = 'Complies with standard';
           }
         } else if (rawResult.toLowerCase() === 'agreeable') {
-          subLabel = '✓ Satisfactory';
+          subLabel = 'Satisfactory';
           remarks = 'Satisfactory';
         }
 
@@ -171,9 +178,9 @@ export function getParameterTable(rows: any[][], category: string) {
       vLineColor: () => PDF_COLORS.border,
       paddingLeft: () => 5,
       paddingRight: () => 5,
-      paddingTop: () => 4,
-      paddingBottom: () => 4
+      paddingTop: () => 2.5,
+      paddingBottom: () => 2.5
     },
-    margin: [0, 0, 0, 14]
+    margin: [0, 0, 0, 6]
   };
 }
