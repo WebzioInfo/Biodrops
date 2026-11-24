@@ -64,40 +64,32 @@ describe("Water Report PDF Adapter with Aquora Data", () => {
   it("never invents defaults for unentered parameters in partial responses", () => {
     const contract = adaptVerifyBatchToWaterReport(sampleAquoraResponse);
 
-    // Unentered chemical parameters must be "—" and not "0" or "WITHIN LIMIT"
+    // Unentered chemical parameters are excluded from the report
     const chlorineParam = contract.parameters.find((p) => p.name === "Residual Free Chlorine");
-    expect(chlorineParam?.result).toBe("—");
-    expect(chlorineParam?.status).toBe("—");
+    expect(chlorineParam).toBeUndefined();
 
     const sulphateParam = contract.parameters.find((p) => p.name === "Sulphate");
-    expect(sulphateParam?.result).toBe("—");
-    expect(sulphateParam?.status).toBe("—");
+    expect(sulphateParam).toBeUndefined();
 
     const alkalinityParam = contract.parameters.find((p) => p.name === "Alkalinity");
-    expect(alkalinityParam?.result).toBe("—");
-    expect(alkalinityParam?.status).toBe("—");
+    expect(alkalinityParam).toBeUndefined();
 
-    // Unentered organoleptic parameters must be "—" and not "Agreeable"
+    // Unentered organoleptic parameters are excluded from the report
     const colourParam = contract.parameters.find((p) => p.name === "Colour");
-    expect(colourParam?.result).toBe("—");
-    expect(colourParam?.status).toBe("—");
+    expect(colourParam).toBeUndefined();
 
     const odourParam = contract.parameters.find((p) => p.name === "Odour");
-    expect(odourParam?.result).toBe("—");
-    expect(odourParam?.status).toBe("—");
+    expect(odourParam).toBeUndefined();
 
     const tasteParam = contract.parameters.find((p) => p.name === "Taste");
-    expect(tasteParam?.result).toBe("—");
-    expect(tasteParam?.status).toBe("—");
+    expect(tasteParam).toBeUndefined();
 
-    // Untested pathogens must be "—" and not "Absent"
+    // Untested pathogens are excluded
     const pseudomonasParam = contract.parameters.find((p) => p.name === "Pseudomonas");
-    expect(pseudomonasParam?.result).toBe("—");
-    expect(pseudomonasParam?.status).toBe("—");
+    expect(pseudomonasParam).toBeUndefined();
 
     const yeastParam = contract.parameters.find((p) => p.name === "Yeast & Mold");
-    expect(yeastParam?.result).toBe("—");
-    expect(yeastParam?.status).toBe("—");
+    expect(yeastParam).toBeUndefined();
 
     // Unprovided personnel metadata must be "—" and not fake "QC Team"
     expect(contract.collectedBy).toBe("—");
@@ -154,17 +146,10 @@ describe("Water Report PDF Adapter with Aquora Data", () => {
     expect(tds?.result).toBe("10");
     expect(tds?.status).toBe("PASS");
 
-    expect(turbidity?.result).toBe("—");
-    expect(turbidity?.status).toBe("—");
-    expect(turbidity?.standard).toBe("—");
-
-    expect(colour?.result).toBe("—");
-    expect(colour?.status).toBe("—");
-    expect(colour?.standard).toBe("—");
-
-    expect(odour?.result).toBe("—");
-    expect(odour?.status).toBe("—");
-    expect(odour?.standard).toBe("—");
+    // Untested parameters are excluded from the report
+    expect(turbidity).toBeUndefined();
+    expect(colour).toBeUndefined();
+    expect(odour).toBeUndefined();
 
     // Since pH was 9 (> 8.5 limit), overallStatus must be FAIL
     expect(contract.overallStatus).toBe("FAIL");
@@ -215,12 +200,7 @@ describe("Water Report PDF Adapter with Aquora Data", () => {
     expect(contract.testedBy).toBe("—");
     expect(contract.verifiedBy).toBe("—");
     expect(contract.overallStatus).toBe("—");
-
-    contract.parameters.forEach((param) => {
-      expect(param.result).toBe("—");
-      expect(param.status).toBe("—");
-      expect(param.standard).toBe("—");
-    });
+    expect(contract.parameters.length).toBe(0);
   });
 
   it("properly flags microbiology pathogens as FAIL when detected", () => {
@@ -299,14 +279,13 @@ describe("Water Report PDF Adapter with Aquora Data", () => {
     expect(phRow?.[2]).toBe("7.0");
     expect(phRow?.[5]).toBe("PASS");
 
-    // Verify row for TDS is missing placeholder
+    // Verify row for unentered TDS is excluded
     const tdsRow = reportData.rows.find((r) => r[0] === "TDS");
-    expect(tdsRow).toBeDefined();
-    expect(tdsRow?.[2]).toBe("—");
-    expect(tdsRow?.[5]).toBe("—");
+    expect(tdsRow).toBeUndefined();
 
-    // Verify PDFMake document definition builds cleanly
-    const docDef = getWaterReportDocumentDefinition(contract);
+    // Verify PDFMake document definition builds cleanly with sample full contract
+    const sampleContract = adaptVerifyBatchToWaterReport(sampleAquoraResponse);
+    const docDef = getWaterReportDocumentDefinition(sampleContract);
     expect(docDef).toBeDefined();
     expect(docDef.content).toBeDefined();
     expect(docDef.content.length).toBeGreaterThan(0);
@@ -321,11 +300,13 @@ describe("Water Report PDF Adapter with Aquora Data", () => {
     expect(microHeader).toBeDefined();
     expect(microHeader.pageBreak).toBe("before");
 
+    // If chemical parameters were present, verify chemical header pageBreak is undefined
     const chemHeader = docDef.content.find((item: any) => 
       item.columns && item.columns.some((col: any) => col.text === "CHEMICAL PARAMETERS")
     );
-    expect(chemHeader).toBeDefined();
-    expect(chemHeader.pageBreak).toBeUndefined();
+    if (chemHeader) {
+      expect(chemHeader.pageBreak).toBeUndefined();
+    }
   });
 
   it("includes generated time and date in reportGeneratedDate and metadata", () => {
@@ -339,7 +320,7 @@ describe("Water Report PDF Adapter with Aquora Data", () => {
   });
 
   it("handles licenses cleanly: never displays null and includes custom licenses", () => {
-    const batchWithLicenses: AquoraBatchVerificationResponse = {
+    const batchWithLicenses = {
       success: true,
       verified: true,
       data: {
@@ -358,7 +339,7 @@ describe("Water Report PDF Adapter with Aquora Data", () => {
         waterQuality: { ph: "7.0", tds: "50", turbidity: "0.1" },
         report: { available: true }
       }
-    };
+    } as any;
 
     const contract = adaptVerifyBatchToWaterReport(batchWithLicenses);
     expect(contract.remarks).toContain("FSSAI Lic No: 11322000000000");

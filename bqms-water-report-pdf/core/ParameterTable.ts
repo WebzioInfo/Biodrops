@@ -32,8 +32,10 @@ export const METHOD_MAP: Record<string, string> = {
 
 export function getParameterTable(rows: any[][], category: string) {
   // Filter rows belonging to the given category (row[1] is Category)
+  // Strictly filter out any parameter that has no result / was not tested
   const filteredRows = rows.filter(
-    row => String(row[1] || '').trim().toUpperCase() === category.toUpperCase()
+    row => String(row[1] || '').trim().toUpperCase() === category.toUpperCase() &&
+           row[2] !== null && row[2] !== undefined && String(row[2]).trim() !== '' && String(row[2]).trim() !== '—'
   );
 
   if (filteredRows.length === 0) return null;

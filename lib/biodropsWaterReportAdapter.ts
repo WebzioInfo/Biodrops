@@ -214,14 +214,7 @@ export function adaptVerifyBatchToWaterReport(
   ) {
     const isPresent = hasValue(extracted.val);
     if (!isPresent) {
-      return {
-        name,
-        category,
-        result: "—",
-        unit,
-        standard: "—",
-        status: (extracted.explicitStatus || "—") as QualityStatus,
-      };
+      return null;
     }
 
     const result = String(extracted.val).trim();
@@ -281,8 +274,8 @@ export function adaptVerifyBatchToWaterReport(
   const nitrateData = findParam("Nitrate", "nitrate", "Nitrate", "no3");
   const nitriteData = findParam("Nitrite", "nitrite", "Nitrite", "no2");
 
-  // Real Parameter Rows mapped to Water Report Structure
-  const parameters = [
+  // Real Parameter Rows mapped to Water Report Structure (Only parameters present in response)
+  const rawParameters = [
     // Physical Parameters
     buildParamRow("pH", "PHYSICAL", "—", "6.5 - 8.5", findParam("pH", "ph", "PH"), resolvePhStatus),
     buildParamRow("TDS", "PHYSICAL", "mg/L", "≤ 500", findParam("TDS", "tds", "TDS"), resolveTdsStatus),
@@ -312,6 +305,33 @@ export function adaptVerifyBatchToWaterReport(
     buildParamRow("Aerobic Microbial Count 37°C", "MICROBIOLOGY", "CFU/ml", "≤ 20", amc37Data, (v) => resolveNumericLimitStatus(v, 20)),
     buildParamRow("Yeast & Mold", "MICROBIOLOGY", "CFU/100ml", "Absent", ymData, resolvePathogenStatus),
   ];
+
+  // Strictly retain ONLY parameters that were tested (present with non-empty results in response)
+  const parameters = rawParameters.filter(Boolean) as any[];
+
+  // Also dynamically attach any additional parameters from the backend that were tested
+  if (paramsArray && Array.isArray(paramsArray)) {
+    const includedNames = new Set(parameters.map((p) => p.name.toLowerCase().replace(/[^a-z0-9]/g, "")));
+    for (const item of paramsArray) {
+      const pName = (item.name || item.parameter || "").trim();
+      const norm = pName.toLowerCase().replace(/[^a-z0-9]/g, "");
+      if (!pName || includedNames.has(norm)) continue;
+      const val = item.result !== undefined ? item.result : item.value;
+      if (!hasValue(val)) continue;
+
+      const category = (item.category || "PHYSICAL").toUpperCase();
+      const status = item.status || item.qualityStatus || (item.isPass ? "PASS" : "FAIL");
+      parameters.push({
+        name: pName,
+        category: category as any,
+        result: String(val).trim(),
+        unit: item.unit || "—",
+        standard: item.standard || "—",
+        status: status as QualityStatus,
+      });
+      includedNames.add(norm);
+    }
+  }
 
   // Check if any tested parameter failed
   const hasFailure = parameters.some(
