@@ -7,7 +7,10 @@ import { Search, Loader2, MapPin, ShieldCheck, Mail, Phone, FileText, Clock } fr
 import { verifyAquoraBatch, fetchAquoraManufacturers, AquoraManufacturerDto, AquoraBatchVerificationResponse } from "@/services/aquoraPublicApi";
 import Image from "next/image";
 
-function getInitials(name: string) {
+function getInitials(name: string, badgeLetters?: string | null) {
+  if (badgeLetters && badgeLetters.trim()) {
+    return badgeLetters.trim().toUpperCase().substring(0, 4);
+  }
   if (!name) return "MP";
   return name.split(' ').filter(Boolean).map(n => n[0]).join('').substring(0, 2).toUpperCase() || "MP";
 }
@@ -313,7 +316,11 @@ export default function KnowYourWaterForm() {
                 {manufacturers.map((mfg) => (
                   <div key={mfg.id} className="bg-white p-4 rounded-[14px] shadow-sm border border-gray-100 flex flex-col hover:shadow-md hover:border-[#15b5a3]/30 hover:-translate-y-0.5 transition-all duration-300 group">
                     <div className="flex items-start gap-3 mb-4">
-                      {mfg.logoUrl ? (
+                      {mfg.badgeLetters ? (
+                        <div className="bg-[#15b5a3]/10 w-10 h-10 flex items-center justify-center rounded-full text-[#15b5a3] font-bold text-[14px] shrink-0 group-hover:scale-110 transition-transform">
+                          {mfg.badgeLetters.trim().toUpperCase()}
+                        </div>
+                      ) : mfg.logoUrl ? (
                         <Image
                           src={mfg.logoUrl}
                           alt={mfg.name}

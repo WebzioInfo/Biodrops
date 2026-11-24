@@ -12,6 +12,7 @@ export interface AquoraManufacturerDto {
   subdomain?: string;
   customDomain?: string | null;
   logoUrl?: string | null;
+  badgeLetters?: string | null;
   address?: string | null;
   location?: string | null;
   licenseNumber?: string | null;
