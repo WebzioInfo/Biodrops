@@ -6,7 +6,7 @@ function getUpstreamBaseUrl(): string {
     process.env.NEXT_PUBLIC_AQUORA_PUBLIC_API_URL ||
     process.env.NEXT_PUBLIC_AQUORA_API_URL ||
     process.env.AQUORA_API_URL ||
-    "https://aquzio.onrender.com";
+    "https://aquora-backend.webziointernational.in";
 
   return url.trim().replace(/\/+$/, "");
 }
@@ -37,7 +37,25 @@ export async function GET(
     });
     clearTimeout(timeoutId);
 
-    const data = await res.json();
+    const rawText = await res.text();
+    let data: unknown = null;
+    try {
+      data = rawText ? JSON.parse(rawText) : null;
+    } catch {
+      data = null;
+    }
+
+    if (!res.ok) {
+      return NextResponse.json(
+        data ?? {
+          success: false,
+          code: "AQUORA_HTTP_ERROR",
+          message: `Upstream Aquora Public API error: ${res.status} ${res.statusText}`,
+        },
+        { status: res.status }
+      );
+    }
+
     return NextResponse.json(data, { status: res.status });
   } catch (error: unknown) {
     const isTimeout = error instanceof Error && error.name === "AbortError";
