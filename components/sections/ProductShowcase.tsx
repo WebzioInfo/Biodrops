@@ -143,17 +143,17 @@ export default function ProductShowcase() {
               Batch-Coded Safety Sleeve
             </div>
 
-            {/* TEMPORARILY DISABLED (2-day hold): Uncomment when user asks to restore eDrops navigation */}
+            {/* TEMPORARILY ROUTED TO WHATSAPP (2-day hold): restore https://edrops.in when user asks */}
             {/* CTA Button */}
-            {/* <a
-              href="https://edrops.in"
+            <a
+              href="https://wa.me/918884577773?text=Hello%20BIODROPS%2C%20I%20would%20like%20to%20request%20delivery%20for%2020L%20mineral%20water."
               target="_blank"
               rel="noopener noreferrer"
               className="group mt-1 inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-[#0F766E] hover:bg-[#0D655E] text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95"
             >
               <span>REQUEST DELIVERY</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" strokeWidth={2.5} />
-            </a> */}
+            </a>
           </ScrollFade>
 
           {/* RIGHT column — cards 03 & 04 */}

@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShieldCheck } from "lucide-react";
-// TEMPORARILY DISABLED (2-day hold): restore ShoppingBag import when uncommenting Order Now button
-// import { ShoppingBag, ShieldCheck } from "lucide-react";
+import { ShoppingBag, ShieldCheck } from "lucide-react";
 
 export default function FloatingActions() {
   const pathname = usePathname();
@@ -26,18 +24,18 @@ export default function FloatingActions() {
         <span>Verify Batch</span>
       </Link>
 
-      {/* TEMPORARILY DISABLED (2-day hold): Uncomment when user asks to restore eDrops navigation */}
-      {/* Button 1: Order Now (External Shop Link) */}
-      {/* <a
-        href="https://app.edrops.in/customer/shop"
+      {/* TEMPORARILY ROUTED TO WHATSAPP (2-day hold): restore https://app.edrops.in/customer/shop when user asks */}
+      {/* Button 1: Order Now (WhatsApp Order Link) */}
+      <a
+        href="https://wa.me/918884577773?text=Hello%20BIODROPS%2C%20I%20would%20like%20to%20order%2020L%20mineral%20water."
         target="_blank"
         rel="noopener noreferrer"
         className="pointer-events-auto group inline-flex items-center gap-2 px-3.5 py-2.5 sm:px-4 sm:py-2.5 bg-[#cfef00] hover:bg-[#c2e000] text-[#070D0E] rounded-full text-[0.72rem] sm:text-[0.78rem] font-bold tracking-[0.08em] uppercase transition-all duration-200 hover:scale-105 active:scale-95 shadow-[0_6px_20px_rgba(207,239,0,0.35)] hover:shadow-[0_10px_24px_rgba(207,239,0,0.5)] border border-white/25 backdrop-blur-sm"
-        title="Order Biodrops Mineral Water online"
+        title="Order Biodrops Mineral Water via WhatsApp"
       >
         <ShoppingBag className="w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0 stroke-[2.2]" />
         <span>Order Now</span>
-      </a> */}
+      </a>
     </aside>
   );
 }
