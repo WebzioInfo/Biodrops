@@ -23,6 +23,10 @@ export default function KnowYourWaterForm() {
   const [error, setError] = useState<{ title: string; message: string } | null>(null);
   const [result, setResult] = useState<AquoraBatchVerificationResponse | null>(null);
   const [cooldownSeconds, setCooldownSeconds] = useState(0);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [attemptWarning, setAttemptWarning] = useState<string | null>(null);
+
+  const MAX_ATTEMPTS = 5;
 
   const [manufacturers, setManufacturers] = useState<AquoraManufacturerDto[]>([]);
   const [loadingManufacturers, setLoadingManufacturers] = useState(true);
@@ -30,7 +34,7 @@ export default function KnowYourWaterForm() {
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  // 30-second cooldown timer on error
+  // Cooldown timer — resets failed attempts when it expires
   useEffect(() => {
     if (cooldownSeconds <= 0) return;
 
@@ -38,6 +42,8 @@ export default function KnowYourWaterForm() {
       setCooldownSeconds((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
+          setFailedAttempts(0);
+          setAttemptWarning(null);
           return 0;
         }
         return prev - 1;
@@ -93,13 +99,14 @@ export default function KnowYourWaterForm() {
             if (data.success && data.verified && data.data) {
               setResult(data);
               setError(null);
+              // URL-param auto-lookup succeeded — no attempt counting needed
             } else {
               setResult(null);
               setError({
                 title: "Batch Not Found",
                 message: data.message || "The entered batch number could not be verified. Please check the code and try again."
               });
-              setCooldownSeconds(30);
+              // URL-param failures don't count toward the attempt limit
             }
           })
           .catch((err: any) => {
@@ -116,7 +123,7 @@ export default function KnowYourWaterForm() {
                 message: "Unable to connect to the Aquora verification server. Please try again later."
               });
             }
-            setCooldownSeconds(30);
+            // URL-param failures don't count toward the attempt limit
           })
           .finally(() => {
             if (abortControllerRef.current === abortController) {
@@ -146,19 +153,30 @@ export default function KnowYourWaterForm() {
     setLoading(true);
     setError(null);
     setResult(null);
+    setAttemptWarning(null);
 
     try {
       const data = await verifyAquoraBatch(sanitizedBatch, { full: true, signal: abortController.signal });
       if (data.success && data.verified && data.data) {
         setResult(data);
         setError(null);
+        setFailedAttempts(0);
+        setAttemptWarning(null);
       } else {
         setResult(null);
         setError({
           title: "Batch Not Found",
           message: data.message || "The entered batch number could not be verified. Please check the code and try again."
         });
-        setCooldownSeconds(30);
+        const next = failedAttempts + 1;
+        setFailedAttempts(next);
+        if (next >= MAX_ATTEMPTS) {
+          setCooldownSeconds(30);
+          setAttemptWarning(null);
+        } else {
+          const remaining = MAX_ATTEMPTS - next;
+          setAttemptWarning(`${remaining} attempt${remaining === 1 ? "" : "s"} remaining before temporary lock.`);
+        }
       }
     } catch (err: any) {
       if (err.name === 'AbortError') {
@@ -176,7 +194,15 @@ export default function KnowYourWaterForm() {
           message: "Unable to connect to the Aquora verification server. Please try again later."
         });
       }
-      setCooldownSeconds(30);
+      const next = failedAttempts + 1;
+      setFailedAttempts(next);
+      if (next >= MAX_ATTEMPTS) {
+        setCooldownSeconds(30);
+        setAttemptWarning(null);
+      } else {
+        const remaining = MAX_ATTEMPTS - next;
+        setAttemptWarning(`${remaining} attempt${remaining === 1 ? "" : "s"} remaining before temporary lock.`);
+      }
     } finally {
       if (abortControllerRef.current === abortController) {
         setLoading(false);
@@ -236,12 +262,14 @@ export default function KnowYourWaterForm() {
             >
               <p className="text-red-600 font-bold text-lg">{error.title}</p>
               <p className="text-gray-500 text-sm">{error.message}</p>
-              {cooldownSeconds > 0 && (
+              {cooldownSeconds > 0 ? (
                 <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 border border-amber-200 rounded-full text-xs font-semibold text-amber-700">
                   <Clock className="w-3.5 h-3.5" />
                   <span>Next attempt allowed in {cooldownSeconds}s</span>
                 </div>
-              )}
+              ) : attemptWarning ? (
+                <p className="mt-1.5 text-xs text-amber-600 font-medium">{attemptWarning}</p>
+              ) : null}
             </motion.div>
           )}
         </AnimatePresence>

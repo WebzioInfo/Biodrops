@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Footer from "@/components/sections/Footer";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { WhyUsHero, WhyUsGrid } from "@/components/sections/WhyUsClient";
 import ScrollFade from "@/components/effects/ScrollFade";
 
@@ -160,6 +162,36 @@ export default function WhyUsPage() {
       <section className="py-24 px-6 bg-[#070D0E] text-white">
         <div className="max-w-[1400px] mx-auto">
           <WhyUsGrid values={values} />
+
+          {/* Integrated BQMS Differentiator */}
+          <ScrollFade
+            amount={0.2}
+            duration={0.55}
+            yOffset={20}
+            className="mt-16 pt-14 border-t border-white/10 flex flex-col lg:flex-row lg:items-center justify-between gap-8"
+          >
+            <div className="max-w-3xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#56C7D9] mb-3">
+                Biofix Quality Management System (BQMS)
+              </p>
+              <h2 className="text-2xl md:text-3xl font-normal text-white tracking-tight mb-3">
+                Governed by one integrated quality system, not ad-hoc checks.
+              </h2>
+              <p className="text-white/65 leading-relaxed font-light text-base md:text-lg">
+                Unlike brands that rely on occasional spot checks, every BIODROPS facility operates under BQMS. Each production shift undergoes in-house chemistry and microbiology testing, equipment calibration, and strict BIS IS:14543 and FSSAI compliance—ensuring consistent purity in every jar.
+              </p>
+            </div>
+
+            <div className="shrink-0">
+              <Link
+                href="/bqms"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#cfef00] hover:text-white transition-colors group"
+              >
+                <span>Learn more about BQMS</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </ScrollFade>
         </div>
       </section>
 
