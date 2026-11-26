@@ -32,10 +32,9 @@ export const METHOD_MAP: Record<string, string> = {
 
 export function getParameterTable(rows: any[][], category: string) {
   // Filter rows belonging to the given category (row[1] is Category)
-  // Strictly filter out any parameter that has no result / was not tested
+  // Retain all parameters belonging to this report (including pending, incubating, and overdue)
   const filteredRows = rows.filter(
-    row => String(row[1] || '').trim().toUpperCase() === category.toUpperCase() &&
-           row[2] !== null && row[2] !== undefined && String(row[2]).trim() !== '' && String(row[2]).trim() !== '—'
+    row => String(row[1] || '').trim().toUpperCase() === category.toUpperCase()
   );
 
   if (filteredRows.length === 0) return null;
@@ -75,9 +74,46 @@ export function getParameterTable(rows: any[][], category: string) {
     let resultCellBg = (index % 2 === 1) ? PDF_COLORS.bgZebra : PDF_COLORS.white;
     let statusCellBg = resultCellBg;
 
-    if (isMissing) {
+    const upperStatus = rawStatus.toUpperCase();
+    const isPendingStatus = upperStatus === 'PENDING' || upperStatus === 'PENDING_RESULT';
+    const isIncubatingStatus = upperStatus === 'INCUBATING' || upperStatus === 'IN_PROGRESS';
+    const isOverdueStatus = upperStatus === 'OVERDUE' || upperStatus === 'RESULTS_OVERDUE';
+
+    if (isOverdueStatus && isMissing) {
+      method = METHOD_MAP[lookupKey] || 'IS 3025';
+      resultCellBg = PDF_COLORS.failBg;
+      statusCellBg = PDF_COLORS.failBg;
+      displayResult = {
+        stack: [
+          { text: '—', bold: true, fontSize: 7.5, color: PDF_COLORS.fail },
+          { text: 'Overdue', fontSize: 6, bold: true, color: PDF_COLORS.fail, margin: [0, 1, 0, 0] }
+        ],
+        alignment: 'center'
+      };
+      remarks = 'Result overdue';
+    } else if (isIncubatingStatus && isMissing) {
+      method = METHOD_MAP[lookupKey] || 'IS 3025';
+      displayResult = {
+        stack: [
+          { text: '—', bold: true, fontSize: 7.5, color: PDF_COLORS.warning },
+          { text: 'Incubating', fontSize: 6, bold: true, color: PDF_COLORS.warning, margin: [0, 1, 0, 0] }
+        ],
+        alignment: 'center'
+      };
+      remarks = 'Incubation in progress';
+    } else if (isPendingStatus && isMissing) {
+      method = METHOD_MAP[lookupKey] || 'IS 3025';
+      displayResult = {
+        stack: [
+          { text: '—', bold: true, fontSize: 7.5, color: PDF_COLORS.neutral },
+          { text: 'Pending', fontSize: 6, color: PDF_COLORS.warning, margin: [0, 1, 0, 0] }
+        ],
+        alignment: 'center'
+      };
+      remarks = 'Awaiting result';
+    } else if (isMissing) {
       method = '—';
-      limit = '—';
+      limit = limit || '—';
       rawStatus = '—';
       displayResult = { text: '—', color: PDF_COLORS.neutral, alignment: 'center', fontSize: 7.5 };
       remarks = '—';
@@ -89,10 +125,10 @@ export function getParameterTable(rows: any[][], category: string) {
     } else {
       method = METHOD_MAP[lookupKey] || 'IS 3025';
 
-      const isFail = rawStatus.toUpperCase().includes('FAIL') || 
-                     rawStatus.toUpperCase().includes('BELOW') || 
-                     rawStatus.toUpperCase().includes('ABOVE') ||
-                     (category.toUpperCase() === 'MICROBIOLOGY' && rawResult.toLowerCase().includes('present'));
+      const isFail = rawStatus.toUpperCase().includes('FAIL') ||
+        rawStatus.toUpperCase().includes('BELOW') ||
+        rawStatus.toUpperCase().includes('ABOVE') ||
+        (category.toUpperCase() === 'MICROBIOLOGY' && rawResult.toLowerCase().includes('present'));
 
       // Unit formatting
       const unitSuffix = (unit && unit !== '—' && unit !== 'Descriptor' && !rawResult.includes(unit)) ? ` ${unit}` : '';

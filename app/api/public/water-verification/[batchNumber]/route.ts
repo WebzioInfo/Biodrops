@@ -23,8 +23,14 @@ export async function GET(
     );
   }
 
-  const full = request.nextUrl.searchParams.get("full");
-  const queryString = full ? `?full=${encodeURIComponent(full)}` : "";
+  const upstreamParams = new URLSearchParams();
+  for (const key of ["full", "reportType", "tenantId", "tenantCode"]) {
+    const val = request.nextUrl.searchParams.get(key);
+    if (val !== null && val !== "") {
+      upstreamParams.set(key, val);
+    }
+  }
+  const queryString = upstreamParams.toString() ? `?${upstreamParams.toString()}` : "";
   const upstreamBase = getUpstreamBaseUrl();
   const upstreamUrl = `${upstreamBase}/api/public/water/batches/${encodeURIComponent(batchNumber)}${queryString}`;
 

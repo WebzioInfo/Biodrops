@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import BatchResults, { BatchResultsSkeleton } from "@/components/sections/BatchResults";
 import { Search, Loader2, MapPin, ShieldCheck, Mail, Phone, FileText, Clock } from "lucide-react";
 import { verifyAquoraBatch, fetchAquoraManufacturers, AquoraManufacturerDto, AquoraBatchVerificationResponse } from "@/services/aquoraPublicApi";
+import { toManufacturerSlug } from "@/lib/manufacturerSlug";
 import Image from "next/image";
 
 function getInitials(name: string, badgeLetters?: string | null) {
@@ -86,7 +88,7 @@ export default function KnowYourWaterForm() {
         setError(null);
         setResult(null);
 
-        verifyAquoraBatch(sanitized, abortController.signal)
+        verifyAquoraBatch(sanitized, { full: true, signal: abortController.signal })
           .then((data) => {
             if (data.success && data.verified && data.data) {
               setResult(data);
@@ -146,7 +148,7 @@ export default function KnowYourWaterForm() {
     setResult(null);
 
     try {
-      const data = await verifyAquoraBatch(sanitizedBatch, abortController.signal);
+      const data = await verifyAquoraBatch(sanitizedBatch, { full: true, signal: abortController.signal });
       if (data.success && data.verified && data.data) {
         setResult(data);
         setError(null);
@@ -314,7 +316,11 @@ export default function KnowYourWaterForm() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {manufacturers.map((mfg) => (
-                  <div key={mfg.id} className="bg-white p-4 rounded-[14px] shadow-sm border border-gray-100 flex flex-col hover:shadow-md hover:border-[#15b5a3]/30 hover:-translate-y-0.5 transition-all duration-300 group">
+                  <Link
+                    key={mfg.id}
+                    href={`/manufacture/${toManufacturerSlug(mfg.name)}`}
+                    className="bg-white p-4 rounded-[14px] shadow-sm border border-gray-100 flex flex-col hover:shadow-md hover:border-[#15b5a3]/30 hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer"
+                  >
                     <div className="flex items-start gap-3 mb-4">
                       {mfg.badgeLetters ? (
                         <div className="bg-[#15b5a3]/10 w-10 h-10 flex items-center justify-center rounded-full text-[#15b5a3] font-bold text-[14px] shrink-0 group-hover:scale-110 transition-transform">
@@ -371,7 +377,7 @@ export default function KnowYourWaterForm() {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}

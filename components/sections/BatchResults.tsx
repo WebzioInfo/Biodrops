@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion, Variants } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { AquoraBatchVerificationResponse, verifyAquoraBatch } from "@/services/aquoraPublicApi";
-import { CheckCircle2, Factory, CalendarDays, ShieldCheck, Droplets, Download, Loader2 } from "lucide-react";
+import { CheckCircle2, Factory, CalendarDays, ShieldCheck, Droplets, Download, Loader2, ChevronDown, ChevronUp } from "lucide-react";
 import { downloadWaterReportPdf } from "@/bqms-water-report-pdf";
 import { adaptVerifyBatchToWaterReport, getWaterReportFilename } from "@/lib/biodropsWaterReportAdapter";
 
@@ -64,6 +64,7 @@ export function BatchResultsSkeleton() {
 
 export default function BatchResults({ batch }: BatchResultsProps) {
   const [downloading, setDownloading] = useState(false);
+  const [showAllParameters, setShowAllParameters] = useState(false);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -204,16 +205,128 @@ export default function BatchResults({ batch }: BatchResultsProps) {
         {/* Water Quality Reports */}
         <motion.div variants={itemVariants} className="bg-gray-50 p-6 rounded-2xl flex flex-col">
           <div className="flex items-center gap-3 mb-4 text-[#15b5a3]">
-            <Droplets className="w-5 h-5" />
+            <Droplets className="w-5 h-5 shrink-0" />
             <h3 className="text-lg font-bold text-gray-900">Water Quality</h3>
+            {data?.reportType && (
+              <span className="ml-auto text-[11px] font-semibold uppercase tracking-wide bg-[#15b5a3]/10 text-[#15b5a3] border border-[#15b5a3]/20 px-2.5 py-0.5 rounded-full">
+                {data.reportType}
+              </span>
+            )}
           </div>
-          <div className="space-y-3 flex-1">
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">pH Level:</span> {displayVal(data?.waterQuality?.ph)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">TDS:</span> {displayVal(data?.waterQuality?.tds)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Turbidity:</span> {displayVal(data?.waterQuality?.turbidity)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Microbiology:</span> {displayVal(data?.waterQuality?.microbiology)}</p>
-            <p className="text-sm text-gray-600"><span className="font-medium text-gray-900">Sterilization:</span> {displayVal(data?.waterQuality?.sterilization)}</p>
-          </div>
+
+          {(() => {
+            const validParameters = Array.isArray(data?.parameters)
+              ? data.parameters.filter((p) => Boolean(p && p.name && String(p.name).trim() !== ""))
+              : [];
+
+            if (validParameters.length === 0) {
+              return (
+                <div className="flex-1 flex items-center justify-center py-6">
+                  <p className="text-sm text-gray-500">No water quality data available</p>
+                </div>
+              );
+            }
+
+            const hasMore = validParameters.length > 6;
+            const visibleParameters = showAllParameters ? validParameters : validParameters.slice(0, 6);
+
+            return (
+              <div className="flex-1 flex flex-col">
+                <motion.div layout className="space-y-2">
+                  <AnimatePresence initial={false}>
+                    {visibleParameters.map((param, idx) => {
+                      const rawResult =
+                        param.result !== null && param.result !== undefined && String(param.result).trim() !== ""
+                          ? String(param.result).trim()
+                          : param.value !== null && param.value !== undefined && !Number.isNaN(param.value)
+                          ? String(param.value)
+                          : null;
+
+                      const rs = String(param.resultStatus || "").trim().toUpperCase();
+                      const isOverdue = Boolean(param.isOverdue) || rs === "OVERDUE";
+                      const isIncubating = rs === "IN_PROGRESS";
+                      const quality = String(param.qualityStatus || param.status || "").trim().toUpperCase();
+                      const unitSuffix =
+                        param.unit && param.unit !== "—" && param.unit !== "Descriptor" && rawResult && !rawResult.includes(param.unit)
+                          ? ` ${param.unit}`
+                          : "";
+
+                      let badgeLabel: string | null = null;
+                      let badgeClass = "";
+
+                      if (rawResult !== null) {
+                        if (quality === "FAIL" || quality === "ABOVE LIMIT" || quality === "BELOW LIMIT" || quality === "REJECTED") {
+                          badgeLabel = "Failed";
+                          badgeClass = "bg-red-50 text-red-700 border border-red-200/70";
+                        } else if (quality === "WARNING") {
+                          badgeLabel = "Warning";
+                          badgeClass = "bg-amber-50 text-amber-700 border border-amber-200/70";
+                        } else if (quality === "PASS" || quality === "WITHIN LIMIT" || quality === "WITHIN LIMITS") {
+                          badgeLabel = "Pass";
+                          badgeClass = "bg-emerald-50 text-emerald-700 border border-emerald-200/70";
+                        }
+                      } else if (isOverdue) {
+                        badgeLabel = "Overdue";
+                        badgeClass = "bg-red-50 text-red-700 border border-red-200/70";
+                      } else if (isIncubating) {
+                        badgeLabel = "Incubating";
+                        badgeClass = "bg-amber-50 text-amber-700 border border-amber-200/70";
+                      } else {
+                        badgeLabel = "Pending";
+                        badgeClass = "bg-amber-50 text-amber-700 border border-amber-200/70";
+                      }
+
+                      return (
+                        <motion.div
+                          key={`${param.name}-${idx}`}
+                          layout
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -4 }}
+                          transition={{ duration: 0.18 }}
+                          className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl bg-white/85 border border-gray-100"
+                        >
+                          <span className="text-sm font-medium text-gray-800 truncate">{param.name}</span>
+                          <div className="flex items-center gap-2 shrink-0">
+                            {rawResult !== null && (
+                              <span className="text-sm font-semibold text-gray-900 tabular-nums">
+                                {rawResult}{unitSuffix}
+                              </span>
+                            )}
+                            {badgeLabel && (
+                              <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${badgeClass}`}>
+                                {badgeLabel}
+                              </span>
+                            )}
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </AnimatePresence>
+                </motion.div>
+
+                {hasMore && (
+                  <button
+                    type="button"
+                    onClick={() => setShowAllParameters((prev) => !prev)}
+                    className="mt-3 inline-flex items-center justify-center gap-1.5 w-full py-1.5 text-xs font-semibold text-[#15b5a3] hover:text-[#11998a] hover:bg-[#15b5a3]/5 rounded-lg transition-colors cursor-pointer"
+                  >
+                    {showAllParameters ? (
+                      <>
+                        Show Less
+                        <ChevronUp className="w-3.5 h-3.5" />
+                      </>
+                    ) : (
+                      <>
+                        View All Results
+                        <ChevronDown className="w-3.5 h-3.5" />
+                      </>
+                    )}
+                  </button>
+                )}
+              </div>
+            );
+          })()}
           
           {/* Download Button */}
           <button

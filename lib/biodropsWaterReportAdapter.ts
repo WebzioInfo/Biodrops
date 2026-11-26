@@ -173,10 +173,28 @@ export function adaptVerifyBatchToWaterReport(
   const paramsArray = Array.isArray((data as any)?.parameters)
     ? (data as any).parameters
     : Array.isArray((wq as any)?.parameters)
-    ? (wq as any).parameters
-    : undefined;
+      ? (wq as any).parameters
+      : undefined;
 
-  function findParam(name: string, ...keys: string[]): { val: any; explicitStatus?: QualityStatus } {
+  function mapLifecycleBadge(resultStatus?: string, isOverdue?: boolean): QualityStatus {
+    const rs = String(resultStatus || "").trim().toUpperCase();
+    if (isOverdue || rs === "OVERDUE") return "OVERDUE";
+    if (rs === "IN_PROGRESS") return "INCUBATING";
+    return "PENDING";
+  }
+
+  function findParam(
+    name: string,
+    ...keys: string[]
+  ): {
+    val: any;
+    explicitStatus?: QualityStatus;
+    resultStatus?: string;
+    requiredDurationHours?: number;
+    expectedCompletionAt?: string | null;
+    isOverdue?: boolean;
+    fromParamsArray?: boolean;
+  } {
     // 1. Check paramsArray if available
     if (paramsArray) {
       const target = name.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -188,7 +206,15 @@ export function adaptVerifyBatchToWaterReport(
       if (found) {
         const val = found.result !== undefined ? found.result : found.value;
         const status = found.status || found.qualityStatus;
-        return { val, explicitStatus: status as QualityStatus };
+        return {
+          val,
+          explicitStatus: status as QualityStatus,
+          resultStatus: found.resultStatus,
+          requiredDurationHours: found.requiredDurationHours,
+          expectedCompletionAt: found.expectedCompletionAt,
+          isOverdue: Boolean(found.isOverdue),
+          fromParamsArray: true,
+        };
       }
     }
 
@@ -209,16 +235,26 @@ export function adaptVerifyBatchToWaterReport(
     category: "PHYSICAL" | "CHEMICAL" | "MICROBIOLOGY",
     unit: string,
     standard: string,
-    extracted: { val: any; explicitStatus?: QualityStatus },
+    extracted: {
+      val: any;
+      explicitStatus?: QualityStatus;
+      resultStatus?: string;
+      requiredDurationHours?: number;
+      expectedCompletionAt?: string | null;
+      isOverdue?: boolean;
+      fromParamsArray?: boolean;
+    },
     statusResolver: (val: any) => QualityStatus
   ) {
     const isPresent = hasValue(extracted.val);
-    if (!isPresent) {
+    if (!isPresent && !extracted.fromParamsArray) {
       return null;
     }
 
-    const result = String(extracted.val).trim();
-    const status = extracted.explicitStatus || statusResolver(extracted.val);
+    const result = isPresent ? String(extracted.val).trim() : "—";
+    const status = isPresent
+      ? extracted.explicitStatus || statusResolver(extracted.val)
+      : mapLifecycleBadge(extracted.resultStatus, extracted.isOverdue);
 
     return {
       name,
@@ -227,6 +263,10 @@ export function adaptVerifyBatchToWaterReport(
       unit,
       standard,
       status,
+      resultStatus: extracted.resultStatus,
+      requiredDurationHours: extracted.requiredDurationHours,
+      expectedCompletionAt: extracted.expectedCompletionAt,
+      isOverdue: extracted.isOverdue,
     };
   }
 
@@ -235,7 +275,9 @@ export function adaptVerifyBatchToWaterReport(
   let microDerivedAbsentOrPresent: string | undefined = undefined;
   if (hasValue(microRaw)) {
     const s = String(microRaw).toLowerCase();
-    if (s.includes("present") || s.includes("fail") || s.includes("positive") || s.includes("detected")) {
+    if (s === "pending" || s === "in_progress" || s === "overdue") {
+      microDerivedAbsentOrPresent = undefined;
+    } else if (s.includes("present") || s.includes("fail") || s.includes("positive") || s.includes("detected")) {
       microDerivedAbsentOrPresent = "Present";
     } else if (s.includes("absent") || s.includes("pass") || s.includes("negative") || s.includes("passed")) {
       microDerivedAbsentOrPresent = "Absent";
@@ -246,13 +288,16 @@ export function adaptVerifyBatchToWaterReport(
 
   const ecoliData = findParam("E.coli", "ecoli", "eColi", "EColi", "e_coli");
   const coliformData = findParam("Coliform", "coliform", "Coliform", "totalColiform");
+  const hasStructuredParams = Boolean(paramsArray && paramsArray.length > 0);
 
-  const effectiveEcoli = hasValue(ecoliData.val)
-    ? ecoliData
-    : { val: microDerivedAbsentOrPresent, explicitStatus: ecoliData.explicitStatus };
-  const effectiveColiform = hasValue(coliformData.val)
-    ? coliformData
-    : { val: microDerivedAbsentOrPresent, explicitStatus: coliformData.explicitStatus };
+  const effectiveEcoli =
+    hasValue(ecoliData.val) || hasStructuredParams
+      ? ecoliData
+      : { val: microDerivedAbsentOrPresent, explicitStatus: ecoliData.explicitStatus };
+  const effectiveColiform =
+    hasValue(coliformData.val) || hasStructuredParams
+      ? coliformData
+      : { val: microDerivedAbsentOrPresent, explicitStatus: coliformData.explicitStatus };
 
   const pseudomonasData = findParam("Pseudomonas", "pseudomonas", "Pseudomonas");
   const clostridiaData = findParam("Clostridia", "clostridia", "Clostridia");
@@ -306,31 +351,35 @@ export function adaptVerifyBatchToWaterReport(
     buildParamRow("Yeast & Mold", "MICROBIOLOGY", "CFU/100ml", "Absent", ymData, resolvePathogenStatus),
   ];
 
-  // Strictly retain ONLY parameters that were tested (present with non-empty results in response)
-  const parameters = rawParameters.filter(Boolean) as any[];
-
-  // Also dynamically attach any additional parameters from the backend that were tested
-  if (paramsArray && Array.isArray(paramsArray)) {
-    const includedNames = new Set(parameters.map((p) => p.name.toLowerCase().replace(/[^a-z0-9]/g, "")));
+  // When Aquzio returns structured parameters, use ONLY those exact report parameters.
+  // Fall back to legacy waterQuality key extraction only when parameters array is absent.
+  const parameters: any[] = [];
+  if (hasStructuredParams && paramsArray) {
     for (const item of paramsArray) {
       const pName = (item.name || item.parameter || "").trim();
-      const norm = pName.toLowerCase().replace(/[^a-z0-9]/g, "");
-      if (!pName || includedNames.has(norm)) continue;
+      if (!pName) continue;
       const val = item.result !== undefined ? item.result : item.value;
-      if (!hasValue(val)) continue;
-
+      const isPresent = hasValue(val);
       const category = (item.category || "PHYSICAL").toUpperCase();
-      const status = item.status || item.qualityStatus || (item.isPass ? "PASS" : "FAIL");
+      const status = isPresent
+        ? item.status || item.qualityStatus || (item.isPass ? "PASS" : "FAIL")
+        : mapLifecycleBadge(item.resultStatus, item.isOverdue);
+
       parameters.push({
         name: pName,
         category: category as any,
-        result: String(val).trim(),
+        result: isPresent ? String(val).trim() : "—",
         unit: item.unit || "—",
         standard: item.standard || "—",
         status: status as QualityStatus,
+        resultStatus: item.resultStatus,
+        requiredDurationHours: item.requiredDurationHours,
+        expectedCompletionAt: item.expectedCompletionAt,
+        isOverdue: Boolean(item.isOverdue),
       });
-      includedNames.add(norm);
     }
+  } else {
+    parameters.push(...(rawParameters.filter(Boolean) as any[]));
   }
 
   // Check if any tested parameter failed
@@ -344,13 +393,45 @@ export function adaptVerifyBatchToWaterReport(
 
   // Check if at least one parameter was actually tested
   const hasTestedParams = parameters.some((p) => p.result !== "—" && p.result !== "");
+  const totalParametersCount =
+    typeof data?.totalParametersCount === "number" ? data.totalParametersCount : parameters.length;
+  const completedParametersCount =
+    typeof data?.completedParametersCount === "number"
+      ? data.completedParametersCount
+      : parameters.filter((p) => p.result !== "—" && p.result !== "").length;
+  const overdueParametersCount =
+    typeof data?.overdueParametersCount === "number"
+      ? data.overdueParametersCount
+      : parameters.filter((p) => p.isOverdue || p.status === "OVERDUE").length;
+  const pendingParametersCount =
+    typeof data?.pendingParametersCount === "number"
+      ? data.pendingParametersCount
+      : Math.max(0, totalParametersCount - completedParametersCount);
 
-  // Overall compliance check
+  const completionStatus =
+    (data?.completionStatus || "").trim().toUpperCase() ||
+    (overdueParametersCount > 0
+      ? "RESULTS_OVERDUE"
+      : totalParametersCount > 0 && pendingParametersCount > 0
+        ? completedParametersCount > 0
+          ? "PARTIALLY_COMPLETED"
+          : "PENDING_RESULTS"
+        : undefined);
+
+  // Overall compliance check - never fake APPROVED when parameters are pending or overdue
   let overallStatus: QualityStatus = "—";
-  if (data?.overallStatus || (data as any)?.status || (data as any)?.report?.status) {
-    overallStatus = (data?.overallStatus || (data as any)?.status || (data as any)?.report?.status) as QualityStatus;
-  } else if (hasFailure) {
+  if (hasFailure) {
     overallStatus = "FAIL";
+  } else if (completionStatus === "RESULTS_OVERDUE") {
+    overallStatus = "RESULTS_OVERDUE";
+  } else if (completionStatus === "PARTIALLY_COMPLETED" || completionStatus === "PENDING_RESULTS") {
+    overallStatus = "PENDING";
+  } else if (data?.overallStatus || (data as any)?.report?.status) {
+    overallStatus = (data?.overallStatus || (data as any)?.report?.status) as QualityStatus;
+  } else if (completionStatus === "COMPLETED" && hasTestedParams) {
+    overallStatus = "APPROVED";
+  } else if ((data as any)?.status) {
+    overallStatus = (data as any).status as QualityStatus;
   } else if (hasTestedParams) {
     overallStatus = "APPROVED";
   } else {
@@ -362,10 +443,14 @@ export function adaptVerifyBatchToWaterReport(
 
   if (backendRemarks && backendRemarks !== "—") {
     remarksList.push(backendRemarks);
-  } else if (hasTestedParams) {
+  } else if (hasTestedParams || parameters.length > 0) {
     remarksList.push("OBSERVATIONS & COMPLIANCE:");
     if (hasFailure) {
       remarksList.push("1. Water sample does not comply with standard specifications for Packaged Drinking Water (IS 14543 / IS 10500) due to parameter(s) outside permissible limits.");
+    } else if (completionStatus === "RESULTS_OVERDUE") {
+      remarksList.push(`1. Testing is incomplete (${completedParametersCount}/${totalParametersCount} completed, ${overdueParametersCount} overdue). Final certification is withheld until all overdue results are entered.`);
+    } else if (completionStatus === "PARTIALLY_COMPLETED" || completionStatus === "PENDING_RESULTS") {
+      remarksList.push(`1. Testing is in progress (${completedParametersCount}/${totalParametersCount} parameters completed, ${pendingParametersCount} pending). Final certification is pending remaining results.`);
     } else {
       remarksList.push("1. The tested water sample parameters comply with standard specifications for Packaged Drinking Water (IS 14543 / IS 10500).");
     }
@@ -435,6 +520,11 @@ export function adaptVerifyBatchToWaterReport(
     reportGeneratedDate,
     reportType,
     overallStatus,
+    completionStatus,
+    totalParametersCount,
+    completedParametersCount,
+    pendingParametersCount,
+    overdueParametersCount,
     verificationUrl,
     remarks,
     parameters,

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { adaptVerifyBatchToWaterReport, getWaterReportFilename } from "../lib/biodropsWaterReportAdapter";
 import { AquoraBatchVerificationResponse } from "../services/aquoraPublicApi";
-import { formatReportDataFromContract, getWaterReportDocumentDefinition } from "../bqms-water-report-pdf";
+import { formatReportDataFromContract, getWaterReportDocumentDefinition, generateWaterReportPdfBuffer } from "../bqms-water-report-pdf";
 
 describe("Water Report PDF Adapter with Aquora Data", () => {
   const sampleAquoraResponse: AquoraBatchVerificationResponse = {
@@ -294,14 +294,14 @@ describe("Water Report PDF Adapter with Aquora Data", () => {
     // Page 1: Report Info + Physical Table + Chemical Table
     // Page 2: Microbiology Header (pageBreak: before) + Table + Signatures
     // Page 3: Remarks (pageBreak: before)
-    const microHeader = docDef.content.find((item: any) => 
+    const microHeader = docDef.content.find((item: any) =>
       item.columns && item.columns.some((col: any) => col.text === "MICROBIOLOGICAL PARAMETERS")
     );
     expect(microHeader).toBeDefined();
     expect(microHeader.pageBreak).toBe("before");
 
     // If chemical parameters were present, verify chemical header pageBreak is undefined
-    const chemHeader = docDef.content.find((item: any) => 
+    const chemHeader = docDef.content.find((item: any) =>
       item.columns && item.columns.some((col: any) => col.text === "CHEMICAL PARAMETERS")
     );
     if (chemHeader) {
@@ -347,5 +347,190 @@ describe("Water Report PDF Adapter with Aquora Data", () => {
     expect(contract.remarks).not.toContain("null");
     expect(contract.remarks).toContain("ISO 22000:2018: FSMS-1002");
     expect(contract.remarks).toContain("PCB Consent: PCB/W/2026/88");
+  });
+
+  it("retains pending/incubating parameters and never fakes APPROVED when 12/13 completed", async () => {
+    const partialResponse: AquoraBatchVerificationResponse = {
+      success: true,
+      verified: true,
+      data: {
+        batchNumber: "B-PARTIAL-12-13",
+        reportNumber: "RPT-B-PARTIAL-12-13",
+        reportType: "DAILY",
+        status: "SUBMITTED",
+        completionStatus: "PARTIALLY_COMPLETED",
+        totalParametersCount: 3,
+        completedParametersCount: 2,
+        pendingParametersCount: 1,
+        overdueParametersCount: 0,
+        manufacturer: { name: "Aiwa Minerals" },
+        manufacturing: { manufacturedDate: "2026-11-25" },
+        expiry: { bestBefore: "2027-05-25" },
+        licenses: { fssai: "100200300" },
+        waterQuality: { ph: "7.2", tds: "120", microbiology: "Pending", sterilization: "Passed" },
+        parameters: [
+          { name: "pH", category: "PHYSICAL", result: "7.2", unit: "—", standard: "6.5 - 8.5", status: "PASS", resultStatus: "COMPLETED", requiredDurationHours: 0, isOverdue: false },
+          { name: "TDS", category: "PHYSICAL", result: "120", unit: "mg/L", standard: "0 - 500", status: "PASS", resultStatus: "COMPLETED", requiredDurationHours: 0, isOverdue: false },
+          { name: "E.coli", category: "MICROBIOLOGY", result: null, unit: "CFU/100ml", standard: "Absent", status: "PENDING", resultStatus: "IN_PROGRESS", requiredDurationHours: 24, expectedCompletionAt: "2026-11-26T10:00:00Z", isOverdue: false },
+        ],
+        report: { available: true, publicDownloadAvailable: true },
+      },
+    };
+
+    const contract = adaptVerifyBatchToWaterReport(partialResponse);
+    expect(contract.overallStatus).toBe("PENDING");
+    expect(contract.completionStatus).toBe("PARTIALLY_COMPLETED");
+    expect(contract.totalParametersCount).toBe(3);
+    expect(contract.completedParametersCount).toBe(2);
+    expect(contract.pendingParametersCount).toBe(1);
+    expect(contract.parameters).toHaveLength(3);
+
+    const ecoli = contract.parameters.find((p) => p.name === "E.coli");
+    expect(ecoli?.result).toBe("—");
+    expect(ecoli?.status).toBe("INCUBATING");
+
+    const docDef = getWaterReportDocumentDefinition(contract);
+    expect(docDef.content.length).toBeGreaterThan(0);
+
+    // Verify real PDF buffer generates cleanly for partial report
+    const pdfBuffer = await generateWaterReportPdfBuffer(contract);
+    expect(pdfBuffer).toBeInstanceOf(Uint8Array);
+    expect(Buffer.from(pdfBuffer.subarray(0, 5)).toString("utf8")).toBe("%PDF-");
+  });
+
+  it("marks overdue parameters and sets overallStatus to RESULTS_OVERDUE", () => {
+    const overdueResponse: AquoraBatchVerificationResponse = {
+      success: true,
+      verified: true,
+      data: {
+        batchNumber: "B-OVERDUE-1",
+        reportType: "WEEKLY",
+        status: "SUBMITTED",
+        completionStatus: "RESULTS_OVERDUE",
+        totalParametersCount: 2,
+        completedParametersCount: 1,
+        pendingParametersCount: 1,
+        overdueParametersCount: 1,
+        manufacturer: { name: "Aiwa Minerals" },
+        manufacturing: { manufacturedDate: "2026-11-25" },
+        expiry: { bestBefore: "2027-05-25" },
+        licenses: {},
+        waterQuality: { ph: "7.1", microbiology: "Pending", sterilization: "Passed" },
+        parameters: [
+          { name: "pH", category: "PHYSICAL", result: "7.1", unit: "—", standard: "6.5 - 8.5", status: "PASS", resultStatus: "COMPLETED", isOverdue: false },
+          { name: "Coliform", category: "MICROBIOLOGY", result: null, unit: "CFU/100ml", standard: "Absent", status: "PENDING", resultStatus: "OVERDUE", requiredDurationHours: 24, isOverdue: true },
+        ],
+        report: { available: true },
+      },
+    };
+
+    const contract = adaptVerifyBatchToWaterReport(overdueResponse);
+    expect(contract.overallStatus).toBe("RESULTS_OVERDUE");
+    const coliform = contract.parameters.find((p) => p.name === "Coliform");
+    expect(coliform?.result).toBe("—");
+    expect(coliform?.status).toBe("OVERDUE");
+  });
+
+  it("sets overallStatus to FAIL when completed report has a failing parameter", () => {
+    const failedResponse: AquoraBatchVerificationResponse = {
+      success: true,
+      verified: true,
+      data: {
+        batchNumber: "B-FAIL-1",
+        reportType: "DAILY",
+        status: "APPROVED",
+        completionStatus: "COMPLETED",
+        totalParametersCount: 1,
+        completedParametersCount: 1,
+        pendingParametersCount: 0,
+        overdueParametersCount: 0,
+        manufacturer: { name: "Aiwa Minerals" },
+        manufacturing: { manufacturedDate: "2026-11-25" },
+        expiry: { bestBefore: "2027-05-25" },
+        licenses: {},
+        waterQuality: { ph: "9.2", microbiology: "Passed", sterilization: "Passed" },
+        parameters: [
+          { name: "pH", category: "PHYSICAL", result: "9.2", unit: "—", standard: "6.5 - 8.5", status: "FAIL", resultStatus: "COMPLETED", isOverdue: false },
+        ],
+        report: { available: true },
+      },
+    };
+
+    const contract = adaptVerifyBatchToWaterReport(failedResponse);
+    expect(contract.overallStatus).toBe("FAIL");
+  });
+
+  it("includes only Weekly parameters when report has only Weekly microbiology parameters", () => {
+    const weeklyOnlyResponse: AquoraBatchVerificationResponse = {
+      success: true,
+      verified: true,
+      data: {
+        batchNumber: "B-WEEKLY-ONLY",
+        reportType: "WEEKLY",
+        status: "SUBMITTED",
+        completionStatus: "COMPLETED",
+        totalParametersCount: 2,
+        completedParametersCount: 2,
+        pendingParametersCount: 0,
+        overdueParametersCount: 0,
+        manufacturer: { name: "Aiwa Minerals" },
+        manufacturing: { manufacturedDate: "2026-11-25" },
+        expiry: { bestBefore: "2027-05-25" },
+        licenses: {},
+        waterQuality: { ph: null, tds: null, turbidity: null, microbiology: "Passed", sterilization: "Passed" },
+        parameters: [
+          { name: "E.coli", category: "MICROBIOLOGY", result: "Absent", unit: "CFU/100ml", standard: "Absent", status: "PASS", resultStatus: "COMPLETED", isOverdue: false },
+          { name: "Coliform", category: "MICROBIOLOGY", result: "Absent", unit: "CFU/100ml", standard: "Absent", status: "PASS", resultStatus: "COMPLETED", isOverdue: false },
+        ],
+        report: { available: true },
+      },
+    };
+
+    const contract = adaptVerifyBatchToWaterReport(weeklyOnlyResponse);
+    expect(contract.parameters).toHaveLength(2);
+    expect(contract.parameters.map((p) => p.name)).toEqual(["E.coli", "Coliform"]);
+    expect(contract.parameters.find((p) => p.name === "pH")).toBeUndefined();
+    expect(contract.parameters.find((p) => p.name === "TDS")).toBeUndefined();
+  });
+
+  it.each([3, 6, 10, 15])("preserves all %i parameters in PDF contract for Daily and Weekly reports", (count) => {
+    const params = Array.from({ length: count }, (_, i) => ({
+      name: `Param ${i + 1}`,
+      category: i % 3 === 0 ? "PHYSICAL" : i % 3 === 1 ? "CHEMICAL" : "MICROBIOLOGY",
+      result: i === count - 1 ? null : `${7 + (i % 3) * 0.2}`,
+      unit: i % 3 === 2 ? "CFU/100ml" : "mg/L",
+      standard: i % 3 === 2 ? "Absent" : "0 - 500",
+      status: i === count - 1 ? "PENDING" : "PASS",
+      resultStatus: i === count - 1 ? "PENDING_RESULT" : "COMPLETED",
+      isOverdue: false,
+    }));
+
+    const response: AquoraBatchVerificationResponse = {
+      success: true,
+      verified: true,
+      data: {
+        batchNumber: `B-COUNT-${count}`,
+        reportType: count >= 10 ? "WEEKLY" : "DAILY",
+        status: "SUBMITTED",
+        completionStatus: "PARTIALLY_COMPLETED",
+        totalParametersCount: count,
+        completedParametersCount: count - 1,
+        pendingParametersCount: 1,
+        overdueParametersCount: 0,
+        manufacturer: { name: "Aiwa Minerals" },
+        manufacturing: { manufacturedDate: "2026-11-25" },
+        expiry: { bestBefore: "2027-05-25" },
+        licenses: {},
+        waterQuality: { ph: "7.2", tds: "100", turbidity: "0.2", microbiology: "Pending", sterilization: "Passed" },
+        parameters: params,
+        report: { available: true },
+      },
+    };
+
+    const contract = adaptVerifyBatchToWaterReport(response);
+    expect(contract.reportType).toBe(count >= 10 ? "WEEKLY" : "DAILY");
+    expect(contract.parameters).toHaveLength(count);
+    const docDef = getWaterReportDocumentDefinition(contract);
+    expect(docDef.content.length).toBeGreaterThan(0);
   });
 });

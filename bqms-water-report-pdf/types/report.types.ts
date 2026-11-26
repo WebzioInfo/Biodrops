@@ -4,21 +4,27 @@
 
 export type ParameterCategory = 'PHYSICAL' | 'CHEMICAL' | 'MICROBIOLOGY';
 
-export type QualityStatus = 
-  | 'PASS' 
-  | 'FAIL' 
-  | 'APPROVED' 
-  | 'REJECTED' 
-  | 'WITHIN LIMIT' 
-  | 'WITHIN LIMITS' 
-  | 'ABOVE LIMIT' 
-  | 'ABOVE LIMITS' 
-  | 'ABOVE MAXIMUM' 
-  | 'BELOW LIMIT' 
-  | 'BELOW LIMITS' 
-  | 'BELOW MINIMUM' 
-  | 'WARNING' 
-  | 'NOT TESTED' 
+export type QualityStatus =
+  | 'PASS'
+  | 'FAIL'
+  | 'APPROVED'
+  | 'REJECTED'
+  | 'WITHIN LIMIT'
+  | 'WITHIN LIMITS'
+  | 'ABOVE LIMIT'
+  | 'ABOVE LIMITS'
+  | 'ABOVE MAXIMUM'
+  | 'BELOW LIMIT'
+  | 'BELOW LIMITS'
+  | 'BELOW MINIMUM'
+  | 'WARNING'
+  | 'PENDING'
+  | 'INCUBATING'
+  | 'OVERDUE'
+  | 'PARTIALLY_COMPLETED'
+  | 'RESULTS_OVERDUE'
+  | 'PENDING_RESULTS'
+  | 'NOT TESTED'
   | 'NOT ENTERED'
   | string;
 
@@ -137,6 +143,11 @@ export interface WaterReportInputContract {
   reportGeneratedDate?: string;
   reportType?: string;
   overallStatus?: QualityStatus;
+  completionStatus?: string;
+  totalParametersCount?: number;
+  completedParametersCount?: number;
+  pendingParametersCount?: number;
+  overdueParametersCount?: number;
   verificationUrl?: string;
   remarks?: string;
 
@@ -146,9 +157,13 @@ export interface WaterReportInputContract {
   parameters: {
     name: string;
     category: ParameterCategory;
-    result: string | number;
+    result: string | number | null;
     unit?: string;
     standard?: string;
     status?: QualityStatus;
+    resultStatus?: string;
+    requiredDurationHours?: number;
+    expectedCompletionAt?: string | null;
+    isOverdue?: boolean;
   }[];
 }

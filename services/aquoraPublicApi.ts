@@ -21,6 +21,57 @@ export interface AquoraManufacturerDto {
   email?: string | null;
   phone?: string | null;
   isBiodropsProduction: boolean;
+  shortDescription?: string | null;
+  coverImageUrl?: string | null;
+  city?: string | null;
+  state?: string | null;
+  createdAt: string;
+}
+
+export interface AquoraPublicGalleryImageDto {
+  id: string;
+  url: string;
+  category: string;
+  caption?: string | null;
+  width: number;
+  height: number;
+  displayOrder: number;
+}
+
+export interface AquoraManufacturerProfileDto {
+  id: string;
+  name: string;
+  displayName?: string | null;
+  code: string;
+  logoUrl?: string | null;
+  badgeLetters?: string | null;
+  coverImageUrl?: string | null;
+  shortDescription?: string | null;
+  about?: string | null;
+  establishedYear?: number | null;
+  email?: string | null;
+  phone?: string | null;
+  websiteUrl?: string | null;
+  contactPerson?: string | null;
+  address?: string | null;
+  location?: {
+    fullAddress?: string | null;
+    city?: string | null;
+    district?: string | null;
+    state?: string | null;
+    pinCode?: string | null;
+    googleMapsUrl?: string | null;
+    latitude?: number | null;
+    longitude?: number | null;
+  };
+  licenseNumber?: string | null;
+  gstNumber?: string | null;
+  isBiodropsProduction: boolean;
+  factoryIntroduction?: string | null;
+  productionFacilityDescription?: string | null;
+  manufacturingInfrastructure?: string | null;
+  qualityControlFacilities?: string | null;
+  gallery?: AquoraPublicGalleryImageDto[];
   createdAt: string;
 }
 
@@ -101,6 +152,12 @@ export interface AquoraBatchVerificationData {
   verifiedBy?: string | null;
   collectedBy?: string | null;
   reportType?: string | null;
+  status?: string | null;
+  completionStatus?: string | null;
+  totalParametersCount?: number;
+  completedParametersCount?: number;
+  pendingParametersCount?: number;
+  overdueParametersCount?: number;
   remarks?: string | null;
   manufacturer: AquoraBatchManufacturer;
   manufacturing: AquoraBatchManufacturing;
@@ -112,9 +169,17 @@ export interface AquoraBatchVerificationData {
     name: string;
     category?: string;
     result?: string | number | null;
+    value?: number | null;
     unit?: string;
     standard?: string;
     status?: string;
+    qualityStatus?: string;
+    resultStatus?: string;
+    requiredDurationHours?: number;
+    startedAt?: string | null;
+    expectedCompletionAt?: string | null;
+    actualCompletedAt?: string | null;
+    isOverdue?: boolean;
     [key: string]: any;
   }>;
   [key: string]: any;
@@ -195,17 +260,125 @@ export async function fetchAquoraManufacturers(
 }
 
 /**
+ * Fetches paginated certified BioDrops manufacturers from Aquora Public API.
+ * Preserves pagination metadata (totalCount, page, pageSize, totalPages) for management views.
+ */
+export async function fetchAquoraManufacturersPaged(
+  options?: { search?: string; page?: number; pageSize?: number },
+  signal?: AbortSignal
+): Promise<AquoraPagedResult<AquoraManufacturerDto>> {
+  const baseUrl = getAquoraBaseUrl();
+  const page = options?.page ?? 1;
+  const pageSize = options?.pageSize ?? 10;
+  const searchParams = new URLSearchParams();
+  if (options?.search) searchParams.set("search", options.search);
+  searchParams.set("page", page.toString());
+  searchParams.set("pageSize", pageSize.toString());
+
+  const queryString = searchParams.toString() ? `?${searchParams.toString()}` : "";
+  const endpoint = `${baseUrl}/api/public/manufacturers${queryString}`;
+
+  const response = await fetch(endpoint, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    signal,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Aquora Public API error: ${response.status} ${response.statusText}`);
+  }
+
+  const rawJson: AquoraApiResponse<AquoraPagedResult<AquoraManufacturerDto> | AquoraManufacturerDto[]> = await response.json();
+
+  if (!rawJson.success || !rawJson.data) {
+    return { items: [], totalCount: 0, page, pageSize, totalPages: 0 };
+  }
+
+  if (Array.isArray(rawJson.data)) {
+    return {
+      items: rawJson.data,
+      totalCount: rawJson.data.length,
+      page,
+      pageSize,
+      totalPages: Math.max(1, Math.ceil(rawJson.data.length / pageSize)),
+    };
+  }
+
+  const paged = rawJson.data as AquoraPagedResult<AquoraManufacturerDto>;
+  const items = Array.isArray(paged.items) ? paged.items : [];
+  const totalCount = typeof paged.totalCount === "number" ? paged.totalCount : items.length;
+  const resolvedPageSize = typeof paged.pageSize === "number" && paged.pageSize > 0 ? paged.pageSize : pageSize;
+  const totalPages =
+    typeof paged.totalPages === "number"
+      ? paged.totalPages
+      : Math.max(1, Math.ceil(totalCount / resolvedPageSize));
+
+  return {
+    items,
+    totalCount,
+    page: typeof paged.page === "number" ? paged.page : page,
+    pageSize: resolvedPageSize,
+    totalPages,
+  };
+}
+
+/**
+ * Fetches full public profile & gallery for a certified BioDrops manufacturer.
+ * Returns null if the profile endpoint is not available (404) so callers can fall back gracefully.
+ */
+export async function fetchAquoraManufacturerProfile(
+  id: string,
+  signal?: AbortSignal
+): Promise<AquoraManufacturerProfileDto | null> {
+  if (!id) return null;
+  const baseUrl = getAquoraBaseUrl();
+  const endpoint = `${baseUrl}/api/public/manufacturers/${encodeURIComponent(id)}/profile`;
+
+  const response = await fetch(endpoint, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    signal,
+  });
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error(`Aquora Public API error: ${response.status} ${response.statusText}`);
+  }
+
+  const rawJson: AquoraApiResponse<AquoraManufacturerProfileDto> = await response.json();
+  if (!rawJson.success || !rawJson.data) {
+    return null;
+  }
+
+  return rawJson.data;
+}
+
+/**
  * Verifies a water production batch with Aquora Public API.
  * Normalizes input and fetches authoritative batch, manufacturer, QC parameters, and report status.
  * Supports lightweight summary by default, or full QC parameter results via options.full = true.
  */
 export async function verifyAquoraBatch(
   batchNumber: string,
-  optionsOrSignal?: { full?: boolean; signal?: AbortSignal } | AbortSignal
+  optionsOrSignal?:
+    | {
+      full?: boolean;
+      reportType?: string;
+      tenantId?: string;
+      tenantCode?: string;
+      signal?: AbortSignal;
+    }
+    | AbortSignal
 ): Promise<AquoraBatchVerificationResponse> {
   const isSignal = typeof AbortSignal !== "undefined" && optionsOrSignal instanceof AbortSignal;
-  const signal = isSignal ? optionsOrSignal : (optionsOrSignal as { signal?: AbortSignal })?.signal;
-  const full = !isSignal && (optionsOrSignal as { full?: boolean })?.full;
+  const options = isSignal ? undefined : (optionsOrSignal as { full?: boolean; reportType?: string; tenantId?: string; tenantCode?: string; signal?: AbortSignal });
+  const signal = isSignal ? optionsOrSignal : options?.signal;
+  const full = options?.full;
 
   const sanitized = (batchNumber || "").trim();
   if (!sanitized) {
@@ -218,7 +391,12 @@ export async function verifyAquoraBatch(
   }
 
   const baseUrl = getAquoraBaseUrl();
-  const query = full ? "?full=true" : "";
+  const searchParams = new URLSearchParams();
+  if (full) searchParams.set("full", "true");
+  if (options?.reportType) searchParams.set("reportType", options.reportType);
+  if (options?.tenantId) searchParams.set("tenantId", options.tenantId);
+  if (options?.tenantCode) searchParams.set("tenantCode", options.tenantCode);
+  const query = searchParams.toString() ? `?${searchParams.toString()}` : "";
   const endpoint = `${baseUrl}/api/public/water-verification/${encodeURIComponent(sanitized)}${query}`;
 
   const response = await fetch(endpoint, {
@@ -231,6 +409,11 @@ export async function verifyAquoraBatch(
 
   if (response.status === 404) {
     throw new Error("BATCH_NOT_FOUND");
+  }
+
+  if (response.status === 409) {
+    const conflictData: AquoraBatchVerificationResponse = await response.json();
+    return conflictData;
   }
 
   if (!response.ok) {

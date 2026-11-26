@@ -10,11 +10,11 @@ export function getReportInfo(metadata: Record<string, string> = {}) {
   const sampleTime = metadata['Sample Time'] || metadata['Collected On'] || '—';
   const reportType = metadata['Report Type'] || '—';
   const status = metadata['Overall Status'] || metadata['Report Status'] || '—';
-  
+
   const collectedBy = metadata['Collected By'] || '—';
   const testedBy = metadata['Tested By'] || metadata['Analyst'] || '—';
   const verifiedBy = metadata['Verified By'] || '—';
-  
+
   const generatedDate = metadata['Report Generated'] || `${new Date().toLocaleDateString('en-GB', {
     day: '2-digit',
     month: 'short',
@@ -35,6 +35,19 @@ export function getReportInfo(metadata: Record<string, string> = {}) {
 
   const labelStyle = { fontSize: 7.5, bold: true, color: '#475569' };
   const valueStyle = { fontSize: 7.5, color: '#0F172A' };
+
+  const totalParams = metadata['Total Parameters'];
+  const completedParams = metadata['Completed Parameters'];
+  const pendingParams = metadata['Pending Parameters'];
+  const overdueParams = metadata['Overdue Parameters'];
+  const lifecycleStatus = metadata['Lifecycle Status'];
+
+  const statusUpper = String(status).toUpperCase();
+  const statusColor = (statusUpper === 'APPROVED' || statusUpper === 'PUBLISHED' || statusUpper === 'PASS' || statusUpper === 'COMPLETED')
+    ? PDF_COLORS.pass
+    : (statusUpper === 'PENDING' || statusUpper === 'PARTIALLY_COMPLETED' || statusUpper === 'PENDING_RESULTS' || statusUpper === 'INCUBATING')
+      ? PDF_COLORS.warning
+      : (status === '—' || !status ? PDF_COLORS.neutral : PDF_COLORS.fail);
 
   const tableBody: any[][] = [
     // Row 1
@@ -77,17 +90,34 @@ export function getReportInfo(metadata: Record<string, string> = {}) {
       { text: 'Report Type', ...labelStyle, fillColor: PDF_COLORS.bgCard },
       { text: reportType, ...valueStyle, fillColor: PDF_COLORS.bgCard },
       { text: 'Report Status', ...labelStyle, fillColor: PDF_COLORS.bgCard },
-      { 
-        text: status, 
+      {
+        text: status,
         fontSize: 7.5,
         bold: (status !== '—' && !!status),
-        color: (status === 'APPROVED' || status === 'PUBLISHED' || status === 'PASS') 
-          ? PDF_COLORS.pass 
-          : (status === '—' || !status ? PDF_COLORS.neutral : PDF_COLORS.fail),
+        color: statusColor,
         fillColor: PDF_COLORS.bgCard
       }
     ]
   ];
+
+  if (totalParams || lifecycleStatus) {
+    const progressParts: string[] = [];
+    if (completedParams && totalParams) {
+      progressParts.push(`${completedParams}/${totalParams} Completed`);
+    }
+    if (pendingParams && Number(pendingParams) > 0) {
+      progressParts.push(`${pendingParams} Pending`);
+    }
+    if (overdueParams && Number(overdueParams) > 0) {
+      progressParts.push(`${overdueParams} Overdue`);
+    }
+    tableBody.push([
+      { text: 'Parameter Progress', ...labelStyle, fillColor: PDF_COLORS.bgCard },
+      { text: progressParts.join(' • ') || '—', ...valueStyle, bold: true, fillColor: PDF_COLORS.bgCard },
+      { text: 'Lifecycle Status', ...labelStyle, fillColor: PDF_COLORS.bgCard },
+      { text: lifecycleStatus || '—', ...valueStyle, bold: true, fillColor: PDF_COLORS.bgCard }
+    ]);
+  }
 
   // Integrate Customer Address if present
   if (customerAddress) {

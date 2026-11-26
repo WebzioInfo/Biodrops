@@ -107,6 +107,15 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/manufacture"
+                  prefetch={false}
+                  className="inline-block w-full py-3 sm:py-2 text-white/60 hover:text-[#cfef00] focus-visible:text-[#cfef00] transition-colors focus-visible:ring-2 focus-visible:ring-[#cfef00] focus-visible:outline-none rounded"
+                >
+                  Manufacturing Partners
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/why-us"
                   prefetch={false}
                   className="inline-block w-full py-3 sm:py-2 text-white/60 hover:text-[#cfef00] focus-visible:text-[#cfef00] transition-colors focus-visible:ring-2 focus-visible:ring-[#cfef00] focus-visible:outline-none rounded"

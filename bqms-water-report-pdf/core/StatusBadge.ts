@@ -17,6 +17,15 @@ export function getStatusBadge(status: string) {
   } else if (cleanStatus === 'BELOW LIMIT' || cleanStatus === 'BELOW LIMITS' || cleanStatus === 'BELOW MINIMUM' || cleanStatus === 'WARNING') {
     color = PDF_COLORS.warning;
     text = status;
+  } else if (cleanStatus === 'OVERDUE' || cleanStatus === 'RESULTS_OVERDUE') {
+    color = PDF_COLORS.fail;
+    text = 'OVERDUE';
+  } else if (cleanStatus === 'INCUBATING' || cleanStatus === 'IN_PROGRESS') {
+    color = PDF_COLORS.warning;
+    text = 'INCUBATING';
+  } else if (cleanStatus === 'PENDING' || cleanStatus === 'PENDING_RESULT' || cleanStatus === 'PENDING_RESULTS' || cleanStatus === 'PARTIALLY_COMPLETED') {
+    color = PDF_COLORS.warning;
+    text = cleanStatus === 'PARTIALLY_COMPLETED' ? 'PARTIAL' : 'PENDING';
   } else if (cleanStatus === 'NOT TESTED' || cleanStatus === 'NOT ENTERED') {
     color = PDF_COLORS.neutral;
     text = status || 'NOT TESTED';

@@ -28,6 +28,22 @@ export function formatReportDataFromContract(contract: WaterReportInputContract)
     "Report Status": contract.overallStatus || "—",
   };
 
+  if (contract.completionStatus) {
+    metadata["Lifecycle Status"] = contract.completionStatus;
+  }
+  if (typeof contract.totalParametersCount === "number") {
+    metadata["Total Parameters"] = String(contract.totalParametersCount);
+  }
+  if (typeof contract.completedParametersCount === "number") {
+    metadata["Completed Parameters"] = String(contract.completedParametersCount);
+  }
+  if (typeof contract.pendingParametersCount === "number") {
+    metadata["Pending Parameters"] = String(contract.pendingParametersCount);
+  }
+  if (typeof contract.overdueParametersCount === "number") {
+    metadata["Overdue Parameters"] = String(contract.overdueParametersCount);
+  }
+
   if (contract.clientAddress && contract.clientAddress !== "—") {
     metadata["Customer Address"] = contract.clientAddress;
     metadata["Address"] = contract.clientAddress;
@@ -44,25 +60,29 @@ export function formatReportDataFromContract(contract: WaterReportInputContract)
   }
 
   const headers = ["Parameter", "Category", "Result", "Unit", "Standard", "Status"];
-  
+
   let rows: (string | number)[][] = [];
 
   if (contract.parameters && contract.parameters.length > 0) {
     rows = contract.parameters.map((p) => {
       const isMissingResult = p.result === null || p.result === undefined || String(p.result).trim() === "" || String(p.result).trim() === "—";
       const resultStr = isMissingResult ? "—" : String(p.result);
-      
+
       // If result is missing and status wasn't explicitly provided, don't allow a fake "PASS" or "WITHIN LIMIT"
       let statusStr = "—";
       if (!isMissingResult) {
         statusStr = p.status ? String(p.status) : "—";
+      } else if (p.isOverdue || p.resultStatus === "OVERDUE") {
+        statusStr = "OVERDUE";
+      } else if (p.resultStatus === "IN_PROGRESS") {
+        statusStr = "INCUBATING";
+      } else if (p.resultStatus === "PENDING_RESULT") {
+        statusStr = "PENDING";
       } else if (p.status && p.status !== "PASS" && p.status !== "WITHIN LIMIT" && p.status !== "WITHIN LIMITS") {
         statusStr = String(p.status);
       }
 
-      const standardStr = isMissingResult && (!p.standard || p.standard === "—")
-        ? "—"
-        : (p.standard || "—");
+      const standardStr = p.standard || "—";
 
       return [
         p.name,
