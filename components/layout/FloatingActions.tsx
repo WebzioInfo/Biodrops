@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
+// TEMPORARILY DISABLED (2-day hold): restore ShoppingBag import when uncommenting Order Now button
+// import { ShoppingBag, ShieldCheck } from "lucide-react";
 
 export default function FloatingActions() {
   const pathname = usePathname();
@@ -24,8 +26,9 @@ export default function FloatingActions() {
         <span>Verify Batch</span>
       </Link>
 
+      {/* TEMPORARILY DISABLED (2-day hold): Uncomment when user asks to restore eDrops navigation */}
       {/* Button 1: Order Now (External Shop Link) */}
-      <a
+      {/* <a
         href="https://app.edrops.in/customer/shop"
         target="_blank"
         rel="noopener noreferrer"
@@ -34,7 +37,7 @@ export default function FloatingActions() {
       >
         <ShoppingBag className="w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0 stroke-[2.2]" />
         <span>Order Now</span>
-      </a>
+      </a> */}
     </aside>
   );
 }
